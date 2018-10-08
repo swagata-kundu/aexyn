@@ -1,0 +1,26 @@
+{
+    "port": 3001,
+    "mailFrom": "afflemailer@gmail.com",
+    "db": {
+        "host": "aexyn",
+        "port": 3306,
+        "user": "root",
+        "password": "password",
+        "database": "no",
+        "connectionLimit": 10,
+        "waitForConnections": true,
+        "dateStrings": true,
+        "multipleStatements": true
+    },
+    "mailCredential": {
+        "service": "gmail",
+        "auth": {
+            "user": "afflemailer@gmail.com",
+            "pass": "appstudioz"
+        },
+        "tls": {
+            "rejectUnauthorized": false
+        }
+
+    }
+}
