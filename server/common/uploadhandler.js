@@ -4,53 +4,54 @@ import path from 'path';
 
 
 export class UploadHandler {
-    constructor(fileSize) {
-        this.fileSize = fileSize;
+  constructor(fileSize) {
+    this.fileSize = fileSize;
 
-        this.storage = multer.diskStorage({
-            destination(req, file, cb) {
-                const root = path.normalize(`${__dirname}/../..`);
-                cb(null, `${root}/uploads/`);
-            },
-            filename(req, file, cb) {
-                cb(null, `${Date.now()}_${file.originalname}`);
-            },
-        });
-        this.uploadFile = this.uploadFile.bind(this);
-    }
-    /**
+    this.storage = multer.diskStorage({
+      destination(req, file, cb) {
+        const root = path.normalize(`${__dirname}/../..`);
+        cb(null, `${root}/uploads/`);
+      },
+      filename(req, file, cb) {
+        cb(null, `${Date.now()}_${file.originalname}`);
+      },
+    });
+    this.uploadFile = this.uploadFile.bind(this);
+  }
+
+  /**
      * @param  {} req
      * @param  {} res
      * @param  {} next
      * @param  {} upload
      */
-    handleUploadError(req, res, next, upload) {
-        upload(req, res, function (err) {
-            if (err) {
-                if (err.code === 'LIMIT_FILE_SIZE') {
-                    return next(Boom.boomify(err, 'File size limit exceeds'));
-                }
-                return next(Boom.internal(err, 'Error in file upload'));
-            }
-            return next();
-        });
-    }
+  handleUploadError(req, res, next, upload) {
+    upload(req, res, (err) => {
+      if (err) {
+        if (err.code === 'LIMIT_FILE_SIZE') {
+          return next(Boom.boomify(err, 'File size limit exceeds'));
+        }
+        return next(Boom.internal(err, 'Error in file upload'));
+      }
+      return next();
+    });
+  }
 
 
-    /**
+  /**
      * @param  {} req
      * @param  {} res
      * @param  {} next
      */
-    uploadFile(req, res, next) {
-        const upload = multer({
-            storage: this.storage,
-            limits: {
-                fileSize: this.fileSize * 1024 * 1024,
-            },
-        }).any();
-        this.handleUploadError(req, res, next, upload);
-    }
+  uploadFile(req, res, next) {
+    const upload = multer({
+      storage: this.storage,
+      limits: {
+        fileSize: this.fileSize * 1024 * 1024,
+      },
+    }).any();
+    this.handleUploadError(req, res, next, upload);
+  }
 }
 
 

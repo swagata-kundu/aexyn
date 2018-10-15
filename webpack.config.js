@@ -3,8 +3,11 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 
 module.exports = {
+  mode:'development', 
   entry: {
-    'create-account': ['./server/web/create-account', 'webpack-hot-middleware/client'],
+    'create-account': ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', './server/web/create-account'],
+    'sign-in': ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', './server/web/sign-in'],
+
   },
   module: {
     rules: [{
@@ -24,6 +27,17 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'all',
+        },
+      },
+    },
+  },
   devServer: {
     contentBase: './dist',
   },
@@ -40,5 +54,5 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(),
   ],
-  devtool: 'source-map',
+  devtool: 'inline-source-map',
 };

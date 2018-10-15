@@ -2,15 +2,16 @@
     "port": 3001,
     "mailFrom": "afflemailer@gmail.com",
     "db": {
-        "host": "aexyn",
+        "host": "localhost",
         "port": 3306,
         "user": "root",
-        "password": "password",
-        "database": "no",
+        "password": "passworda",
+        "database": "aexyn",
         "connectionLimit": 10,
         "waitForConnections": true,
         "dateStrings": true,
-        "multipleStatements": true
+        "multipleStatements": true,
+        "debug": ["ComQueryPacket", "RowDataPacket"]
     },
     "mailCredential": {
         "service": "gmail",

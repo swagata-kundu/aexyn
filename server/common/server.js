@@ -33,7 +33,7 @@ export default class ExpressServer {
 
     this.app.use(Morgan('dev'));
     this.app.use(Helmet());
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development' && !process.env.API_DEV) {
       this.app.use(webpackDevMiddleware(compiler, {
         publicPath: WebpackConfig.output.publicPath,
       }));
@@ -50,8 +50,6 @@ export default class ExpressServer {
   }
 
     configureRoutes = () => {
-      this.app.use('/api', Api(this.db));
-      this.app.use('/web', Web());
       this.app.use('/static', Express.static('static', {
         etag: false,
         maxAge: 0,
@@ -62,6 +60,8 @@ export default class ExpressServer {
         maxAge: 0,
         lastModified: false,
       }));
+      this.app.use('/', Web());
+      this.app.use('/api', Api(this.db));
       return this;
     }
 
