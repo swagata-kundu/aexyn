@@ -1,11 +1,8 @@
 import Express from 'express';
-import Controller from './controller';
 
 export default function (db) {
-  const controller = new Controller(db);
-
   return Express
     .Router()
-    .post('/signup', controller.signup)
-    .post('/login', controller.login);
+    .post('/',require('./create_account')(db))
+    .get('/check-email/:email', require('./checkemail')(db));
 }

@@ -60,8 +60,8 @@ export default class ExpressServer {
         maxAge: 0,
         lastModified: false,
       }));
-      this.app.use('/', Web());
       this.app.use('/api', Api(this.db));
+      this.app.use('/', Web());
       return this;
     }
 

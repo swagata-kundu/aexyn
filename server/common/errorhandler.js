@@ -36,7 +36,7 @@ export default class ErrorHandler {
       if (typeof this.logMethod === 'function') {
         this.logMethod(errorString);
       } else {
-        console.log(errorString);
+        console.error(errorString);
       }
     }
   }

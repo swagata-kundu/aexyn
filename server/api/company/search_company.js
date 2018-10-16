@@ -1,14 +1,14 @@
-import DbHelper from '../../db/DbHelper';
+import QueryHelper from '../../db/QueryHelper';
 
 module.exports = function searchCompany(db) {
   return async (req, res, next) => {
-    const dbHelper = new DbHelper(db);
+    const queryHelper = new QueryHelper(db);
     const searchText = req.query.searchText ? `%${req.query.searchText}%` : '%%';
     const query = {
       text: `SELECT 
       C.*,
       CONCAT('[',
-              GROUP_CONCAT(JSON_OBJECT('location_id',
+              GROUP_CONCAT(JSON_OBJECT('office_id',
                           CL.id,
                           'address1',
                           CL.address1,
@@ -20,11 +20,11 @@ module.exports = function searchCompany(db) {
                           zip,
                           'state',
                           S.name)),
-              ']') AS locations
+              ']') AS offices
   FROM
       company C
           JOIN
-      company_location CL ON C.id = CL.company_id
+          company_office CL ON C.id = CL.company_id
           LEFT JOIN
       state S ON CL.state_id = S.id
       WHERE C.name LIKE ?
@@ -33,7 +33,7 @@ module.exports = function searchCompany(db) {
     };
     let result = [];
     try {
-      result = await dbHelper.query(query);
+      result = await queryHelper.query(query);
     } catch (error) {
       return next(error);
     }

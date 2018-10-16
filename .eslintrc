@@ -3,6 +3,7 @@
     "parser": "babel-eslint",
     "rules": {
         "global-require":"off",
-        "react/prop-types":"off"
+        "react/prop-types":"off",
+        "camelcase":"off"
     }
 }

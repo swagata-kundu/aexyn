@@ -1,6 +1,7 @@
 
 import Mysql from 'mysql';
 import Config from 'config';
+import Boom from 'boom';
 
 
 export default class Db {
@@ -13,9 +14,14 @@ export default class Db {
   }
 
   getConnection=(done) => {
-    if (!this.connectionPool) {
-      return done();
+    if (!this.pool) {
+      return done(Boom.internal('Error in Database connection'));
     }
-    return this.pool.getConnection(done);
+    return this.pool.getConnection((err, con) => {
+      if (err) {
+        return done(Boom.boomify(err));
+      }
+      return done(null, con);
+    });
   }
 }
