@@ -34,3 +34,4 @@ uploads/
 .vscode/
 *.vscode/
 static/dist/*
+.env
