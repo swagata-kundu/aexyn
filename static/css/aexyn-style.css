@@ -187,7 +187,7 @@ textarea:focus::placeholder {
     border-color: #54bb78 !important;
 }
 
-.sidebar-nav {
+.sidebar-group {
     position: fixed;
     height: 100%;
     background: rgba(16, 95, 43, 0.7);
@@ -230,6 +230,106 @@ textarea:focus::placeholder {
 
 .sidebar-nav ul li.active:hover i {
     color: #fff;
+}
+
+.sidebar-group {
+    transition: all 0.4s;
+    background: rgb(82, 128, 98);
+}
+
+.sidebar-group:hover {
+    width: 20%;
+}
+
+.custom-sidebar-recent-view ul li a {
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+}
+
+.sidebar-group ul li a {
+    position: relative;
+}
+
+.sidebar-group ul li .menu-text {
+    display: none;
+    margin-left: 10px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 32px;
+    min-width: 150px;
+    color: #fff;
+}
+
+.sidebar-group:hover ul li .menu-text {
+    display: block;
+}
+
+.custom-sidebar-recent-view {
+    padding: 5px 15px;
+    display: none;
+    min-width: 200px;
+    margin-top: 40px;
+}
+
+.sidebar-group:hover .custom-sidebar-recent-view {
+    display: block;
+}
+
+.custom-sidebar-recent-view h3 {
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+.custom-sidebar-recent-view ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.custom-sidebar-recent-view ul li a {
+    font-size: 14px;
+    line-height: normal;
+    padding: 0 10px;
+    background: transparent !important;
+    opacity: 1;
+}
+
+.custom-sidebar-login-details {
+    display: none;
+}
+
+.sidebar-group:hover .custom-sidebar-login-details {
+    display: block;
+}
+
+.custom-sidebar-login-details ul {
+    margin: 0;
+    padding: 0;
+}
+
+.custom-sidebar-login-details ul li {
+    opacity: 1;
+    background: transparent;
+}
+
+.custom-sidebar-login-details ul li a {
+    padding: 0 15px;
+    font-size: 14px;
+    color: #fff;
+}
+
+.custom-sidebar-login-details ul li a:hover {
+    text-decoration: underline;
+}
+
+.custom-sidebar-login-details {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
 }
 
 .custom-tabber-top-group {
@@ -1002,6 +1102,7 @@ ul.projects-tab-link li.active>a {
 
 .custom-account-container-wrapper .form-group form h1 {
     text-align: center;
+    font-size: 32px;
 }
 
 .custom-account-container-wrapper .form-group form input {
@@ -1135,7 +1236,7 @@ input[type="submit"] {
     text-align: center;
     font-size: 15px;
     font-weight: normal;
-    color: #000;
+    color: #a6afa9;
 }
 
 .company-selection .companies .company-items .item {
@@ -1253,7 +1354,19 @@ input[type="submit"] {
     margin-bottom: 15px;
 }
 
+.company-information .two-col-right-input select {
+    width: 65% !important;
+    margin-right: 8px;
+}
 
+a.company-selection-btn.custom-btn {
+    margin-top: 30px;
+}
+
+.company-details .input input,
+.company-details .input select {
+    max-width: 100%;
+}
 
 
 
@@ -1336,4 +1449,51 @@ a.back-to-office-select {
 .office-selection form select {
     width: 100%;
     max-width: 100%;
+}
+
+.two-col-right-input select {
+    width: 66% !important;
+    display: inline-block;
+    margin-right: 6px;
+}
+
+.two-col-right-input input {
+    width: 31% !important;
+    display: inline-block;
+}
+
+
+
+/********  Email Verification   ********/
+
+.custom-account-container-wrapper .email-verification {
+    text-align: center;
+    margin: 0 auto;
+}
+
+a.email-verify-btn.custom-btn {
+    margin-bottom: 30px;
+}
+
+.custom-account-container-wrapper .email-verification p a {
+    text-decoration: underline;
+}
+
+.custom-account-container-wrapper .email-verification span.email-text {
+    font-weight: 500;
+}
+
+.custom-account-container-wrapper .email-verification p {
+    color: #a6afa9;
+}
+
+.custom-account-container-wrapper {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.have-alredy-account {
+    margin-bottom: 15px;
+    color: red;
+    font-size: 14px;
 }
