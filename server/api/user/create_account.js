@@ -1,11 +1,13 @@
 import Async from 'async';
 import Joi from 'joi';
-import _ from 'lodash';
 import Boom from 'boom';
+import Config from 'config';
+import Bcrypt from 'bcrypt';
+import Company from '../company/company';
 import TxHelper from '../../db/TxHelper';
 import { tables } from '../../db';
 import { user_account } from './schema';
-import { createCompany } from '../company/create_company';
+import { constants } from '../../common';
 
 module.exports = function createAccount(db) {
   return async (req, res, next) => {
@@ -17,8 +19,9 @@ module.exports = function createAccount(db) {
     }
 
     const tx = new TxHelper(db);
+    const _company =new Company(tx);
     const {
-      user_info, company_info, office, office_profile, company_id, office_id,
+      user_info, company_info, office, company_id, office_id, office_profile,
     } = value;
     Async.waterfall([
       (cb) => {
@@ -39,25 +42,43 @@ module.exports = function createAccount(db) {
           return cb(null);
         });
       },
-      (cb) => {
-        tx.insert({ tableName: tables.USER, values: user_info }, cb);
-      },
-      (userId, cb) => {
+      cb => Bcrypt.hash(user_info.password, Config.get('saltRound'), cb),
+      (password, cb) => tx.insert({ tableName: tables.USER, values: { ...user_info, password, user_role_id: constants.ROLE.CUSTOMER } }, cb),
+      (user_id, cb) => {
         if (company_id) {
-          return cb(null, { userId, company_id, office_id });
+          return cb(null, { user_id, company_id, office_id });
         }
 
         if (!company_id && company_info) {
-          return createCompany({ company_info, offices: [office] }, (err, result) => {
+          _company.createCompany({ company_info, offices: [office] }, (err, result) => {
             if (err) {
               return cb(err);
             }
+            const { company } = result;
+            return cb(null, { user_id, company_id: company, office_id: result.office[0].office });
           });
         }
-
         return cb(Boom.badRequest('Company info not sent'));
       },
-    ], (err, results) => {
+      ({ user_id, company_id, office_id }, cb) => {
+        if (office_id) {
+          return cb(null, { user_id, company_id, office_id });
+        }
+        if (!office_id && office) {
+          return _company.createCompanyOffice({ ...office, company_id }, (err, result) => {
+            if (err) {
+              return cb(err);
+            }
+            return cb(null, { user_id, company_id, office_id: result.office });
+          });
+        }
+        return cb(Boom.badRequest('Office info not sent'));
+      },
+      ({ user_id, office_id }, cb) => tx.insert({
+        tableName: tables.USER_OFFICE_PROFILE,
+        values: { ...office_profile, user_id, office_id },
+      }, cb),
+    ], (err) => {
       if (err) {
         tx.rollbackTransaction(() => next(err));
       } else {
@@ -65,21 +86,9 @@ module.exports = function createAccount(db) {
           if (commiterror) {
             return next(commiterror);
           }
-          return res.json(_.last(results));
+          return res.send('ok');
         });
       }
     });
-
-    // const queryHelper = new QueryHelper(db);
-    // const query = {
-    //   text: 'SELECT count(id) AS userCount FROM user where email=?;',
-    //   values: ['la'],
-    // };
-    // try {
-    //   const result = await queryHelper.query(query);
-    //   return res.json({ exists: !!result[0].userCount });
-    // } catch (dberror) {
-    //   return next(dberror);
-    // }
   };
 };

@@ -18,7 +18,7 @@ export const user_account = {
   user_info: Joi.object().keys(user_schema).required(),
   company_info: Joi.object().keys(company_info).optional(),
   office: Joi.object().keys(office_schema).optional(),
-  office_profile: Joi.object().keys(office_profile).optional(),
+  office_profile: Joi.object().keys(office_profile),
   office_id:Joi.number().optional(),
   company_id:Joi.number().optional()
 };

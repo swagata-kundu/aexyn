@@ -4,4 +4,7 @@ module.exports = {
     TRIAL: 2,
     PRO: 3,
   },
+  ROLE: {
+    CUSTOMER: 1,
+  },
 };

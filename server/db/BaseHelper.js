@@ -11,20 +11,19 @@ export default class BaseHelper {
     const modified_value = this.stringify(values);
     const that = this;
     if (!done || typeof done !== 'function') {
-      new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         that.connection.query(text, modified_value, (err, result) => {
           if (err) {
             return reject(Boom.boomify(err));
           } return resolve(result);
         });
       });
-    } else {
-      that.connection.query(text, modified_value, (err, result) => {
-        if (err) {
-          return done(Boom.boomify(err));
-        } return done(null, result);
-      });
     }
+    return that.connection.query(text, modified_value, (err, result) => {
+      if (err) {
+        return done(Boom.boomify(err));
+      } return done(null, result);
+    });
   }
 
   insert=async ({ tableName, values }, done) => {
