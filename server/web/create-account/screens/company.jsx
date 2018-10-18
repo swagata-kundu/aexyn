@@ -1,100 +1,129 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Header from '../components/header';
+import Welcome from '../components/welcome';
+import { load_company, mergeKeys } from '../state/action';
 
-export default class Company extends Component {
+class Company extends Component {
   constructor(props) {
     super(props);
     this.state = {
       searchText: '',
-      companies: [],
-      company_id: null
     };
   }
 
-  renderItem = () => (
-    <div className="item">
-      <div className="company-detail">
-        <div className="icon">
-          <i className="fa fa-building-o" aria-hidden="true" />
-        </div>
-        <div className="about-company">
-          <a href="#" className="company-name">
-            Company name
-          </a>
-          <span className="company-location">
-            <span className="city">City</span>,<span className="state" />
-            State
-          </span>
-        </div>
-      </div>
-    </div>
-  );
+  componentDidMount() {
+    const { searchText } = this.props;
+    if (searchText) {
+      this.props.load_company({ searchText });
+    }
+  }
 
-  renderCompanies = () => (
-    <div className="company-items clearfix">
-      {this.renderItem()}
-      <div className="item last">
-        <a href="/create-company">
-          <div className="company-detail">
-            <div className="icon">
-              <i className="fa fa-plus" aria-hidden="true" />
-            </div>
-            <div className="about-company">
-              <span className="company-location">Don't see your company?</span>
-              <span className="company-name">Create a new one?</span>
-            </div>
+  handleSearch = (e) => {
+    const searchText = e.target.value;
+    this.setState({ searchText });
+    this.props.load_company({ searchText });
+  };
+
+  selectCompany=(company_id) => {
+    this.props.mergeKeys({ company_id });
+  }
+
+  next=() => this.props.mergeKeys({ step: 'SELECT_OFFICE' })
+
+  back=() => this.props.mergeKeys({ step: 'USER' })
+
+  renderCompany = (c) => {
+    const company = c.toJSON();
+    const office = company.offices[0];
+    return (
+      <div key={company.id} role="presentation" className="item" onClick={() => this.selectCompany(company.id)}>
+        <div className="company-detail">
+          <div className="icon">
+            <i className="fa fa-building-o" aria-hidden="true" />
           </div>
-        </a>
+          <div className="about-company">
+            <a href="#" className="company-name">
+              {company.name}
+            </a>
+            <span className="company-location">
+              <span className="city">{office.city}</span>
+,
+              <span className="state" />
+              {office.state}
+            </span>
+          </div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+  ;
+
+  renderCompanies = () => {
+    const { companies } = this.props;
+    if (companies.size === 0) {
+      return null;
+    }
+    return (
+      <div className="company-items clearfix">
+        {companies.map(c => this.renderCompany(c))}
+        <div className="item last">
+          <a href="/create-company">
+            <div className="company-detail">
+              <div className="icon">
+                <i className="fa fa-plus" aria-hidden="true" />
+              </div>
+              <div className="about-company">
+                <span className="company-location">
+                  Don't see your company?
+                </span>
+                <span className="company-name">Create a new one?</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    );
+  };
 
   render() {
+    const { companies, searchText, company_id } = this.props;
+    const size = companies.size;
+    const text = this.state.searchText || searchText;
     return (
       <div>
         <Header />
         <section className="custom-account-container-wrapper">
-          <div className="container-fluid">
-            <div className="row">
-              <div className="section-header col-sm-12 text-center">
-                <h1>
-                  Hello
-                  <span className="username">Username</span>,
-                </h1>
-                <h1>Welcome to Aexyn</h1>
-              </div>
-            </div>
-          </div>
+          <Welcome />
           <div className="company-selection">
             <div className="company-selection-search">
               <form>
                 <label>What is the name of your company?</label>
                 <div className="input">
                   <i className="fa fa-search" aria-hidden="true" />
-                  <input type="search" placeholder="Search" />
+                  <input value={text} onChange={this.handleSearch} type="search" placeholder="Search" />
                 </div>
               </form>
             </div>
             <div className="companies">
-              <h5>
+              {size === 0 ? (
+                <h5>
                 Search your company if it is already on Aexyn platform or
-                <a href="/create-company"> Create a new one.</a>
-              </h5>
+                  <a href="/create-company"> Create a new one.</a>
+                </h5>
+              ) : null}
               {this.renderCompanies()}
             </div>
-            <center>
-              <a
-                href="/office-selection"
-                className="company-selection-btn custom-btn"
-              >
-                Next
+            {company_id ? (
+              <center>
+                <input onClick={this.next} type="button" className="company-selection-btn custom-btn" value="Next" />
                 <i className="fa fa-angle-double-right" />
-              </a>
-            </center>
+              </center>
+            ) : null}
+
             <center>
-              <a href="#" className="back-to-office-select">
-                <i className="fa fa-angle-double-left"> Back</i>
-              </a>
+              <input onClick={this.back} type="button" href="#" className="back-to-office-select" />
+              <i className="fa fa-angle-double-left"> Back</i>
             </center>
           </div>
         </section>
@@ -102,3 +131,12 @@ export default class Company extends Component {
     );
   }
 }
+
+export default connect(
+  state => ({
+    companies: state.account.get('companies'),
+    searchText: state.account.get('searchText'),
+    company_id: state.account.get('company_id'),
+  }),
+  { load_company, mergeKeys },
+)(Company);

@@ -2,7 +2,7 @@ import { stringify } from 'querystring';
 import { axios } from '../util';
 import { COMPANY } from '../endpoint';
 
-const getCompany = async (query) => {
+export const getCompany = async (query) => {
   const url = `${COMPANY}/search?${stringify(query)}`;
   try {
     const result = await axios.get(url);
@@ -10,8 +10,4 @@ const getCompany = async (query) => {
   } catch (error) {
     return [];
   }
-};
-
-module.exports = {
-  getCompany,
 };

@@ -37,6 +37,16 @@ module.exports = function searchCompany(db) {
     } catch (error) {
       return next(error);
     }
-    return res.json(result);
+    const mod = result.map((r) => {
+      try {
+        let { offices, labour_type } = r;
+        offices = JSON.parse(offices);
+        labour_type = JSON.parse(labour_type);
+        return { ...r, offices, labour_type };
+      } catch (pe) {
+        return r;
+      }
+    });
+    return res.json(mod);
   };
 };

@@ -3,6 +3,7 @@ import Joi from 'joi';
 import Boom from 'boom';
 import Config from 'config';
 import Bcrypt from 'bcrypt';
+import _ from 'lodash';
 import Company from '../company/company';
 import TxHelper from '../../db/TxHelper';
 import { tables } from '../../db';
@@ -19,11 +20,12 @@ module.exports = function createAccount(db) {
     }
 
     const tx = new TxHelper(db);
-    const _company =new Company(tx);
+    const cp = new Company(tx);
     const {
-      user_info, company_info, office, company_id, office_id, office_profile,
+      user_info, company, office, office_id,
     } = value;
-    Async.waterfall([
+
+    return Async.waterfall([
       (cb) => {
         tx.beginTransaction(cb);
       },
@@ -45,17 +47,17 @@ module.exports = function createAccount(db) {
       cb => Bcrypt.hash(user_info.password, Config.get('saltRound'), cb),
       (password, cb) => tx.insert({ tableName: tables.USER, values: { ...user_info, password, user_role_id: constants.ROLE.CUSTOMER } }, cb),
       (user_id, cb) => {
+        const { company_id } = value;
         if (company_id) {
           return cb(null, { user_id, company_id, office_id });
         }
-
+        const { company_info, company_office } = company;
         if (!company_id && company_info) {
-          _company.createCompany({ company_info, offices: [office] }, (err, result) => {
+          return cp.createCompany({ company_info, offices: [company_office] }, (err, result) => {
             if (err) {
               return cb(err);
             }
-            const { company } = result;
-            return cb(null, { user_id, company_id: company, office_id: result.office[0].office });
+            return cb(null, { user_id, company_id: result.company, office_id: result.office[0].office });
           });
         }
         return cb(Boom.badRequest('Company info not sent'));
@@ -65,7 +67,7 @@ module.exports = function createAccount(db) {
           return cb(null, { user_id, company_id, office_id });
         }
         if (!office_id && office) {
-          return _company.createCompanyOffice({ ...office, company_id }, (err, result) => {
+          return cp.createCompanyOffice({ ...office, company_id }, (err, result) => {
             if (err) {
               return cb(err);
             }
@@ -74,10 +76,15 @@ module.exports = function createAccount(db) {
         }
         return cb(Boom.badRequest('Office info not sent'));
       },
-      ({ user_id, office_id }, cb) => tx.insert({
-        tableName: tables.USER_OFFICE_PROFILE,
-        values: { ...office_profile, user_id, office_id },
-      }, cb),
+      ({ user_id, office_id }, cb) => {
+        const defaults = { job_title: '', work_phone: '', work_performed: [] };
+        const insertData = Object.assign(defaults, _.get(company, 'office_profile', {}));
+
+        tx.insert({
+          tableName: tables.USER_OFFICE_PROFILE,
+          values: { ...insertData, user_id, office_id },
+        }, cb);
+      },
     ], (err) => {
       if (err) {
         tx.rollbackTransaction(() => next(err));

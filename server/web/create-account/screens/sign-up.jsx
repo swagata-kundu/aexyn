@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Header from '../../sign-in/components/header';
 import Footer from '../../sign-in/components/footer';
-import { next } from '../state/action';
+import { mergeKeys } from '../state/action';
 
 const SignupForm = (props) => {
   const { handleSubmit, onSubmit } = props;
@@ -72,13 +72,13 @@ const SignupForm = (props) => {
 };
 const SignupFormConnected = reduxForm({
   form: 'signup',
+  destroyOnUnmount: false,
 })(SignupForm);
 class SignUp extends Component {
   renderForm = () => <SignupFormConnected onSubmit={this.onSubmit} />;
 
   onSubmit=(values) => {
-    console.log(values);
-    this.props.next();
+    this.props.mergeKeys({ step: 'COMPANY' });
   }
 
   render() {
@@ -105,6 +105,4 @@ class SignUp extends Component {
     );
   }
 }
-export default connect(null, dispatch => ({
-  next: () => dispatch(next()),
-}))(SignUp);
+export default connect(null, { mergeKeys })(SignUp);

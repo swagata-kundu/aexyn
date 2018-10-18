@@ -1,4 +1,5 @@
 import Async from 'async';
+import _ from 'lodash';
 import { tables } from '../../db';
 import { constants, util } from '../../common';
 
@@ -18,7 +19,9 @@ export default class Company {
           };
           return this.con.insert({ tableName: tables.OFFICE_PACKAGE, values }, cb);
         }],
-      }, done);
+      }, (err,result)=>{
+        return done(err,result);
+      });
     }
 
     createCompany= ({ company_info, offices }, done) => {

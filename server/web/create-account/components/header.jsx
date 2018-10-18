@@ -9,11 +9,6 @@ const Header = () => (
             <img src="/static/images/aexyn-logo.png" alt="Aexyn" />
           </a>
         </div>
-        <div className="col-md-9 pull-left text-right">
-          <a href="/sign-up" className="pull-right">
-            Sign In
-          </a>
-        </div>
       </div>
     </div>
   </header>

@@ -32,6 +32,7 @@ export default class BaseHelper {
       const { insertId } = await this.query({ text, values });
       return done(null, insertId);
     } catch (error) {
+      console.log(error);
       return done(error);
     }
   }
