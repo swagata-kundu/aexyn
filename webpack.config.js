@@ -3,11 +3,11 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-  mode:'development', 
+  mode: 'development',
   entry: {
     'create-account': ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', './server/web/create-account'],
     'sign-in': ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', './server/web/sign-in'],
-
+    questionire: ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', './server/web/questionier'],
   },
   module: {
     rules: [{

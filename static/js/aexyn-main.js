@@ -1,5 +1,6 @@
+/* eslint-disable */
 // Tabber
-$(document).ready(function () {
+$(document).ready(() => {
     $('ul.custom-tabs li').each(function (i) {
         $(this).find('a').attr('href', '#tab' + (i + 1) + '');
     });
@@ -24,7 +25,7 @@ $(document).ready(function () {
     $(window).on('resize', getSidebarHeight);
 
     function getSidebarWidth() {
-        $('.custom-body-container-wrapper, .footer-container-wrapper').css('padding-left', $('.sidebar-nav').width());
+        $('.custom-body-container-wrapper, .footer-container-wrapper').css('padding-left', $('.sidebar-group').width());
     }
     getSidebarWidth();
     $(window).on('resize', getSidebarWidth);
@@ -65,7 +66,7 @@ $(document).ready(function () {
 });
 
 
-$(document).ready(function () {
+$(document).ready(() => {
 
     $('.additional-input').click(function () {
         var cloneForm = $(this).prev().clone();

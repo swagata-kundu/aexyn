@@ -5,6 +5,7 @@ export const office_schema = {
   address2: Joi.string().required(),
   city: Joi.string().required(),
   zip: Joi.string().required(),
+  country_id: Joi.number().optional(),
   state_id: Joi.number().required(),
   lat: Joi.optional(),
   lng: Joi.optional(),

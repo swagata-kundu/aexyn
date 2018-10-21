@@ -1,7 +1,8 @@
 import {
- PREV_STEP, NEXT_STEP, LOAD_COMPANY, MERGE 
+  PREV_STEP, NEXT_STEP, LOAD_COMPANY, MERGE,
 } from './types';
 import { getCompany } from '../../service/company';
+import signUp from '../../service/signup';
 
 export function next() {
   return {
@@ -32,6 +33,21 @@ export function load_company({ searchText }) {
       return dispatch({ type: LOAD_COMPANY, payload: { data, searchText } });
     } catch (error) {
       return dispatch({ type: LOAD_COMPANY, payload: [] });
+    }
+  };
+}
+
+export function sign_up(params) {
+  return async (dispatch, getState) => {
+    const { account, form } = getState();
+    const { signup, company, office } = form;
+    try {
+      const result = await signUp({
+        account: account.toJS(), signup, company, office,
+      });
+      location.assign('/questionire');
+    } catch (error) {
+      console.log(error);
     }
   };
 }

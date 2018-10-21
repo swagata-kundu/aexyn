@@ -5,12 +5,17 @@ import SignUp from './sign-up';
 import Company from './company';
 import SelectOffice from './select-office';
 import CreateCompany from './create-company';
+import { masterData } from '../../state/action';
 
 class CreateAccount extends Component {
+  componentDidMount() {
+    this.props.masterData();
+  }
+
   render() {
     const { step } = this.props;
     switch (step) {
-      case 'USER': return <SignUp />;
+      case 'USER_INFO': return <SignUp />;
       case 'COMPANY': return <Company />;
       case 'SELECT_OFFICE': return <SelectOffice />;
       case 'CREATE_COMPANY': return <CreateCompany />;
@@ -22,4 +27,4 @@ class CreateAccount extends Component {
 
 export default connect(state => ({
   step: state.account.get('step'),
-}))(CreateAccount);
+}), { masterData })(CreateAccount);

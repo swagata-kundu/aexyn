@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, SubmissionError } from 'redux-form';
 import { connect } from 'react-redux';
 
 import Header from '../../sign-in/components/header';
 import Footer from '../../sign-in/components/footer';
+import { checkEmail } from '../../service/auth';
+import { customField } from '../components/field';
 import { mergeKeys } from '../state/action';
 
 const SignupForm = (props) => {
@@ -16,8 +18,9 @@ const SignupForm = (props) => {
           <Field
             component="input"
             type="text"
-            name="firstName"
+            name="first_name"
             placeholder="First Name"
+            maxLength={20}
             required
           />
         </div>
@@ -25,40 +28,47 @@ const SignupForm = (props) => {
           <Field
             component="input"
             type="text"
-            name="lastName"
+            name="last_name"
             placeholder="Last Name"
+            maxLength={20}
             required
           />
         </div>
       </div>
-      <div className="input">
-        <Field
-          component="input"
-          type="email"
-          name="email"
-          placeholder="Email"
-          required
-        />
-      </div>
+      <Field
+        component={customField}
+        type="email"
+        name="email"
+        label="Email"
+        maxLength={50}
+        required
+      />
       <div className="input">
         <Field
           component="input"
           type="password"
           name="password"
+          maxLength={20}
           placeholder="Create a Password"
           required
         />
       </div>
+      <Field
+        component={customField}
+        type="password"
+        name="repeatPassword"
+        label="Confirm Password"
+        maxLength={20}
+        required
+      />
       <div className="checkbox-input">
         <Field
           component="input"
           type="checkbox"
-          name="checkbox"
-          defaultValue="check"
+          name="agree"
           id="agree"
           required
         />
-        {' '}
         I agree the Aexyn&nbsp;
         <a href="#">terms of service</a>
         &nbsp;and&nbsp;
@@ -73,11 +83,26 @@ const SignupForm = (props) => {
 const SignupFormConnected = reduxForm({
   form: 'signup',
   destroyOnUnmount: false,
+  initialValues: {
+    agree: false,
+  },
 })(SignupForm);
 class SignUp extends Component {
   renderForm = () => <SignupFormConnected onSubmit={this.onSubmit} />;
 
-  onSubmit=(values) => {
+  onSubmit=async (values) => {
+    const exists = await checkEmail(values.email);
+    if (exists) {
+      throw new SubmissionError({
+        email: 'Email Already in user',
+      });
+    }
+    const { password, repeatPassword } = values;
+    if (password !== repeatPassword) {
+      throw new SubmissionError({
+        repeatPassword: 'Password do not match',
+      });
+    }
     this.props.mergeKeys({ step: 'COMPANY' });
   }
 

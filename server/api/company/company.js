@@ -10,7 +10,11 @@ export default class Company {
 
     createCompanyOffice=(data, done) => {
       Async.auto({
-        office: cb => this.con.insert({ tableName: tables.OFFICE, values: data }, cb),
+        office: (cb) => {
+          let mod = data;
+          delete mod.country_id;
+          return this.con.insert({ tableName: tables.OFFICE, values: mod }, cb);
+        },
         package: ['office', (results, cb) => {
           const values = {
             office_id: results.office,
@@ -19,9 +23,7 @@ export default class Company {
           };
           return this.con.insert({ tableName: tables.OFFICE_PACKAGE, values }, cb);
         }],
-      }, (err,result)=>{
-        return done(err,result);
-      });
+      }, (err, result) => done(err,result));
     }
 
     createCompany= ({ company_info, offices }, done) => {

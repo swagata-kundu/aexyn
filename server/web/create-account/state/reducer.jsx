@@ -1,15 +1,16 @@
 import { combineReducers } from 'redux';
 import { reducer as reduxFormReducer } from 'redux-form';
 import { fromJS } from 'immutable';
-
 import { NEXT_STEP, LOAD_COMPANY, MERGE } from './types';
+import common from '../../state/reducer';
 
 const INITIAL_STATE = fromJS({
-  step: 'CREATE_COMPANY',
+  step: 'USER_INFO',
   companies: [],
   searchText: '',
   company_id: null,
   office_id: null,
+  showOfficeForm: false,
 });
 
 function createaccount(state = INITIAL_STATE, action) {
@@ -34,6 +35,7 @@ function createaccount(state = INITIAL_STATE, action) {
 
 const reducer = combineReducers({
   form: reduxFormReducer,
-  account: createaccount
+  account: createaccount,
+  common,
 });
 export default reducer;

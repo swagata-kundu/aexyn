@@ -4,7 +4,7 @@ import { reduxForm } from 'redux-form';
 
 import Header from '../components/header';
 import Welcome from '../components/welcome';
-import { mergeKeys } from '../state/action';
+import { mergeKeys, sign_up } from '../state/action';
 import OfficeFields from '../components/offfice-fields';
 
 const OfficeForm = (props) => {
@@ -12,48 +12,64 @@ const OfficeForm = (props) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <OfficeFields />
+      <center>
+        <button
+          type="submit"
+          className="company-selection-btn custom-btn"
+        >
+        Get Started
+        </button>
+      </center>
     </form>
   );
 };
 
 const OfficeFormConnected = reduxForm({
   form: 'office',
+  destroyOnUnmount: false,
 })(OfficeForm);
 
 class CompanySelect extends Component {
-  next=() => {
-  }
+  next = () => {};
 
-  back=() => this.props.mergeKeys({ step: 'COMPANY' });
+  back = () => this.props.mergeKeys({ step: 'COMPANY', office_id: null });
 
-  selectOffice= office_id => this.props.mergeKeys({ office_id });
+  selectOffice = office_id => this.props.mergeKeys({ office_id });
 
-  onSubmit=(values) => {
-  }
+  showOfficeForm = () => this.props.mergeKeys({ showOfficeForm: true, office_id: null });
 
-  renderOffice=() => {
+  getStarted = () => {
+    this.props.sign_up();
+  };
+
+  renderOffice = () => {
     const { companies, company_id } = this.props;
     const selected_company = companies.find(c => c.get('id') === company_id);
-    if (!selected_company.size) {
+    if (!selected_company || !selected_company.size) {
       return null;
     }
     const offices = selected_company.get('offices').toJS();
     return (
       <ul className="clearfix">
-        {offices.map(o => (<li onClick={() => this.selectOffice(o.office_id)} key={o.office_id}>{o.city}</li>))}
-        <li className="menu-has-child">
+        {offices.map(o => (
+          <li onClick={() => this.selectOffice(o.office_id)} key={o.office_id}>
+            {o.city}
+          </li>
+        ))}
+        <li className="menu-has-child" onClick={this.showOfficeForm}>
           <a href="#">
             <i className="fa fa-plus" aria-hidden="true" />
-          Enter a New
-          Office Location
+            {' '}
+Enter a New Office
+            Location
           </a>
         </li>
       </ul>
     );
-  }
+  };
 
   render() {
-    const { office_id } = this.props;
+    const { office_id, showOfficeForm } = this.props;
     return (
       <div>
         <Header />
@@ -63,33 +79,34 @@ class CompanySelect extends Component {
             <h5>
               Now, which
               <span className="office-name"> Office Name</span>
-               office do you work out of?
+              office do you work out of?
             </h5>
             {this.renderOffice()}
-            <div className="container-fluid">
-              <div className="row">
-                <div className="col-sm-12">
-                  <div className="office-selection">
-                    <h3>
-                      <i className="fa fa-map-marker" aria-hidden="true" />
-                      {' '}
-                      New
-                      Office
-                    </h3>
-                    <OfficeFormConnected onSubmit={this.onSubmit} />
+            {showOfficeForm && (
+              <div className="container-fluid">
+                <div className="row">
+                  <div className="col-sm-12">
+                    <div className="office-selection">
+                      <h3>
+                        <i className="fa fa-map-marker" aria-hidden="true" />
+                        {' '}
+                        New Office
+                      </h3>
+                      <OfficeFormConnected onSubmit={this.getStarted} />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            {office_id ? (
+            )}
+            {office_id && !showOfficeForm ? (
               <center>
-                <input
-                  onClick={this.next}
-                  type="button"
+                <button
+                  type="submit"
                   className="company-selection-btn custom-btn"
-                  value="Next"
-                />
-                <i className="fa fa-angle-double-right" />
+                  onClick={this.getStarted}
+                >
+              Get Started
+                </button>
               </center>
             ) : null}
 
@@ -97,7 +114,6 @@ class CompanySelect extends Component {
               <input
                 onClick={this.back}
                 type="button"
-                href="#"
                 className="back-to-office-select"
               />
               <i className="fa fa-angle-double-left"> Back</i>
@@ -114,6 +130,7 @@ export default connect(
     companies: state.account.get('companies'),
     company_id: state.account.get('company_id'),
     office_id: state.account.get('office_id'),
+    showOfficeForm: state.account.get('showOfficeForm'),
   }),
-  { mergeKeys },
+  { mergeKeys, sign_up },
 )(CompanySelect);

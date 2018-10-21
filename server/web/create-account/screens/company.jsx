@@ -29,9 +29,12 @@ class Company extends Component {
     this.props.mergeKeys({ company_id });
   }
 
-  next=() => this.props.mergeKeys({ step: 'SELECT_OFFICE' })
+  next=() => this.props.mergeKeys({ step: 'SELECT_OFFICE' });
 
-  back=() => this.props.mergeKeys({ step: 'USER' })
+  back=() => this.props.mergeKeys({ step: 'USER_INFO' });
+
+  create=() => this.props.mergeKeys({ step: 'CREATE_COMPANY', company_id: null });
+
 
   renderCompany = (c) => {
     const company = c.toJSON();
@@ -68,7 +71,7 @@ class Company extends Component {
       <div className="company-items clearfix">
         {companies.map(c => this.renderCompany(c))}
         <div className="item last">
-          <a href="/create-company">
+          <a onClick={this.create}>
             <div className="company-detail">
               <div className="icon">
                 <i className="fa fa-plus" aria-hidden="true" />
@@ -77,7 +80,7 @@ class Company extends Component {
                 <span className="company-location">
                   Don't see your company?
                 </span>
-                <span className="company-name">Create a new one?</span>
+                <span role="presentation" onClick={this.create} className="company-name">Create a new one?</span>
               </div>
             </div>
           </a>
@@ -109,7 +112,7 @@ class Company extends Component {
               {size === 0 ? (
                 <h5>
                 Search your company if it is already on Aexyn platform or
-                  <a href="/create-company"> Create a new one.</a>
+                  <a onClick={this.create} href="#"> Create a new one.</a>
                 </h5>
               ) : null}
               {this.renderCompanies()}
