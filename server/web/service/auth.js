@@ -11,3 +11,8 @@ export const checkEmail = async (email) => {
     return { exists: true };
   }
 };
+
+export const login = (params) => {
+  const url = `${USER}/login`;
+  return axios.post(url, params);
+};

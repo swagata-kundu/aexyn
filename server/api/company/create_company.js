@@ -1,7 +1,7 @@
 import Async from 'async';
 import Joi from 'joi';
 import _ from 'lodash';
-import Company from './company';
+import Company from '../../models/company';
 import TxHelper from '../../db/TxHelper';
 import { company_schema } from './schema';
 

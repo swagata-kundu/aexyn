@@ -1,0 +1,17 @@
+html
+  include includes/head.pug
+  body(data-gr-c-s-loaded='true')
+    div
+      header.custom-header-container-wrapper
+        .custom-header-container
+          .account-header-group
+            .container-fluid
+              .row
+                .col-sm-12.logo
+                  a(href='/')
+                    img(src='/static/images/aexyn-logo.png' alt='Aexyn')
+      section.custom-account-container-wrapper
+        .container
+          center
+            h3 Your account has been verified successfully. Continue to log in.
+            a(href="/") login

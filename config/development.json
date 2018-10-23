@@ -1,6 +1,7 @@
 {
     "port": 3001,
     "mailFrom": "afflemailer@gmail.com",
+    "host": "http://localhost:3001/",
     "db": {
         "host": "localhost",
         "port": 3306,
@@ -13,15 +14,21 @@
         "multipleStatements": true,
         "debug": ["ComQueryPacket", "RowDataPacket"]
     },
+    "redis":{
+        "host":"localhost",
+        "port":"6379"
+    },
+    "saltRound": 10,
     "mailCredential": {
         "service": "gmail",
         "auth": {
-            "user": "afflemailer@gmail.com",
-            "pass": "appstudioz"
+            "user": "mynightout.dev",
+            "pass": "hrhk@1234"
         },
         "tls": {
             "rejectUnauthorized": false
         }
+
     },
-    "saltRound":10
+    "fromAddress":"mynightout.dev@gmail.com"
 }

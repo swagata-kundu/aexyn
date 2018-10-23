@@ -42,7 +42,7 @@ export function sign_up(params) {
     const { account, form } = getState();
     const { signup, company, office } = form;
     try {
-      const result = await signUp({
+      await signUp({
         account: account.toJS(), signup, company, office,
       });
       location.assign('/questionire');

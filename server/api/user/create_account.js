@@ -4,11 +4,13 @@ import Boom from 'boom';
 import Config from 'config';
 import Bcrypt from 'bcrypt';
 import _ from 'lodash';
-import Company from '../company/company';
+import Company from '../../models/company';
 import TxHelper from '../../db/TxHelper';
+import QryHelper from '../../db/QueryHelper';
 import { tables } from '../../db';
 import { user_account } from './schema';
 import { constants } from '../../common';
+import User from '../../models/user';
 
 module.exports = function createAccount(db) {
   return async (req, res, next) => {
@@ -24,6 +26,7 @@ module.exports = function createAccount(db) {
     const {
       user_info, company, office, office_id,
     } = value;
+    let new_user_id;
 
     return Async.waterfall([
       (cb) => {
@@ -47,6 +50,7 @@ module.exports = function createAccount(db) {
       cb => Bcrypt.hash(user_info.password, Config.get('saltRound'), cb),
       (password, cb) => tx.insert({ tableName: tables.USER, values: { ...user_info, password, user_role_id: constants.ROLE.CUSTOMER } }, cb),
       (user_id, cb) => {
+        new_user_id = user_id;
         const { company_id } = value;
         if (company_id) {
           return cb(null, { user_id, company_id, office_id });
@@ -93,6 +97,8 @@ module.exports = function createAccount(db) {
           if (commiterror) {
             return next(commiterror);
           }
+          new User(new QryHelper(db))
+            .sendAccountVerificationEmail({ user_id: new_user_id, email: user_info.email }, () => {});
           return res.send('ok');
         });
       }

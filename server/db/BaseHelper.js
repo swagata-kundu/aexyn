@@ -7,19 +7,32 @@ export default class BaseHelper {
     this.connection = this.db.pool;
   }
 
+  typecast=(field, next) => {
+    if (field.type === 'TINY' && field.length === 1) {
+      return (field.string() === '1'); // 1 = true, 0 = false
+    }
+    return next();
+  }
+
   query = ({ text, values }, done) => {
     const modified_value = this.stringify(values);
     const that = this;
     if (!done || typeof done !== 'function') {
       return new Promise((resolve, reject) => {
-        that.connection.query(text, modified_value, (err, result) => {
+        that.connection.query({
+          sql: text,
+          typeCast: this.typecast,
+        }, modified_value, (err, result) => {
           if (err) {
             return reject(Boom.boomify(err));
           } return resolve(result);
         });
       });
     }
-    return that.connection.query(text, modified_value, (err, result) => {
+    return that.connection.query({
+      sql: text,
+      typeCast: this.typecast,
+    }, modified_value, (err, result) => {
       if (err) {
         return done(Boom.boomify(err));
       } return done(null, result);
@@ -40,15 +53,15 @@ export default class BaseHelper {
   stringify=(values) => {
     if (_.isArray(values)) {
       return _.map(values, (v) => {
-        if (_.isObjectLike(v)) {
-          return JSON.stringify(values);
+        if (_.isArray(v)) {
+          return JSON.stringify(v);
         }
         return v;
       });
     }
     const obj = { ...values };
     _.keys(values).forEach((k) => {
-      if (_.isObjectLike(values[k])) {
+      if (_.isArray(values[k])) {
         const v = values[k];
         obj[k] = JSON.stringify(v);
       }

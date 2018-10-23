@@ -1,7 +1,7 @@
 import Async from 'async';
 import _ from 'lodash';
-import { tables } from '../../db';
-import { constants, util } from '../../common';
+import { tables, sp } from '../db';
+import { constants, util } from '../common';
 
 export default class Company {
   constructor(con) {
@@ -11,7 +11,7 @@ export default class Company {
     createCompanyOffice=(data, done) => {
       Async.auto({
         office: (cb) => {
-          let mod = data;
+          const mod = data;
           delete mod.country_id;
           return this.con.insert({ tableName: tables.OFFICE, values: mod }, cb);
         },
@@ -23,7 +23,7 @@ export default class Company {
           };
           return this.con.insert({ tableName: tables.OFFICE_PACKAGE, values }, cb);
         }],
-      }, (err, result) => done(err,result));
+      }, (err, result) => done(err, result));
     }
 
     createCompany= ({ company_info, offices }, done) => {
@@ -43,6 +43,13 @@ export default class Company {
             }
             return cb(null, _.flatten(loc_results));
           });
+        }],
+        questionire: ['office', (results, cb) => {
+          const { company } = results;
+          this.con.query({
+            text: 'CALL ?? (?)',
+            values: [sp.SET_INITIAL_QUESTIONS, company],
+          }, cb);
         }],
       }, done);
     }

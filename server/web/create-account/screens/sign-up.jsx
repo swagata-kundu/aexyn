@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Field, reduxForm, SubmissionError } from 'redux-form';
 import { connect } from 'react-redux';
+import Recaptcha from 'react-recaptcha';
 
 import Header from '../../sign-in/components/header';
 import Footer from '../../sign-in/components/footer';
@@ -9,7 +10,7 @@ import { customField } from '../components/field';
 import { mergeKeys } from '../state/action';
 
 const SignupForm = (props) => {
-  const { handleSubmit, onSubmit } = props;
+  const { handleSubmit, onSubmit, captchaVerify } = props;
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h3>Create an A Aexyn account</h3>
@@ -74,6 +75,13 @@ const SignupForm = (props) => {
         &nbsp;and&nbsp;
         <a href="#">privacy policy</a>
       </div>
+      <div>
+        <Recaptcha
+          verifyCallback={captchaVerify}
+          sitekey="6Lc_OHYUAAAAAE7zPafaYGEsv2CCtNcDafnT9A5H"
+        />
+      </div>
+
       <div className="actions">
         <input type="submit" name="submit" defaultValue="Create Account" />
       </div>
@@ -88,7 +96,16 @@ const SignupFormConnected = reduxForm({
   },
 })(SignupForm);
 class SignUp extends Component {
-  renderForm = () => <SignupFormConnected onSubmit={this.onSubmit} />;
+  constructor(props) {
+    super(props);
+    this.verified = false;
+  }
+
+  renderForm = () => <SignupFormConnected onSubmit={this.onSubmit} captchaVerify={this.captchaVerify} />;
+
+  captchaVerify=() => {
+    this.verified = true;
+  }
 
   onSubmit=async (values) => {
     const exists = await checkEmail(values.email);
@@ -103,7 +120,9 @@ class SignUp extends Component {
         repeatPassword: 'Password do not match',
       });
     }
-    this.props.mergeKeys({ step: 'COMPANY' });
+    if (this.verified) {
+      this.props.mergeKeys({ step: 'COMPANY' });
+    }
   }
 
   render() {
@@ -117,7 +136,7 @@ class SignUp extends Component {
                 {this.renderForm()}
                 <div className="form-bottom-content">
                   <center>
-                    <a href="/sign-in">Already have an account?</a>
+                    <a href="/">Already have an account?</a>
                   </center>
                   <h2>Tag Line</h2>
                 </div>

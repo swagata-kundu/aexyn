@@ -4,33 +4,33 @@ import * as Path from 'path';
 import Fs from 'fs';
 import Config from 'config';
 import {
-    htmlToText,
+  htmlToText,
 } from 'nodemailer-html-to-text';
-import {
-    getRootDir,
-} from '../common/util';
-
-const mailFrom = Config.get('mailFrom');
 
 export class MailNotifier {
-    constructor() {
-        const root = getRootDir();
-        this.mailFrom = Config.get('mailFrom');
-        this.transporter = NodeMailer.createTransport(SMTP(Config.get('mailCredential')));
-        this.transporter.use('compile', htmlToText());
-        this.forgetTemplate = this.transporter.templateSender({
-            subject: 'Password Reset',
-            html: Fs.readFileSync(Path.normalize(`${root}/server/templates/forget.email.html`)).toString(),
-        }, {
-            from: mailFrom,
-        });
-        this.verifyTemplate = this.transporter.templateSender({
-            subject: 'User Verification',
-            html: Fs.readFileSync(Path.normalize(`${root}/server/templates/userverify.email.html`)).toString(),
-        }, {
-            from: mailFrom,
-        });
-    }
+  constructor() {
+    this.transporter = NodeMailer.createTransport(SMTP(Config.get('mailCredential')));
+    this.transporter.use('compile', htmlToText());
+    this.transporter.verify((error) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Server is ready to take our messages');
+      }
+    });
+    this.defaultConfig = {
+      from: Config.get('fromAddress'),
+      subject: '',
+    };
+  }
+
+  sendVerificationMail=(data, done) => {
+    this.transporter.sendMail({
+      ...this.defaultConfig,
+      subject: 'Verify Account',
+      ...data,
+    }, done);
+  }
 }
 
 export default new MailNotifier();
