@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import Async from 'async';
 import Boom from 'boom';
-import QueryHelper from '../../db/QueryHelper';
+import Query from '../../db/Query';
 import { tables } from '../../db';
 
 module.exports = function checkEmail(db) {
@@ -12,7 +12,7 @@ module.exports = function checkEmail(db) {
 
     let verification_row;
 
-    const qry = new QueryHelper(db);
+    const qry = new Query(db);
     Async.auto({
       validate: (cb) => {
         Joi.validate(req.params, validtaionSchema, cb);

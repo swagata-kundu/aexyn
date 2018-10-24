@@ -1,7 +1,7 @@
 import Boom from 'boom';
 import passerror from 'passerror';
 import User from '../models/user';
-import Qry from '../db/QueryHelper';
+import Qry from '../db/Query';
 
 module.exports = db => (req, res, next) => {
   const user = new User(new Qry(db));

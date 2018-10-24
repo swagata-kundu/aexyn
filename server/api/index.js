@@ -1,7 +1,7 @@
 import Express from 'express';
 import user from './user';
 import company from './company';
-import question from './question';
+import questions from './questions';
 import MasterData from './master-data';
 import { verifyAuth } from '../middlewares';
 
@@ -10,5 +10,5 @@ export default function routes(db) {
     .use('/company', company(db))
     .use('/master-data', MasterData(db))
     .use(verifyAuth(db))
-    .use('/question',question(db))
+    .use('/questions', questions(db));
 }

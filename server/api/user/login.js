@@ -2,7 +2,7 @@ import Joi from 'joi';
 import Async from 'async';
 import Boom from 'boom';
 import Bcrypt from 'bcrypt';
-import QueryHelper from '../../db/QueryHelper';
+import QueryHelper from '../../db/Query';
 
 module.exports = function checkEmail(db) {
   return async (req, res, next) => {

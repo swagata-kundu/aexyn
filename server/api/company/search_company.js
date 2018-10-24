@@ -1,8 +1,8 @@
-import QueryHelper from '../../db/QueryHelper';
+import Query from '../../db/Query';
 
 module.exports = function searchCompany(db) {
   return async (req, res, next) => {
-    const queryHelper = new QueryHelper(db);
+    const queryHelper = new Query(db);
     const searchText = req.query.searchText ? `%${req.query.searchText}%` : '%%';
     const query = {
       text: `SELECT 

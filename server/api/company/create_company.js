@@ -2,7 +2,7 @@ import Async from 'async';
 import Joi from 'joi';
 import _ from 'lodash';
 import Company from '../../models/company';
-import TxHelper from '../../db/TxHelper';
+import Transaction from '../../db/Transaction';
 import { company_schema } from './schema';
 
 
@@ -11,7 +11,7 @@ import { company_schema } from './schema';
  */
 export default function handler(db) {
   return (req, res, next) => {
-    const tx = new TxHelper(db);
+    const tx = new Transaction(db);
     const company = new Company(tx);
     Async.series([
       (cb) => {

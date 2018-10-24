@@ -5,8 +5,8 @@ import Config from 'config';
 import Bcrypt from 'bcrypt';
 import _ from 'lodash';
 import Company from '../../models/company';
-import TxHelper from '../../db/TxHelper';
-import QryHelper from '../../db/QueryHelper';
+import Transaction from '../../db/Transaction';
+import Query from '../../db/Query';
 import { tables } from '../../db';
 import { user_account } from './schema';
 import { constants } from '../../common';
@@ -21,7 +21,7 @@ module.exports = function createAccount(db) {
       return next(error);
     }
 
-    const tx = new TxHelper(db);
+    const tx = new Transaction(db);
     const cp = new Company(tx);
     const {
       user_info, company, office, office_id,
@@ -97,7 +97,7 @@ module.exports = function createAccount(db) {
           if (commiterror) {
             return next(commiterror);
           }
-          new User(new QryHelper(db))
+          new User(new Query(db))
             .sendAccountVerificationEmail({ user_id: new_user_id, email: user_info.email }, () => {});
           return res.send('ok');
         });

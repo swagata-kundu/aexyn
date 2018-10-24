@@ -1,5 +1,5 @@
 import Async from 'async';
-import Base from './BaseHelper';
+import Base from './Base';
 
 export default class TxHelper extends Base {
   constructor(db) {

@@ -1,5 +1,6 @@
 import Boom from 'boom';
 import _ from 'lodash';
+import { format } from 'mysql';
 
 export default class BaseHelper {
   constructor(db) {
@@ -45,9 +46,17 @@ export default class BaseHelper {
       const { insertId } = await this.query({ text, values });
       return done(null, insertId);
     } catch (error) {
-      console.log(error);
       return done(error);
     }
+  }
+
+  bulkInsert=({ tableName, values }, done) => {
+    const text = `INSERT INTO ${tableName} SET ? ;`;
+    const inserts = values.map(v => format(text, this.stringify(v)));
+    if (inserts && !inserts.length) {
+      return done();
+    }
+    return this.connection.query(inserts.join('\n'), done);
   }
 
   stringify=(values) => {

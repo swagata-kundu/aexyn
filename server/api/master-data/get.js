@@ -1,5 +1,5 @@
 import async from 'async';
-import QueryHelper from '../../db/QueryHelper';
+import Query from '../../db/Query';
 
 function labourtype(db, done) {
   const queryHelper = new QueryHelper(db);
@@ -44,12 +44,12 @@ function country(db, done) {
 }
 
 function workPerformed(db, done) {
-  const queryHelper = new QueryHelper(db);
+  const qry = new Query(db);
   const query = {
     text: 'SELECT * FROM work_performed;',
     values: [],
   };
-  return queryHelper.query(query, done);
+  return qry.query(query, done);
 }
 
 exports.getLabpurType = db => async (req, res, next) => {

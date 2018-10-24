@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import QueryHelper from '../../db/QueryHelper';
+import Query from '../../db/Query';
 
 module.exports = function checkEmail(db) {
   return async (req, res, next) => {
@@ -12,7 +12,7 @@ module.exports = function checkEmail(db) {
     if (error) {
       return next(error);
     }
-    const queryHelper = new QueryHelper(db);
+    const queryHelper = new Query(db);
     const query = {
       text: 'SELECT count(id) AS userCount FROM user where email=?;',
       values: [req.params.email],
