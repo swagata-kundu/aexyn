@@ -29,10 +29,6 @@ module.exports = function checkEmail(db) {
           return cb(Boom.badRequest('User is not registered..'));
         }
         const user_info = get[0];
-
-        // if (!user_info.verified) {
-        //   return cb(Boom.badRequest('User is not verified..'));
-        // }
         return cb(null, user_info);
       }],
       match_password: ['user', (results, cb) => {

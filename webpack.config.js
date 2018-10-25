@@ -1,13 +1,20 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
+const dotenv = require('dotenv');
+
+const env = dotenv.config().parsed;
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
 
 module.exports = {
   mode: 'development',
   entry: {
     'create-account': ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', './server/web/create-account'],
     'sign-in': ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', './server/web/sign-in'],
-    questionire: ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', './server/web/questionier'],
+    questionnaire: ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', './server/web/questionnaire'],
   },
   module: {
     rules: [{
@@ -47,11 +54,7 @@ module.exports = {
     publicPath: '/static/dist/',
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('dev'),
-      },
-    }),
+    new webpack.DefinePlugin(envKeys),
     new webpack.HotModuleReplacementPlugin(),
   ],
   devtool: 'inline-source-map',

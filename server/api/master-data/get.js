@@ -2,7 +2,7 @@ import async from 'async';
 import Query from '../../db/Query';
 
 function labourtype(db, done) {
-  const queryHelper = new QueryHelper(db);
+  const queryHelper = new Query(db);
   const query = {
     text: 'SELECT * FROM labour_type;',
     values: [],
@@ -11,7 +11,7 @@ function labourtype(db, done) {
 }
 
 function country(db, done) {
-  const queryHelper = new QueryHelper(db);
+  const queryHelper = new Query(db);
   const query = {
     text: `SELECT C.*,CONCAT('[',
     GROUP_CONCAT(JSON_OBJECT('state_id',

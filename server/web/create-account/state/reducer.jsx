@@ -5,7 +5,7 @@ import { NEXT_STEP, LOAD_COMPANY, MERGE } from './types';
 import common from '../../state/reducer';
 
 const INITIAL_STATE = fromJS({
-  step: 'USER_INFO',
+  step: 'CREATE_COMPANY',
   companies: [],
   searchText: '',
   company_id: null,

@@ -1,6 +1,8 @@
 import Bcrypt from 'bcrypt';
 import config from 'config';
 import Async from 'async';
+import passerror from 'passerror';
+import Boom from 'boom';
 import { tables } from '../db';
 import mailNotifier from '../common/mailnotifier';
 
@@ -51,5 +53,17 @@ export default class User {
 		JOIN company C ON CO.company_id= C.id
     WHERE U.id=?`;
     return this.con.query({ text, values: [user_id] }, done);
+  }
+
+  setUserCookie=(user_id, request, response, next) => {
+    this.getUserInfo(user_id, passerror(next, (results) => {
+      if (results.length === 0) {
+        return next(Boom.unauthorized('User not found'));
+      }
+      const user_info = results[0];
+      delete user_info.password;
+      request.session.user_id = user_id;
+      return response.send('ok');
+    }));
   }
 }

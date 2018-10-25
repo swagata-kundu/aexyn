@@ -12,6 +12,8 @@ import { user_account } from './schema';
 import { constants } from '../../common';
 import User from '../../models/user';
 
+const nop = () => {};
+
 module.exports = function createAccount(db) {
   return async (req, res, next) => {
     const {
@@ -97,8 +99,8 @@ module.exports = function createAccount(db) {
           if (commiterror) {
             return next(commiterror);
           }
-          new User(new Query(db))
-            .sendAccountVerificationEmail({ user_id: new_user_id, email: user_info.email }, () => {});
+          const usr = new User(new Query(db));
+          usr.sendAccountVerificationEmail({ user_id: new_user_id, email: user_info.email }, nop);
           return res.send('ok');
         });
       }
