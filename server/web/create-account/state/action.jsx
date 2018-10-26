@@ -45,7 +45,7 @@ export function sign_up(params) {
       await signUp({
         account: account.toJS(), signup, company, office,
       });
-      location.assign('/questionire');
+      location.assign('/questionnaire');
     } catch (error) {
       console.log(error);
     }

@@ -32,7 +32,7 @@ export default class Login extends Component {
       try {
         const { email, password } = this.state;
         await login({ email, password });
-        location.assign('/questionire');
+        location.assign('/questionnaire');
       } catch (error) {
         const { response } = error;
         if (response.data && response.data.message) {

@@ -7,10 +7,11 @@ import EmailVrify from './email-verify';
 
 
 const Routes = () => (
-  <Router basename="/questionnaire/">
+  <Router basename="/qualification-manager/">
     <div>
       <Header />
       <Route path="/manage-food-suppliers/" component={Mfs} />
+      <Route path="/verify-email" component={EmailVrify} />
       <Footer />
     </div>
   </Router>

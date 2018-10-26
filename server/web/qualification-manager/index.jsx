@@ -5,6 +5,6 @@ import Routes from './routes';
 window.onload = () => {
   render(
     <Routes />,
-    document.getElementById('questionnaire'),
+    document.getElementById('qualification-manager'),
   );
 };

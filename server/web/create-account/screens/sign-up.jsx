@@ -13,7 +13,7 @@ const SignupForm = (props) => {
   const { handleSubmit, onSubmit, captchaVerify } = props;
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h3>Create an A Aexyn account</h3>
+      <h3>Create an Aexyn account</h3>
       <div className="input two-col-input clearfix">
         <div>
           <Field
@@ -78,7 +78,7 @@ const SignupForm = (props) => {
       <div>
         <Recaptcha
           verifyCallback={captchaVerify}
-          sitekey="6Lc_OHYUAAAAAE7zPafaYGEsv2CCtNcDafnT9A5H"
+          sitekey={process.env.RecaptchaKey}
         />
       </div>
 

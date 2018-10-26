@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Field } from 'redux-form';
 import { connect } from 'react-redux';
 import LocationSearch from '../../components/location-search';
-import _ from 'lodash';
 
 
 class OfficeFields extends Component {
@@ -39,6 +38,7 @@ class OfficeFields extends Component {
         <div className="input">
           <Field
             component={LocationSearch}
+            seperator={seperator}
             name={`${seperator}address1`}
             placeholder="Street / P.O Box"
           />
