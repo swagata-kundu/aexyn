@@ -70,7 +70,7 @@ export default class ExpressServer {
         lastModified: false,
       }));
       this.app.use('/api', Api(this.db));
-      this.app.use('/', Web());
+      this.app.use('/', Web(this.db));
       return this;
     }
 

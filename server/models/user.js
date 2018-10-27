@@ -48,9 +48,9 @@ export default class User {
     FROM
     user U
     LEFT JOIN user_office_profile OP ON U.id = OP.user_id
-		JOIN office_package PACKAGE ON PACKAGE.office_id=OP.office_id
+    JOIN office_package PACKAGE ON PACKAGE.office_id=OP.office_id
     JOIN company_office CO ON CO.id = OP.office_id
-		JOIN company C ON CO.company_id= C.id
+    JOIN company C ON CO.company_id= C.id
     WHERE U.id=?`;
     return this.con.query({ text, values: [user_id] }, done);
   }
@@ -60,8 +60,6 @@ export default class User {
       if (results.length === 0) {
         return next(Boom.unauthorized('User not found'));
       }
-      const user_info = results[0];
-      delete user_info.password;
       request.session.user_id = user_id;
       return response.send('ok');
     }));

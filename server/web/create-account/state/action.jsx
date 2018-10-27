@@ -45,7 +45,7 @@ export function sign_up(params) {
       await signUp({
         account: account.toJS(), signup, company, office,
       });
-      location.assign('/questionnaire');
+      location.assign('/qualification-manager');
     } catch (error) {
       console.log(error);
     }

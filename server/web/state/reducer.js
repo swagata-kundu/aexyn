@@ -3,6 +3,7 @@ import { load_master_data } from './type';
 
 const INITIAL_STATE = fromJS({
   masterData: {},
+  userInfo: window._user_ ? window._user_ : {},
 });
 
 export default function commonReducer(state = INITIAL_STATE, action) {
