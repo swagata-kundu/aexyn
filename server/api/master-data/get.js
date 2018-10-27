@@ -18,7 +18,7 @@ function country(db, done) {
                 S.id,
                 'state_name',
                 S.name)),
-    ']') AS states FROM country C JOIN state S ON S.country_id=C.id GROUP BY C.id;`,
+    ']') AS states FROM country C JOIN state S ON S.country_id=C.id GROUP BY C.id ORDER BY S.name ASC;`,
     values: [],
   };
   queryHelper.query(query, (err, result) => {

@@ -5,7 +5,9 @@ import Footer from '../components/dashboard-footer';
 import Mfs from './mfs';
 import EmailVrify from './email-verify';
 import Invite from './mfs/invite/routes';
+import RouteG from '../components/route-guard';
 
+import Mfs from './mfs';
 
 const Routes = () => (
   <Router basename="/qualification-manager/">
@@ -18,4 +20,7 @@ const Routes = () => (
     </div>
   </Router>
 );
-export default Routes;
+
+const RoutesHOC = () => (<RouteG view={<Routes />} />);
+
+export default RoutesHOC;

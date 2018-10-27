@@ -12,14 +12,14 @@ const VerifyEmail = () => (
             which has verified.
             Email verification is required as a security precaution.
           </p>
-          <a href className="email-verify-btn custom-btn">
+          <a className="email-verify-btn custom-btn">
             Resend Email Verification
           </a>
           <p>
             <small>
               Already verified your email?
               {' '}
-              <a href>
+              <a>
                 <em>Reload this page</em>
               </a>
             </small>
@@ -28,7 +28,7 @@ const VerifyEmail = () => (
             <small>
               Need help?
               {' '}
-              <a href>
+              <a>
                 <em>Email our support team.</em>
               </a>
             </small>
