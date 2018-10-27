@@ -2,10 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import store from './state/store';
-
 import Routes from './routes';
-import { Provider } from 'react-redux';
-import store from '../create-account/state/store';
 
 window.onload = () => {
   render(

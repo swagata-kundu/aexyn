@@ -2,82 +2,147 @@ import React from 'react';
 
 const DashBoardHeader = () => (
   <header className="custom-header-container-wrapper">
-    <div className="custom-header-container" style={{ minHeight: '44.5781px' }}>
+    <div
+      className="custom-header-container questionnaire"
+      style={{ minHeight: 45 }}
+    >
       <div className="header-group">
-        <div className="col-md-3 pull-left logo">
+        <div className="col-md-2 logo">
           <a href="/">
             <img src="/static/images/aexyn-logo.png" alt="Aexyn" />
           </a>
         </div>
-        <div className="col-md-9 pull-left" style={{ textAlign: 'right' }}>
-          <a href="/sign-up" className="pull-right">
-            Sign In
-          </a>
+        <div className="header-right group col-md-10 text-right">
+          <ul>
+            <li className="custom-ovel-btn red">
+              <a href="#">
+                <span className="trial-expired">Trial</span>
+                <span className="pro-expired">Pro</span>
+                {' '}
+Expired (Click hare to
+                renew)
+              </a>
+            </li>
+            <li className="custom-ovel-btn green">
+              <a href="#">
+                Pro version (Validate till
+                {' '}
+                <span className="validate-date">date</span>
+                {')'}
+              </a>
+            </li>
+            <li className="custom-ovel-btn blue">
+              <a href="#">
+                Free Trial (
+                <span className="day">1</span>
+                {' '}
+                day left)
+              </a>
+            </li>
+            <li className="custom-ovel-btn yellow">
+              <a href="#">Start 14 days trial</a>
+            </li>
+            <li>
+              <span className="notify-ico">
+                <i className="fa fa-bell" aria-hidden="true" />
+              </span>
+            </li>
+            <li>
+              <span className="user-ico">
+                <i className="fa fa-user-o" aria-hidden="true" />
+              </span>
+              <span className="user-name">
+                {'User Name '}
+                <i className="fa fa-chevron-down" aria-hidden="true" />
+              </span>
+              <ul>
+                <li className="my-account">
+                  <a href="#">
+                    <span>
+                      <i className="fa fa-user-o" aria-hidden="true" />
+                      {' My Accounts'}
+                    </span>
+                  </a>
+                </li>
+                <li className="logout">
+                  <a href="#">
+                    <span>
+                      <i className="fa fa-power-off" aria-hidden="true" />
+                      {' Logout'}
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
         </div>
+        <span className="mobile-trigger">
+          <i />
+        </span>
       </div>
     </div>
+    {/* Siderbar Nav Start */}
     <div className="custom-sidebar-wrapper">
-      <div className="sidebar-group">
-        <div className="sidebar-nav">
-          <ul>
-            <li>
-              <a href="/user">
-                <i className="fa fa-user-circle-o" aria-hidden="true" />
-                <span className="menu-text">Ajay</span>
-              </a>
-            </li>
-            <li>
-              <a href="/companies">
-                <i className="fa fa-building-o" aria-hidden="true" />
-                <span className="menu-text">Ajay Mech</span>
-              </a>
-            </li>
-            <li>
-              <a href="/projects">
-                <i className="fa fa-list-ul" aria-hidden="true" />
-                <span className="menu-text">Projects</span>
-              </a>
-            </li>
-            <li>
-              <a hres="/opportunities">
-                <i className="fa fa-database" aria-hidden="true" />
-                <span className="menu-text">Opportunities</span>
-              </a>
-            </li>
-            <li>
-              <a href="/qualifications">
-                <i className="fa fa-tasks" aria-hidden="true" />
-                <span className="menu-text">Qualifications</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div className="custom-sidebar-recent-view">
-          <h3>Recently Viewed:</h3>
-          <ul>
-            <li>
-              <a href="#">Nothing viewed yet</a>
-            </li>
-          </ul>
-        </div>
-        <div className="custom-sidebar-login-details">
-          <ul>
-            <li>
-              <a href="#">Sign Out</a>
-            </li>
-            <li>
-              <a href="#">Support</a>
-            </li>
-            <li>
-              <a href="#">Terms</a>
-            </li>
-            <li>
-              <a href="#">Privacy</a>
-            </li>
-          </ul>
-        </div>
+      <div className="sidebar-nav">
+        <ul>
+          <li>
+            <a href="/user">
+              <i className="fa fa-user-circle-o" aria-hidden="true" />
+              <span className="menu-text">User</span>
+            </a>
+          </li>
+          <li>
+            <a href="/companies">
+              <i className="fa fa-building-o" aria-hidden="true" />
+              <span className="menu-text">Company</span>
+            </a>
+          </li>
+          <li>
+            <a href="/projects">
+              <i className="fa fa-list-ul" aria-hidden="true" />
+              <span className="menu-text">Projects</span>
+            </a>
+          </li>
+          <li>
+            <a href="/opportunities">
+              <i className="fa fa-database" aria-hidden="true" />
+              <span className="menu-text">Opportunities</span>
+            </a>
+          </li>
+          <li>
+            <a href="/qualifications">
+              <i className="fa fa-tasks" aria-hidden="true" />
+              <span className="menu-text">Qualifications</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div className="custom-sidebar-recent-view">
+        <h3>Recently Viewed:</h3>
+        <ul>
+          <li>
+            <a href="#">Nothing viewed yet</a>
+          </li>
+        </ul>
+      </div>
+      <div className="custom-sidebar-login-details">
+        <ul>
+          <li>
+            <a href="/sign-out">Sign Out</a>
+          </li>
+          <li>
+            <a href="/support">Support</a>
+          </li>
+          <li>
+            <a href="/terms">Terms</a>
+          </li>
+          <li>
+            <a href="/privacy">Privacy</a>
+          </li>
+        </ul>
       </div>
     </div>
+    {/* Siderbar Nav END */}
   </header>
 );
 
