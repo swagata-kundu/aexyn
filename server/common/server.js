@@ -9,6 +9,7 @@ import Helmet from 'helmet';
 import Session from 'express-session';
 import env from 'dotenv';
 import ConnectRedis from 'connect-redis';
+import CookieParser from 'cookie-parser';
 
 import ErrorHandler from './errorhandler';
 import Db from './db';
@@ -37,6 +38,7 @@ export default class ExpressServer {
     env.config();
     this.app.use(Morgan('dev'));
     this.app.use(Helmet());
+    this.app.use(CookieParser());
     this.app.use(Session({
       secret: process.env.SESSION_SECRET,
       cookie: {},

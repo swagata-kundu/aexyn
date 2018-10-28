@@ -8,7 +8,7 @@ const DropdownForm = (props) => {
   return (
     <form className="custom-sidebar-form">
       <div className="custom-sidebar-form-field">
-        <lable>Willing to traval to:</lable>
+        <label>Willing to traval to:</label>
         <Field
           required
           component={MultiSelect}
@@ -22,7 +22,7 @@ const DropdownForm = (props) => {
         </span>
       </div>
       <div className="custom-sidebar-form-field">
-        <lable>Work Performed</lable>
+        <label>Work Performed</label>
         <Field
           required
           component={MultiSelect}
@@ -32,7 +32,7 @@ const DropdownForm = (props) => {
         />
       </div>
       <div className="custom-sidebar-form-field">
-        <lable>Tags</lable>
+        <label>Tags</label>
         <Field
           required
           component={MultiSelect}
@@ -42,7 +42,7 @@ const DropdownForm = (props) => {
         />
       </div>
       <div className="custom-sidebar-form-field">
-        <lable>Qualification Status</lable>
+        <label>Qualification Status</label>
         <div className="checkbox-item">
           <Field name="Invitation Sent" id="InvitationSent" component="input" type="checkbox" />
           <label >Invitation Sent</label>
@@ -73,7 +73,7 @@ const DropdownForm = (props) => {
         </div>
       </div>
       <div className="custom-sidebar-form-field">
-        <lable>Labor Requirements</lable>
+        <label>Labor Requirements</label>
         <div className="checkbox-item">
           <Field name="Union" id="Union" component="input" type="checkbox" />
           <label >Union</label>

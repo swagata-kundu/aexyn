@@ -65,7 +65,7 @@ Expired (Click hare to
                   </a>
                 </li>
                 <li className="logout">
-                  <a href="#">
+                  <a href="/logout">
                     <span>
                       <i className="fa fa-power-off" aria-hidden="true" />
                       {' Logout'}
@@ -128,7 +128,7 @@ Expired (Click hare to
       <div className="custom-sidebar-login-details">
         <ul>
           <li>
-            <a href="/sign-out">Sign Out</a>
+            <a href="/logout">Log Out</a>
           </li>
           <li>
             <a href="/support">Support</a>

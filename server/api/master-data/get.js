@@ -1,59 +1,11 @@
 import async from 'async';
 import Query from '../../db/Query';
+import MasterData from '../../models/masterdata';
 
-function labourtype(db, done) {
-  const queryHelper = new Query(db);
-  const query = {
-    text: 'SELECT * FROM labour_type;',
-    values: [],
-  };
-  return queryHelper.query(query, done);
-}
-
-function country(db, done) {
-  const queryHelper = new Query(db);
-  const query = {
-    text: `SELECT C.*,CONCAT('[',
-    GROUP_CONCAT(JSON_OBJECT('state_id',
-                S.id,
-                'state_name',
-                S.name)),
-    ']') AS states FROM country C JOIN state S ON S.country_id=C.id GROUP BY C.id ORDER BY S.name ASC;`,
-    values: [],
-  };
-  queryHelper.query(query, (err, result) => {
-    if (err) {
-      return done(err);
-    }
-    const mod = result.map((r) => {
-      try {
-        let {
-          states,
-        } = r;
-        states = JSON.parse(states);
-        return {
-          ...r,
-          states,
-        };
-      } catch (pe) {
-        return r;
-      }
-    });
-    return done(null, mod);
-  });
-}
-
-function workPerformed(db, done) {
-  const qry = new Query(db);
-  const query = {
-    text: 'SELECT * FROM work_performed;',
-    values: [],
-  };
-  return qry.query(query, done);
-}
 
 exports.getLabpurType = db => async (req, res, next) => {
-  labourtype(db, (err, result) => {
+  const master = new MasterData(new Query(db));
+  master.labourtype((err, result) => {
     if (err) {
       return next(err);
     }
@@ -63,7 +15,8 @@ exports.getLabpurType = db => async (req, res, next) => {
 
 
 exports.getCountry = db => async (req, res, next) => {
-  country(db, (err, result) => {
+  const master = new MasterData(new Query(db));
+  master.country((err, result) => {
     if (err) {
       return next(err);
     }
@@ -72,7 +25,8 @@ exports.getCountry = db => async (req, res, next) => {
 };
 
 exports.getWorkedPerformed = db => async (req, res, next) => {
-  workPerformed(db, (err, result) => {
+  const master = new MasterData(new Query(db));
+  master.workPerformed((err, result) => {
     if (err) {
       return next(err);
     }
@@ -80,11 +34,31 @@ exports.getWorkedPerformed = db => async (req, res, next) => {
   });
 };
 
-exports.all = db => async (req, res, next) => {
+exports.all = db => (req, res, next) => {
+  const master = new MasterData(new Query(db));
   async.auto({
-    labourType: cb => labourtype(db, cb),
-    country: cb => country(db, cb),
-    workPerformed: cb => workPerformed(db, cb),
+    labourType: cb => master.labourtype(cb),
+    country: cb => master.country(cb),
+    workPerformed: cb => master.workPerformed(cb),
+  }, (err, results) => {
+    if (err) {
+      return next(err);
+    }
+    return res.json(results);
+  });
+};
+
+exports.invitaionFilter = db => (req, res, next) => {
+  const { userInfo } = res.locals;
+
+  const master = new MasterData(new Query(db));
+  async.auto({
+    labourType: cb => master.labourtype(cb),
+    workPerformed: cb => master.workPerformed(cb),
+    tags: cb => master.getCompanyTags(userInfo.company_id, cb),
+    locations: cb => master.getSearchLocations(cb),
+    status: cb => master.getInvitationType(cb),
+
   }, (err, results) => {
     if (err) {
       return next(err);

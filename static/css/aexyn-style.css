@@ -1727,7 +1727,7 @@ a.email-verify-btn.custom-btn {
     border-right: 1px solid;
 }
 
-.custom-sidebar-form .custom-sidebar-form-field>lable {
+.custom-sidebar-form .custom-sidebar-form-field>label {
     font-weight: 600;
     font-size: 14px;
     display: block;

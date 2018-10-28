@@ -134,7 +134,7 @@ export default class Login extends Component {
                     <div>
                       <p>How do i get an account?</p>
                       <p>
-                    Aexyn is currently only available via invitation. The
+                    Aexyn is currently only availabel via invitation. The
                     easiest way to start using the platform is to get invited to
                     bid on an upcoming project from a GC or Owner who already
                     uses the Aexyn platform, or get invited to an office by one

@@ -7,4 +7,12 @@ module.exports = {
   ROLE: {
     CUSTOMER: 1,
   },
+  INVITATION_STATUS: {
+    SENT: 'sent',
+    IN_PROGRESS: 'progress',
+    SUBMITTED: 'submitted',
+    APPROVED: 'approved',
+    DENIED: 'denied',
+    APPROVED_EXCEPTION: 'approved-exception',
+  },
 };
