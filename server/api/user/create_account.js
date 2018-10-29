@@ -101,7 +101,7 @@ module.exports = function createAccount(db) {
           }
           const usr = new User(new Query(db));
           usr.sendAccountVerificationEmail({ user_id: new_user_id, email: user_info.email }, nop);
-          req.session.user_id = new_user_id;
+          // req.session.user_id = new_user_id;
           res.cookie('user_id', new_user_id, { httpOnly: false });
           return res.send('ok');
         });

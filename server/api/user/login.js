@@ -47,7 +47,7 @@ module.exports = function checkEmail(db) {
         return next(err);
       }
       const user_id = results.user.id;
-      req.session.user_id = user_id;
+      // req.session.user_id = user_id;
       res.cookie('user_id', user_id, { httpOnly: false });
       return res.send('ok');
     });

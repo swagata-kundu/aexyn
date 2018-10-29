@@ -39,17 +39,15 @@ export default class ExpressServer {
     this.app.use(Morgan('dev'));
     this.app.use(Helmet());
     this.app.use(CookieParser());
-    this.app.use(Session({
-      secret: process.env.SESSION_SECRET,
-      cookie: {},
-      store: new RedisStore(Config.get('redis')),
+    // this.app.use(Session({
+    //   secret: process.env.SESSION_SECRET,
+    //   cookie: {},
+    //   store: new RedisStore(Config.get('redis')),
+    // }));
+    this.app.use(webpackDevMiddleware(compiler, {
+      publicPath: WebpackConfig.output.publicPath,
     }));
-    if (process.env.NODE_ENV === 'development' && !process.env.API_DEV) {
-      this.app.use(webpackDevMiddleware(compiler, {
-        publicPath: WebpackConfig.output.publicPath,
-      }));
-      this.app.use(WHM(compiler));
-    }
+    this.app.use(WHM(compiler));
     this.app.use(Express.static(`${root}/views`));
     this.app.set('view engine', 'pug');
     this.app.use(cors({

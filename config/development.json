@@ -3,10 +3,10 @@
     "mailFrom": "afflemailer@gmail.com",
     "host": "http://localhost:3001/",
     "db": {
-        "host": "localhost",
+        "host": "13.126.18.137",
         "port": 3306,
         "user": "root",
-        "password": "password",
+        "password": "hrhk@1234",
         "database": "aexyn",
         "connectionLimit": 10,
         "waitForConnections": true,
