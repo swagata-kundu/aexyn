@@ -1,26 +1,18 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import _ from 'lodash';
+import { load_questions } from '../../state/action';
 import SideMenu from './sidemenu';
 import Form from './configuration-form';
 import { getQuestions } from '../../../service/qualification-manager';
 
-export default class Configure extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      questions: {},
-      questionTypes: [],
-    };
-  }
-
+class Configure extends Component {
   componentDidMount=async () => {
     const r = await getQuestions();
     const questions = _.get(r, 'questions', {});
     const questionTypes = _.get(r, 'questionTypes', []);
     const { questionSet } = r;
-    this.setState({
-      questions, questionTypes, questionSet,
-    });
+    this.props.load_questions({ questions, questionTypes });
   }
 
   render() {
@@ -33,10 +25,12 @@ export default class Configure extends Component {
           <SideMenu />
 
           <div className="custom-right-group">
-            <Form handleSubmit={()=>{}}/>
+            <Form handleSubmit={() => {}} />
           </div>
         </div>
       </section>
     );
   }
 }
+
+export default connect(null, ({ load_questions }))(Configure);

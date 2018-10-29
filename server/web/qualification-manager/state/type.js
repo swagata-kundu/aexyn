@@ -1,0 +1,1 @@
+export const LOAD_INITIAL_QUESTIONS='questionier@load-initial-questions';

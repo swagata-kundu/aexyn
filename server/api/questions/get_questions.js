@@ -29,7 +29,7 @@ module.exports = db => (req, res, next) => {
     questions: ['questionSet', (results, cb) => {
       const { questionSet } = results;
       qry.query({
-        text: `SELECT Q.*,QT.type FROM questions Q JOIN question_types QT ON Q.question_type=QT.id 
+        text: `SELECT Q.*,QT.type,QT.name AS type_name FROM questions Q JOIN question_types QT ON Q.question_type=QT.id 
           WHERE Q.isDeleted=false AND Q.question_set_id=?
           ORDER BY Q.section ASC,Q.id ASC;`,
         values: [questionSet],
