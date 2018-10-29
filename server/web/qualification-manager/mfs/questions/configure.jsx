@@ -11,7 +11,6 @@ class Configure extends Component {
     const r = await getQuestions();
     const questions = _.get(r, 'questions', {});
     const questionTypes = _.get(r, 'questionTypes', []);
-    const { questionSet } = r;
     this.props.load_questions({ questions, questionTypes });
   }
 
@@ -25,7 +24,10 @@ class Configure extends Component {
           <SideMenu />
 
           <div className="custom-right-group">
-            <Form handleSubmit={() => {}} />
+            <Form onSubmit={(values) => {
+              console.log(values);
+            }}
+            />
           </div>
         </div>
       </section>

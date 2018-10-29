@@ -1,7 +1,7 @@
 import React from 'react';
-import { reduxForm, FieldArray } from 'redux-form';
+import { reduxForm, FieldArray, Field } from 'redux-form';
 import { connect } from 'react-redux';
-
+import Editor from '../../../components/editor';
 import QS from './components/question-selection';
 
 const ConfigureQuestion = (props) => {
@@ -15,9 +15,9 @@ const ConfigureQuestion = (props) => {
             <a href="#" className="custom-ques-cancel-btn">
               Cancel
             </a>
-            <a href="#" className="custom-btn custom-ques-btn">
+            <button type="submit" className="custom-btn custom-ques-btn">
               Save
-            </a>
+            </button>
           </span>
         </div>
         <div className="content-group">
@@ -27,11 +27,7 @@ const ConfigureQuestion = (props) => {
           </p>
           <div className="content-item">
             <h3>Opening Statement</h3>
-            <textarea
-              defaultValue={
-                "Please complete all of the questions. The contents of this questionnaire will be considered confidention and used safety to determine your firm's qualification and will not be disclosed to others."
-              }
-            />
+            <Field component={Editor} name="opening_statement" />
           </div>
           <div className="content-item">
             <div className="form-edit-group">

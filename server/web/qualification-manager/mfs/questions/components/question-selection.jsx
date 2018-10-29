@@ -22,7 +22,7 @@ const renderQuestions = ({ fields, questionTypes }) => {
         </td>
         <td>
           {type_name || (
-            <Field name={`${q}.type`} component="select">
+            <Field name={`${q}.question_type`} component="select">
               <option value="">Select</option>
               {qTypes.map(qt => (
                 <option key={qt.id} value={qt.id}>

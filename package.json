@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "@babel/register": "^7.0.0",
+    "@ckeditor/ckeditor5-build-classic": "^11.1.1",
+    "@ckeditor/ckeditor5-react": "^1.0.0",
     "@webpack-cli/init": "^0.1.2",
     "amazon-cognito-identity-js": "^1.19.0",
     "async": "^2.5.0",
@@ -25,7 +27,6 @@
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
     "dotenv": "^6.1.0",
-    "draft-js": "^0.10.5",
     "eslint-plugin-import": "^2.7.0",
     "express": "^4.16.4",
     "express-session": "^1.15.6",

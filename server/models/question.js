@@ -21,7 +21,7 @@ export default class Question {
       }));
     }
 
-    addQuestionSet=(company_id, done) => this.con.insert({ tableName: tables.QUESTION_SET, values: { company_id } }, done)
+    addQuestionSet=(info, done) => this.con.insert({ tableName: tables.QUESTION_SET, values: { ...info } }, done)
 
     addQuestions=({ questions, question_set_id }, done) => {
       const values = [];
