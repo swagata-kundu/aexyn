@@ -1,0 +1,34 @@
+{
+    "port": 3001,
+    "mailFrom": "afflemailer@gmail.com",
+    "host": "http://13.126.18.137:3001/",
+    "db": {
+        "host": "localhost",
+        "port": 3306,
+        "user": "root",
+        "password": "hrhk@1234",
+        "database": "aexyn",
+        "connectionLimit": 10,
+        "waitForConnections": true,
+        "dateStrings": true,
+        "multipleStatements": true,
+        "debug": ["ComQueryPacket", "RowDataPacket"]
+    },
+    "redis":{
+        "host":"localhost",
+        "port":"6379"
+    },
+    "saltRound": 10,
+    "mailCredential": {
+        "service": "gmail",
+        "auth": {
+            "user": "mynightout.dev",
+            "pass": "hrhk@1234"
+        },
+        "tls": {
+            "rejectUnauthorized": false
+        }
+
+    },
+    "fromAddress":"mynightout.dev@gmail.com"
+}
