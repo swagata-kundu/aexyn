@@ -5,11 +5,12 @@ export const office_schema = {
   address2: Joi.string().required(),
   city: Joi.string().required(),
   zip: Joi.string().required(),
-  country_id: Joi.number().optional(),
+  country_id: Joi.number().required(),
   state_id: Joi.number().required(),
   lat: Joi.optional(),
   lng: Joi.optional(),
-  office_order: Joi.optional(),
+  office_order: Joi.number().optional(),
+  phone_no: Joi.string().optional(),
 };
 
 export const company_info = {
@@ -21,4 +22,9 @@ export const company_info = {
 export const company_schema = {
   company_info: Joi.object().keys(company_info),
   offices: Joi.array().items(office_schema).required(),
+};
+
+export const update_office = {
+  office_id: Joi.number().required(),
+  office: Joi.object().keys(office_schema),
 };
