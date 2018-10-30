@@ -101,4 +101,9 @@ export default class Company {
       text: 'UPDATE ?? SET ? WHERE ??=?;',
       values: [tables.OFFICE, data, 'id', office_id],
     }, done)
+
+    updateCompany=({ company_id, data }, done) => this.con.query({
+      text: 'UPDATE ?? SET ? WHERE ??=?;',
+      values: [tables.COMPANY, data, 'id', company_id],
+    }, done)
 }

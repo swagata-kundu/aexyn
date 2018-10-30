@@ -24,5 +24,5 @@ export const qset = {
 export const create_Question = {
   questions: Joi.object().keys(qset).required(),
   questionSet: Joi.number().required(),
-  opening_statement: Joi.string().required(),
+  opening_statement: Joi.string().optional(),
 };

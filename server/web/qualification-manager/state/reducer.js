@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   questions: {
   },
   questionTypes: [],
+  questionSet: {},
 };
 
 function qualificationReducer(state = INITIAL_STATE, action) {

@@ -22,8 +22,7 @@ module.exports = db => (req, res, next) => {
         if (!results.length) {
           return cb(Boom.internal('Questionier not found'));
         }
-        const { id } = results[0];
-        return cb(null, id);
+        return cb(null, results[0]);
       }));
     },
     questions: ['questionSet', (results, cb) => {
@@ -32,7 +31,7 @@ module.exports = db => (req, res, next) => {
         text: `SELECT Q.*,QT.type,QT.name AS type_name FROM questions Q JOIN question_types QT ON Q.question_type=QT.id 
           WHERE Q.isDeleted=false AND Q.question_set_id=?
           ORDER BY Q.section ASC,Q.id ASC;`,
-        values: [questionSet],
+        values: [questionSet.id],
       }, cb);
     }],
     questionTypes: cb => qry.query({ text: 'SELECT * FROM question_types;' }, cb),

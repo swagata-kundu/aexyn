@@ -23,8 +23,3 @@ export const company_schema = {
   company_info: Joi.object().keys(company_info),
   offices: Joi.array().items(office_schema).required(),
 };
-
-export const update_office = {
-  office_id: Joi.number().required(),
-  office: Joi.object().keys(office_schema),
-};

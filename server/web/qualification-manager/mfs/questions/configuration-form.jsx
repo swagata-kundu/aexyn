@@ -27,7 +27,7 @@ const ConfigureQuestion = (props) => {
           </p>
           <div className="content-item">
             <h3>Opening Statement</h3>
-            <Field component={Editor} name="opening_statement" />
+            <Field component={Editor} required name="opening_statement" />
           </div>
           <div className="content-item">
             <div className="form-edit-group">

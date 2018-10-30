@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const DashBoard = () => {
   return (
@@ -10,24 +11,29 @@ const DashBoard = () => {
         <div className="custom-section">
           <div className="custom-sidebar-tab" id="tab1">
             <div className="custom-tabber-group">
-              <div className="section-header">
-                <div className="container-fluid">
-                  <div className="row">
-                    <div className="col-sm-12">
-                      <h1>Qualification Manager </h1>
-                    </div>
-                    <div className="col-sm-12">
-                      <ul>
-                        <li className="active">
-                          <a href="#">Manage Food Suppliers</a>
-                        </li>
-                        <li>
-                          <a href="#">Invitations From Jungles</a>
-                        </li>
-                        <li>
-                          <a href="#">Permissions &amp; Settings</a>
-                        </li>
-                      </ul>
+              <div
+                className="custom-section-header-main-wrapper"
+                style={{ minHeight: 105 }}
+              >
+                <div className="section-header">
+                  <div className="container-fluid">
+                    <div className="row">
+                      <div className="col-sm-12">
+                        <h1>Qualification Manager </h1>
+                      </div>
+                      <div className="col-sm-12">
+                        <ul>
+                          <li className="active">
+                            <a href="#">Manage Food Suppliers</a>
+                          </li>
+                          <li>
+                            <a href="#">Invitations From Jungles</a>
+                          </li>
+                          <li>
+                            <a href="#">Permissions &amp; Settings</a>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -38,10 +44,10 @@ const DashBoard = () => {
                     <div className="col-sm-6 mfs-layout-top-bar-left-col">
                       <ul>
                         <li>
-                          <a href="/questionnaire">
+                          <Link to="/manage-food-suppliers/configure-questions">
                             <i className="fa fa-tasks" aria-hidden="true" />{' '}
                             Questionnaire
-                          </a>
+                          </Link>
                         </li>
                         <li>
                           <div className="single-check-grp">
@@ -61,8 +67,9 @@ const DashBoard = () => {
                           name
                           placeholder="Find application by company or email"
                         />
-                        <a href className="custom-btn">
-                          + Invite Suppliers
+                        <a href="/qualification-manager/manage-food-suppliers/invite/by-search" className="custom-btn">
+                          <i className="fa fa-plus" aria-hidden="true" /> Invite
+                          Suppliers
                         </a>
                       </form>
                     </div>
@@ -89,39 +96,61 @@ const DashBoard = () => {
                             <div className="member-detail">
                               <span className="company-name">Company name</span>
                               <span className="name">
-                                <a href="/user-profile" />
-                                Member Name
+                                <span className="contact-person" />
+                                <a href="/user-profile">Member Name</a>
+                              </span>{' '}
+                              and{' '}
+                              <span>
+                                <span className="more">1</span> other
                               </span>
                             </div>
                           </div>
                           <div className="meta">
-                            Viewed by{' '}
-                            <span className="name">
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>{' '}
-                              <span className="more"> + more</span>
+                            Viewed by <span className="date">date</span>
+                          </div>
+                          <div className="more-member">
+                            <span className="reviewed-text">
+                              Reviewers ({' '}
+                              <span className="current-reviewer">1</span> of{' '}
+                              <span className="total-reviewer">10</span> reviews
+                              completed )
                             </span>
-                            <div className="more-items">
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                            </div>
+                            <ul>
+                              <li>
+                                <span className="reviewed-member-image" />
+                                <span className="check">
+                                  <i
+                                    className="fa fa-check-circle"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              </li>
+                              <li>
+                                <span className="reviewed-member-image">
+                                  <img
+                                    src="/static/images/Steven_Hallam-slide.jpg"
+                                    alt="Reviewer Name"
+                                  />
+                                </span>
+                                <span className="check">
+                                  <i
+                                    className="fa fa-check-circle"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              </li>
+                              <li className="view-all">
+                                View all
+                                <ul>
+                                  <li>
+                                    <span className="name">
+                                      <span className="contact-person" />
+                                      <a href="/user-profile">Member Name</a>
+                                    </span>
+                                  </li>
+                                </ul>
+                              </li>
+                            </ul>
                           </div>
                         </div>
                       </div>
@@ -146,39 +175,17 @@ const DashBoard = () => {
                             <div className="member-detail">
                               <span className="company-name">Company name</span>
                               <span className="name">
-                                <a href="/user-profile" />
-                                Member Name
+                                <span className="contact-person" />
+                                <a href="/user-profile">Member Name</a>
+                              </span>{' '}
+                              and{' '}
+                              <span>
+                                <span className="more">1</span> other
                               </span>
                             </div>
                           </div>
                           <div className="meta">
-                            Viewed by{' '}
-                            <span className="name">
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>{' '}
-                              <span className="more"> + more</span>
-                            </span>
-                            <div className="more-items">
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                            </div>
+                            Viewed by <span className="date">date</span>
                           </div>
                         </div>
                       </div>
@@ -203,39 +210,17 @@ const DashBoard = () => {
                             <div className="member-detail">
                               <span className="company-name">Company name</span>
                               <span className="name">
-                                <a href="/user-profile" />
-                                Member Name
+                                <span className="contact-person" />
+                                <a href="/user-profile">Member Name</a>
+                              </span>{' '}
+                              and{' '}
+                              <span>
+                                <span className="more">1</span> other
                               </span>
                             </div>
                           </div>
                           <div className="meta">
-                            Viewed by{' '}
-                            <span className="name">
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>{' '}
-                              <span className="more"> + more</span>
-                            </span>
-                            <div className="more-items">
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                            </div>
+                            Viewed by <span className="date">date</span>
                           </div>
                         </div>
                       </div>
@@ -259,39 +244,17 @@ const DashBoard = () => {
                             <div className="member-detail">
                               <span className="company-name">Company name</span>
                               <span className="name">
-                                <a href="/user-profile" />
-                                Member Name
+                                <span className="contact-person" />
+                                <a href="/user-profile">Member Name</a>
+                              </span>{' '}
+                              and{' '}
+                              <span>
+                                <span className="more">1</span> other
                               </span>
                             </div>
                           </div>
                           <div className="meta">
-                            Viewed by{' '}
-                            <span className="name">
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>{' '}
-                              <span className="more"> + more</span>
-                            </span>
-                            <div className="more-items">
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                            </div>
+                            Viewed by <span className="date">date</span>
                           </div>
                         </div>
                       </div>
@@ -315,39 +278,17 @@ const DashBoard = () => {
                             <div className="member-detail">
                               <span className="company-name">Company name</span>
                               <span className="name">
-                                <a href="/user-profile" />
-                                Member Name
+                                <span className="contact-person" />
+                                <a href="/user-profile">Member Name</a>
+                              </span>{' '}
+                              and{' '}
+                              <span>
+                                <span className="more">1</span> other
                               </span>
                             </div>
                           </div>
                           <div className="meta">
-                            Viewed by{' '}
-                            <span className="name">
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>{' '}
-                              <span className="more"> + more</span>
-                            </span>
-                            <div className="more-items">
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                            </div>
+                            Viewed by <span className="date">date</span>
                           </div>
                         </div>
                       </div>
@@ -371,39 +312,17 @@ const DashBoard = () => {
                             <div className="member-detail">
                               <span className="company-name">Company name</span>
                               <span className="name">
-                                <a href="/user-profile" />
-                                Member Name
+                                <span className="contact-person" />
+                                <a href="/user-profile">Member Name</a>
+                              </span>{' '}
+                              and{' '}
+                              <span>
+                                <span className="more">1</span> other
                               </span>
                             </div>
                           </div>
                           <div className="meta">
-                            Viewed by{' '}
-                            <span className="name">
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>{' '}
-                              <span className="more"> + more</span>
-                            </span>
-                            <div className="more-items">
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                            </div>
+                            Viewed by <span className="date">date</span>
                           </div>
                         </div>
                       </div>
@@ -427,106 +346,19 @@ const DashBoard = () => {
                             <div className="member-detail">
                               <span className="company-name">Company name</span>
                               <span className="name">
-                                <a href="/user-profile" />
-                                Member Name
+                                <span className="contact-person" />
+                                <a href="/user-profile">Member Name</a>
+                              </span>{' '}
+                              and{' '}
+                              <span>
+                                <span className="more">1</span> other
                               </span>
                             </div>
                           </div>
                           <div className="meta">
-                            Viewed by{' '}
-                            <span className="name">
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>{' '}
-                              <span className="more"> + more</span>
-                            </span>
-                            <div className="more-items">
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                              <a href="/user-profile" title="Member Name">
-                                MN
-                              </a>
-                            </div>
+                            Viewed by <span className="date">date</span>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="custom-access-section clearfix">
-                  <div className="row">
-                    <div className="col-sm-6 custom-access-section-left-col">
-                      <div className="custom-access-section-left-col-inner">
-                        <div className="top-icon">
-                          <i className="fa fa-lock" aria-hidden="true" />
-                        </div>
-                        <h3>You don't have access</h3>
-                        <p>
-                          You're logged in as{' '}
-                          <a href="mailto:eeee1ea@grr.la">eeee1ea@grr.la</a>
-                          <br /> This account does not have access to view
-                          applications
-                        </p>
-                        <div className="bottom-content">
-                          <p>
-                            <small>
-                              Continuing to have problems? Email our support
-                              team at{' '}
-                              <a href="mailto:support@aexyn.com">
-                                support@aexyn.com
-                              </a>
-                            </small>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-sm-6 custom-access-section-right-col">
-                      <div className="custom-access-section-right-col-inner">
-                        <p>Contact an employee below to request access:</p>
-                        <div className="member-sec">
-                          <div className="member-icon-left">
-                            <span className="member-left-icon">NK</span>
-                          </div>
-                          <div className="member-details-left">
-                            <a href="#">Nishant Kataria</a>
-                            <small>Job Title</small>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="mfs-section-3 clearfix">
-                  <div className="container-fluid">
-                    <div className="row">
-                      <div className="col-sm-12 mfs-section-3-full-width-content">
-                        <h3>Qualifying your vendor is easy with Aexyn Pro</h3>
-                        <h5>
-                          Manage the entire qualifications process through Aexyn
-                          pro <br />
-                          Customize your questionnair, set up security and
-                          startinviting.
-                        </h5>
-                        <a href="#" className="custom-btn">
-                          Start a 14-day Trial
-                        </a>
-                        <p>
-                          <a href="#">Contact our sales team</a> to request a
-                          demo.
-                        </p>
                       </div>
                     </div>
                   </div>

@@ -67,8 +67,8 @@ const renderQuestions = ({ fields, questionTypes }) => {
 
   const addQuestion = () => {
     const lastQuestion = fields.get(fields.length - 1);
-    const { text, type } = lastQuestion;
-    if (text && type) {
+    const { text, question_type } = lastQuestion;
+    if (text && question_type) {
       fields.push({});
     }
   };

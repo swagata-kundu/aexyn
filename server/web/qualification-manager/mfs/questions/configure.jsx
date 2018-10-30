@@ -2,16 +2,31 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { load_questions } from '../../state/action';
-import SideMenu from './sidemenu';
+import SideMenu from './components/sidemenu';
 import Form from './configuration-form';
-import { getQuestions } from '../../../service/qualification-manager';
+import { getQuestions, saveQuestions } from '../../../service/qualification-manager';
 
 class Configure extends Component {
+  constructor(props) {
+    super(props);
+    this.questionSet = null;
+  }
+
+  saveQuestions= async (values) => {
+    try {
+      await saveQuestions({ ...values, questionSet: this.questionSet });
+    } catch (error) {
+
+    }
+  }
+
   componentDidMount=async () => {
     const r = await getQuestions();
     const questions = _.get(r, 'questions', {});
     const questionTypes = _.get(r, 'questionTypes', []);
-    this.props.load_questions({ questions, questionTypes });
+    const questionSet = _.get(r, 'questionSet', {});
+    this.questionSet = questionSet.id;
+    this.props.load_questions({ questions: { ...questions, opening_statement: questionSet.opening_statement }, questionTypes });
   }
 
   render() {
@@ -24,10 +39,7 @@ class Configure extends Component {
           <SideMenu />
 
           <div className="custom-right-group">
-            <Form onSubmit={(values) => {
-              console.log(values);
-            }}
-            />
+            <Form onSubmit={this.saveQuestions} />
           </div>
         </div>
       </section>

@@ -5,7 +5,7 @@ import passerror from 'passerror';
 import Company from '../../models/company';
 import Transaction from '../../db/Transaction';
 import Query from '../../db/Query';
-import { update_office } from './schema';
+import { office_schema, company_info } from './schema';
 
 const getCompanyOffices = db => (req, res, next) => {
   const { userInfo } = res.locals;
@@ -32,14 +32,35 @@ const updateOffice = db => (req, res, next) => {
   const qry = new Query(db);
   const company = new Company(qry);
   Async.auto({
-    validate: cb => Joi.validate(req.body, update_office, cb),
-    update: ['validate', (results, cb) => company.updateOffice({ office_id: results.validate.office_id, data: results.validate.office }, cb)],
+    validate: cb => Joi.validate(req.body, office_schema, cb),
+    update: ['validate', (results, cb) => company.updateOffice({ office_id: req.params.office_id, data: results.validate }, cb)],
   }, passerror(next, () => res.send('ok')));
 };
+
+const createOffice = db => (req, res, next) => {
+  const qry = new Query(db);
+  const company = new Company(qry);
+  Async.auto({
+    validate: cb => Joi.validate(req.body, office_schema, cb),
+    insert: ['validate', (results, cb) => company.createCompanyOffice({ company_id: req.params.company_id, ...results.validate }, cb)],
+  }, passerror(next, () => res.send('ok')));
+};
+
+const updateCompany = db => (req, res, next) => {
+  const qry = new Query(db);
+  const company = new Company(qry);
+  Async.auto({
+    validate: cb => Joi.validate(req.body, company_info, cb),
+    update: ['validate', (results, cb) => company.updateOffice({ company_id: req.params.company_id, data: results.validate }, cb)],
+  }, passerror(next, () => res.send('ok')));
+};
+
 
 module.exports = {
   getCompanyOffices,
   getOfficeEmployees,
   getOfficeInfo,
   updateOffice,
+  createOffice,
+  updateCompany,
 };
