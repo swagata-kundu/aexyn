@@ -10,9 +10,10 @@ export default function (db) {
       res.clearCookie('user_id');
       if (req.session) {
         req.session.destroy(() => res.redirect('/'));
-      }else {
+      } else {
         res.redirect('/');
       }
     })
+    .get('/forget-password', (req, res) => res.render('sign-in'))
     .get('/', (req, res) => res.render('sign-in'));
 }
