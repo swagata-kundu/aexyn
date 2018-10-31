@@ -7,7 +7,7 @@ import QS from './components/question-selection';
 const ConfigureQuestion = (props) => {
   const { handleSubmit, onSubmit, questionTypes } = props;
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form disabled onSubmit={handleSubmit(onSubmit)}>
       <div className="custom-edit-ques-group">
         <div className="top-group clearfix">
           <h1>Qualification Questionnaire</h1>

@@ -3,7 +3,7 @@ import Select from 'react-select';
 import _ from 'lodash';
 
 const multiSelect = (field) => {
-  const { options, input } = field;
+  const { options = [], input } = field;
   const moded_options = options.map(o => ({
     value: o.id,
     label: o.name,

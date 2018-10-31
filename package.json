@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nvm use; export NODE_ENV=development; node index.js",
-    "local-db": "nvm use; export NODE_ENV=development_local; node index.js"
+    "start": "export NODE_ENV=development; node index.js",
+    "local-db": "export NODE_ENV=development_local; node index.js"
   },
   "keywords": [],
   "author": "",
