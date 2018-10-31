@@ -1,26 +1,32 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import _ from 'lodash';
-import SideMenu from './sidemenu';
+import { load_questions } from '../../state/action';
+import SideMenu from './components/sidemenu';
 import Form from './configuration-form';
-import { getQuestions } from '../../../service/qualification-manager';
+import { getQuestions, saveQuestions } from '../../../service/qualification-manager';
 
-export default class Configure extends Component {
+class Configure extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      questions: {},
-      questionTypes: [],
-    };
+    this.questionSet = null;
+  }
+
+  saveQuestions= async (values) => {
+    try {
+      await saveQuestions({ ...values, questionSet: this.questionSet });
+    } catch (error) {
+
+    }
   }
 
   componentDidMount=async () => {
     const r = await getQuestions();
     const questions = _.get(r, 'questions', {});
     const questionTypes = _.get(r, 'questionTypes', []);
-    const { questionSet } = r;
-    this.setState({
-      questions, questionTypes, questionSet,
-    });
+    const questionSet = _.get(r, 'questionSet', {});
+    this.questionSet = questionSet.id;
+    this.props.load_questions({ questions: { ...questions, opening_statement: questionSet.opening_statement }, questionTypes });
   }
 
   render() {
@@ -33,10 +39,12 @@ export default class Configure extends Component {
           <SideMenu />
 
           <div className="custom-right-group">
-            <Form handleSubmit={()=>{}}/>
+            <Form onSubmit={this.saveQuestions} />
           </div>
         </div>
       </section>
     );
   }
 }
+
+export default connect(null, ({ load_questions }))(Configure);

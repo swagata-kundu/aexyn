@@ -5,11 +5,12 @@ export const office_schema = {
   address2: Joi.string().required(),
   city: Joi.string().required(),
   zip: Joi.string().required(),
-  country_id: Joi.number().optional(),
+  country_id: Joi.number().required(),
   state_id: Joi.number().required(),
   lat: Joi.optional(),
   lng: Joi.optional(),
-  office_order: Joi.optional(),
+  office_order: Joi.number().optional(),
+  phone_no: Joi.string().optional(),
 };
 
 export const company_info = {

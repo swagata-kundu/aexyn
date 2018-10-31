@@ -3,7 +3,7 @@ import React from 'react';
 const Sidemenu = () => (
   <div className="custom-left-group">
     <div className="top-group">
-      <a href="#">
+      <a href="/qualification-manager/manage-food-suppliers">
         <i className="fa fa-long-arrow-left" aria-hidden="true" />
 {' '}
 Back to

@@ -7,12 +7,13 @@ module.exports = db => (req, res, next) => {
   const tx = new Txn(db);
   const q = new Question(tx);
   const { userInfo } = res.locals;
+  const { opening_statement, questionSet, questions } = req.body;
   Async.auto({
     validate: cb => Joi.validate(req.body, require('./schema').create_Question, cb),
     beginTx: ['validate', (results, cb) => tx.beginTransaction(cb)],
-    removeQset: ['beginTx', (results, cb) => q.deleteQuestionSet(req.body.questionSet, cb)],
-    addNewQset: ['removeQset', (results, cb) => q.addQuestionSet(userInfo.company_id, cb)],
-    addQuestions: ['addNewQset', (results, cb) => q.addQuestions({ questions: req.body.questions, question_set_id: results.addNewQset }, cb)],
+    removeQset: ['beginTx', (results, cb) => q.deleteQuestionSet(questionSet, cb)],
+    addNewQset: ['removeQset', (results, cb) => q.addQuestionSet({ company_id: userInfo.company_id, opening_statement }, cb)],
+    addQuestions: ['addNewQset', (results, cb) => q.addQuestions({ questions, question_set_id: results.addNewQset }, cb)],
   }, (err) => {
     if (err) {
       tx.rollbackTransaction(() => next(err));
