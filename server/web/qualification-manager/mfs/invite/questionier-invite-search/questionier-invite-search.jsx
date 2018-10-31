@@ -20,12 +20,12 @@ class QuestionierInviteSearch extends Component {
           <div className="custom-sidebar-tab">
             <div className="custom-axeyn-tabber-group">
               <QuestionierInviteHeader />
-              <div className="custom-axeyn-tabber-item axeyn-tab-share-link-grp d-block">
+              <div className="custom-axeyn-tabber-item axeyn-tab-search-grp d-block">
                 <div className="axeyn-tab-search-inner-grp">
                   <div className="container-fluid-1">
                     <div className="row">
                       <SideBar />
-                      <div className="col-sm-9 custom-axeyn-tab-search-main-content">
+                      <div className="col-sm-10 custom-axeyn-tab-search-main-content">
                         <div className="custom-search">
                           <form>
                             <div className="custom-searh-input">
@@ -43,15 +43,17 @@ class QuestionierInviteSearch extends Component {
                                     <h6>5 Best matches</h6>
                                   </td>
                                 </tr>
-                                <tr>
+                                <tr className="has-border">
                                   <td>Company</td>
                                   <td>Private Info</td>
                                   <td>Recent Work History</td>
+                                  <td />
                                 </tr>
                                 <QuestionierCompany />
-                                <QuestionierCompanyInfo />
                               </tbody>
                             </table>
+                            <QuestionierCompanyInfo />
+
                           </div>
                           <div className="custom-search-table table-2">
                             <table>
@@ -61,15 +63,16 @@ class QuestionierInviteSearch extends Component {
                                     <h6>Did you mean one of these?</h6>
                                   </td>
                                 </tr>
-                                <tr>
+                                <tr className="has-border">
                                   <td>Company</td>
                                   <td>Private Info</td>
                                   <td>Recent Work History</td>
                                 </tr>
                                 <QuestionierCompany />
-                                <QuestionierCompanyInfo />
                               </tbody>
                             </table>
+                            <QuestionierCompanyInfo />
+
                           </div>
                         </div>
                       </div>

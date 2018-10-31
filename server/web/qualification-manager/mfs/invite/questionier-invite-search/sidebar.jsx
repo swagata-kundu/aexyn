@@ -8,7 +8,7 @@ const DropdownForm = (props) => {
   return (
     <form className="custom-sidebar-form">
       <div className="custom-sidebar-form-field">
-        <label>Willing to traval to:</label>
+      <lable>Search by Location</lable>
         <Field
           required
           component={MultiSelect}
@@ -16,13 +16,9 @@ const DropdownForm = (props) => {
           name="company"
           placeholder="Select "
         />
-        <span className="tagline">
-          Search by office location instead
-                <i className="fa fa-angle-double-right" aria-hidden="true" />
-        </span>
       </div>
       <div className="custom-sidebar-form-field">
-        <label>Work Performed</label>
+      <lable>Work Performed</lable>
         <Field
           required
           component={MultiSelect}
@@ -118,7 +114,7 @@ class SideBar extends Component {
       { id: 'Item -2', name: 'Item -2' },
     ];
     return (
-      <div className="col-sm-3 custom-axeyn-tab-search-sidebar">
+      <div className="col-sm-2 custom-axeyn-tab-search-sidebar">
         <div className="custom-search-sidebar-col">
           <h6>
             <i className="fa fa-object-ungroup" aria-hidden="true" />

@@ -17,17 +17,17 @@ class QuestionierInviteHeader extends Component {
           <div className="col-sm-12">
             <ul className="custom-axeyn-tabber-list">
               <li>
-                <NavLink to="/invite/by-search" activeClassName="selected">
+                <NavLink to="/manage-food-suppliers/invite/by-search" activeClassName="selected">
                   Search
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/invite/by-email" activeClassName="selected">
+                <NavLink to="/manage-food-suppliers/invite/by-email" activeClassName="selected">
                   Email
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/invite/by-link" activeClassName="selected">
+                <NavLink to="/manage-food-suppliers/invite/by-link" activeClassName="selected">
                   Share Link
                 </NavLink>
               </li>
