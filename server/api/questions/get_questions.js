@@ -1,30 +1,15 @@
 import Async from 'async';
-import Boom from 'boom';
 import passerror from 'passerror';
 import QryHelper from '../../db/Query';
+import Questions from '../../models/question';
 
 module.exports = db => (req, res, next) => {
   const { userInfo } = res.locals;
   const qry = new QryHelper(db);
+  const quest = new Questions(qry);
   Async.auto({
-    questionSet: (cb) => {
-      qry.query({
-        text: `SELECT 
-                *
-            FROM
-                question_set
-            WHERE
-                company_id = ? AND isDeleted = FALSE
-            ORDER BY created DESC
-            LIMIT 1;`,
-        values: [userInfo.company_id],
-      }, passerror(cb, (results) => {
-        if (!results.length) {
-          return cb(Boom.internal('Questionier not found'));
-        }
-        return cb(null, results[0]);
-      }));
-    },
+    questionSet: cb => quest.getQuestionSet(userInfo.company_id, cb),
+
     questions: ['questionSet', (results, cb) => {
       const { questionSet } = results;
       qry.query({
@@ -34,7 +19,10 @@ module.exports = db => (req, res, next) => {
         values: [questionSet.id],
       }, cb);
     }],
+
     questionTypes: cb => qry.query({ text: 'SELECT * FROM question_types;' }, cb),
+
+
   }, passerror(next, (results) => {
     const { questions, questionSet, questionTypes } = results;
     const grouped_questions = {};

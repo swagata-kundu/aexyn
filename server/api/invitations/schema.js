@@ -8,3 +8,7 @@ export const search_company_schema = {
   labours: Joi.array().items(Joi.string()).optional(),
   searchText: Joi.string().max(100).optional().trim(),
 };
+
+export const send_invite = {
+  emails: Joi.array().items(Joi.string().email()).required(),
+};

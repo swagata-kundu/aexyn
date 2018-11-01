@@ -32,4 +32,23 @@ export default class Question {
       });
       this.con.bulkInsert({ tableName: tables.QUESTION, values }, done);
     }
+
+    getQuestionSet=(company_id, done) => {
+      this.con.query({
+        text: `SELECT 
+                *
+            FROM
+                question_set
+            WHERE
+                company_id = ? AND isDeleted = FALSE
+            ORDER BY created DESC
+            LIMIT 1;`,
+        values: [company_id],
+      }, passerror(done, (results) => {
+        if (!results.length) {
+          return done(boom.internal('Questionier not found'));
+        }
+        return done(null, results[0]);
+      }));
+    }
 }
