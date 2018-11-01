@@ -31,6 +31,7 @@ const InviteEmailForm = (props) => {
               className="custom-email-form-field"
             >
               <Field
+                key={index}
                 name={`${emailValue}emailTextValue`}
                 component="input"
                 type="text"

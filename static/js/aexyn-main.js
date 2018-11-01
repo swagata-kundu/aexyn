@@ -182,7 +182,7 @@ $(document).ready(() => {
   $('.section-header').wrap('<div class="custom-section-header-main-wrapper"></div>');
   $('.custom-data-invite-pop').before('<span class="custom-pop-overlay"></span>');
   $('.custom-data-invite-pop .custom-search-table').append('<a class="close-pop"><i class="fa fa-times"></i></a');
-  $('.custom-more-btn').click(function (e) {
+  $(document).on('click', '.custom-more-btn', function (e) {
     e.preventDefault();
     e.stopPropagation();
     $(this).closest('.custom-search-table').addClass('show-pop');

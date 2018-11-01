@@ -1,14 +1,18 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import MultiSelect from '../../../../components/multi-select';
+import { filterCompany } from '../../../../service/qualification-manager';
+import { filterCompanyData } from '../../../state/action';
 
 const DropdownForm = (props) => {
-  const { selectOptions, workPerformanceOptions, tagsOptions } = props;
-
+  const {
+    selectOptions, workPerformanceOptions, tagsOptions, qualificationStatus, location,
+  } = props;
   return (
     <form className="custom-sidebar-form">
       <div className="custom-sidebar-form-field">
-      <lable>Search by Location</lable>
+        <lable>Search by Location</lable>
         <Field
           required
           component={MultiSelect}
@@ -18,12 +22,12 @@ const DropdownForm = (props) => {
         />
       </div>
       <div className="custom-sidebar-form-field">
-      <lable>Work Performed</lable>
+        <lable>Work Performed</lable>
         <Field
           required
           component={MultiSelect}
           options={workPerformanceOptions}
-          name="company"
+          name="company1"
           placeholder="Select "
         />
       </div>
@@ -33,54 +37,33 @@ const DropdownForm = (props) => {
           required
           component={MultiSelect}
           options={tagsOptions}
-          name="company"
+          name="company2"
           placeholder="Select "
         />
       </div>
       <div className="custom-sidebar-form-field">
         <label>Qualification Status</label>
-        <div className="checkbox-item">
-          <Field name="Invitation Sent" id="InvitationSent" component="input" type="checkbox" />
-          <label >Invitation Sent</label>
-        </div>
-        <div className="checkbox-item">
-          <Field name="Progress" id="Progress" component="input" type="checkbox" />
-          <label >In Progress</label>
-        </div>
-        <div className="checkbox-item">
-          <Field name="Submitted" id="Submitted" component="input" type="checkbox" />
-          <label >Submitted</label>
-        </div>
-        <div className="checkbox-item">
-          <Field name="Approved" id="Approved" component="input" type="checkbox" />
-
-          <label >Approved</label>
-        </div>
-        <div className="checkbox-item">
-          <Field name="Approved" id="Approve" component="input" type="checkbox" />
-          <label >
-            Approved with Exceptions
-                </label>
-        </div>
-        <div className="checkbox-item">
-          <Field name="Denied" id="Denied" component="input" type="checkbox" />
-
-          <label >Denied</label>
-        </div>
+        {qualificationStatus.length > 0
+          ? qualificationStatus.map(qualification => (
+            <div className="checkbox-item">
+              <Field key={qualification} name={qualification} id={qualification} component="input" type="checkbox" />
+              <label>{qualification}</label>
+            </div>
+          )) : null}
       </div>
       <div className="custom-sidebar-form-field">
         <label>Labor Requirements</label>
         <div className="checkbox-item">
           <Field name="Union" id="Union" component="input" type="checkbox" />
-          <label >Union</label>
+          <label>Union</label>
         </div>
         <div className="checkbox-item">
           <Field name="nonUnion" id="nonUnion" component="input" type="checkbox" />
-          <label >Non-Union</label>
+          <label>Non-Union</label>
         </div>
         <div className="checkbox-item">
           <Field name="Wages" id="Wages" component="input" type="checkbox" />
-          <label >Prevalling Wages</label>
+          <label>Prevalling Wages</label>
         </div>
       </div>
     </form>
@@ -98,21 +81,14 @@ class SideBar extends Component {
     this.state = {};
   }
 
+  componentDidMount = async () => {
+    const Filter = await filterCompany();
+    this.props.filterCompanyData(Filter);
+  }
+
   render = () => {
-    const selectOptions = [
-      { id: 'Costa', name: 'Costa' },
-      { id: 'Mesa', name: 'Mesa' },
-      { id: 'CA', name: 'CA' },
-      { id: 'USA', name: 'USA' }
-    ];
-    const workPerformanceOptions = [
-      { id: 'AC Dike', name: 'AC Dike' },
-      { id: 'Item 2', name: 'Item 2' }
-    ];
-    const tagsOptions = [
-      { id: 'Item -1', name: 'Item -1' },
-      { id: 'Item -2', name: 'Item -2' },
-    ];
+    const { filterCompanies } = this.props;
+
     return (
       <div className="col-sm-2 custom-axeyn-tab-search-sidebar">
         <div className="custom-search-sidebar-col">
@@ -122,15 +98,25 @@ class SideBar extends Component {
           </h6>
         </div>
         <div className="custom-search-sidebar-col">
-          <SideBarDropDown
-            selectOptions={selectOptions}
-            workPerformanceOptions={workPerformanceOptions}
-            tagsOptions={tagsOptions}
-          />
+          {Object.keys(filterCompanies).length > 0
+            ? (
+              <SideBarDropDown
+                selectOptions={filterCompanies.workPerformed}
+                workPerformanceOptions={filterCompanies.workPerformed}
+                tagsOptions={filterCompanies.workPerformed}
+                qualificationStatus={filterCompanies.status}
+                location={filterCompanies.locations}
+              />
+            ) : null}
         </div>
       </div>
     );
   };
 }
 
-export default SideBar;
+function mapStateToProps(state) {
+  return {
+    filterCompanies: state.qualification.filterCompanies,
+  };
+}
+export default connect(mapStateToProps, { filterCompanyData })(SideBar);

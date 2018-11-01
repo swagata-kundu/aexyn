@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import { axios } from '../util';
-import { QUESTION } from '../endpoint';
+import {
+  QUESTION, SEARCH_COMPANIES, GET_COMPANIES, FILTER_COMPANIES,
+} from '../endpoint';
 
 export const getQuestions = async () => {
   const url = `${QUESTION}`;
@@ -37,4 +39,39 @@ export const saveQuestions = (data) => {
     opening_statement,
   };
   return axios.post(url, params);
+};
+
+export const searchCompanyList = async (data) => {
+  const url = `${SEARCH_COMPANIES}`;
+  const body = {
+    searchText: data,
+  };
+  try {
+    const result = await axios.post(url, body);
+    return result.data;
+  } catch (error) {
+    return {};
+  }
+};
+
+export const getCompany = async () => {
+  const url = `${GET_COMPANIES}`;
+
+  try {
+    const result = await axios.get(url);
+    return result.data;
+  } catch (error) {
+    return {};
+  }
+};
+
+export const filterCompany = async () => {
+  const url = `${FILTER_COMPANIES}`;
+
+  try {
+    const result = await axios.get(url);
+    return result.data;
+  } catch (error) {
+    return {};
+  }
 };

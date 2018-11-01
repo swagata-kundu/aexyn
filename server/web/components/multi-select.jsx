@@ -8,7 +8,6 @@ const multiSelect = (field) => {
     value: o.id,
     label: o.name,
   }));
-
   const change = (e) => {
     let newValues = e || [];
     newValues = newValues.map(v => parseInt(v.value, 10));
