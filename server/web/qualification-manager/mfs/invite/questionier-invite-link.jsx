@@ -35,32 +35,32 @@ class QuestionierInviteLink extends Component {
           <div className="custom-axeyn-tabber-item axeyn-tab-share-link-grp d-block">
             <div className="axeyn-tab-share-link-inner-grp">
               <div className="custom-share-link-tab-img-grp">
-                <img src="Images/Share-link-image.png" alt="Share Link" />
+                <img src="/static/images/-logo.png/Share-link-image.png" alt="Share Link" />
               </div>
-{' '}
+              {' '}
               <div className="custom-share-link-tab-img-content">
                 <p />
                 Share the link below to allow any company to initiate a
-                qualification application or renewal with 
-{' '}
-<b> Karvi </b>
+                qualification application or renewal with
+                {' '}
+                <b> Karvi </b>
                 .Once an application is started, a Suppliers will appear in
-{' '}
+                {' '}
                 <b> "Application in Progress" </b>
-{' '}
+                {' '}
 and once completed, they will
                 move to
-{' '}
-<b> "Application Submitted" </b>
+                {' '}
+                <b> "Application Submitted" </b>
                 .You will be notified of the status update if you 're an
-                auto-add revlewer in settings. 
-{' '}
-<p />
-{' '}
+                auto-add revlewer in settings.
+                {' '}
+                <p />
+                {' '}
                 {copied ? <span> Copied </span> : null}
-{' '}
+                {' '}
               </div>
-{' '}
+              {' '}
               <div className="custom-copy-link-section">
                 <input
                   disabled
@@ -68,7 +68,13 @@ and once completed, they will
                   type="text"
                   defaultValue={linkValue}
                 />
-{' '}
+                <CopyToClipboard
+                  text={linkValue}
+                  onCopy={this.handleAfterCopy}
+                >
+                  <button className="copy-link-btn">Copy Link</button>
+                </CopyToClipboard>
+                {' '}
                 {/* <CopyToClipboard
                         text={linkValue}
                         onCopy={this.handleAfterCopy}

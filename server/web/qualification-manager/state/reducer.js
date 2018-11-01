@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
 import { reducer as reduxFormReducer } from 'redux-form';
-import { LOAD_INITIAL_QUESTIONS } from './type';
+import {
+  LOAD_INITIAL_QUESTIONS, SEARCH_COMPANIES, GET_COMPANIES_DETAIL, FILTER_COMPANY_DATA,
+} from './type';
 import common from '../../state/reducer';
 
 const INITIAL_STATE = {
@@ -8,6 +10,9 @@ const INITIAL_STATE = {
   },
   questionTypes: [],
   questionSet: {},
+  companies: {},
+  getCompanies: [],
+  filterCompanies: {},
 };
 
 function qualificationReducer(state = INITIAL_STATE, action) {
@@ -17,6 +22,24 @@ function qualificationReducer(state = INITIAL_STATE, action) {
       return ({
         ...state,
         ...payload,
+      });
+    }
+    case SEARCH_COMPANIES: {
+      return ({
+        ...state,
+        companies: action.payload,
+      });
+    }
+    case GET_COMPANIES_DETAIL: {
+      return ({
+        ...state,
+        getCompanies: action.payload,
+      });
+    }
+    case FILTER_COMPANY_DATA: {
+      return ({
+        ...state,
+        filterCompanies: action.payload,
       });
     }
     default: return state;

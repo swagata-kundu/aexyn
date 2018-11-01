@@ -1,21 +1,20 @@
-import React, { Component } from "react";
-import QuestionierInviteHeader from "./questionier-invite-header";
+import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
+import QuestionierInviteHeader from './questionier-invite-header';
 
 let validate = false;
-let emailTextValue = "";
+let emailTextValue = '';
 
 const InviteEmailForm = (props) => {
   const {
     emailAddress, handleSearch, checkEmail, addMoreEmail, errorMessage, emailTextValue,
-    addMoreEmailAddres
+    addMoreEmailAddres,
   } = props;
 
   return (
     <div>
       <form>
-        <div className="custom-email-form-field"
-        >
+        <div className="custom-email-form-field">
           <Field
             name="emailTextValue"
             component="input"
@@ -25,13 +24,14 @@ const InviteEmailForm = (props) => {
             onBlur={checkEmail}
           />
         </div>
-        {emailAddress.length >= 1 &&
-          emailAddress.map((emailValue, index) => (
+        {emailAddress.length >= 1
+          && emailAddress.map((emailValue, index) => (
             <div
               key={index}
               className="custom-email-form-field"
             >
               <Field
+                key={index}
                 name={`${emailValue}emailTextValue`}
                 component="input"
                 type="text"
@@ -41,8 +41,8 @@ const InviteEmailForm = (props) => {
               />
             </div>
           ))}
-        {errorMessage !== "" ? (
-          <span style={{ color: "red" }}>
+        {errorMessage !== '' ? (
+          <span style={{ color: 'red' }}>
             {errorMessage}
           </span>
         ) : null}
@@ -64,77 +64,85 @@ class QuestionierInviteEmail extends Component {
     super(props);
     this.state = {
       emailAddress: [],
-      emailText: "",
+      emailText: '',
       validEmail: false,
-      errorMessage: "",
-      addMoreEmails: false
+      errorMessage: '',
+      addMoreEmails: false,
     };
   }
-  handleSearch = e => {
+
+  handleSearch = (e) => {
     emailTextValue = e.target.value;
     const emailCheck = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     validate = emailCheck.test(String(emailTextValue).toLowerCase());
     if (validate) {
       this.setState({
         validEmail: true,
-        emailText: emailTextValue
+        emailText: emailTextValue,
       });
     } else {
       this.setState({
-        validEmail: false
-        
+        validEmail: false,
+
       });
     }
   };
+
   checkEmail = () => {
     const { validEmail, emailAddress, emailText } = this.state;
     if (validEmail) {
       emailAddress.push(emailText);
       this.setState({
-        emailAddress: emailAddress,
-        errorMessage: ""
+        emailAddress,
+        errorMessage: '',
       });
-      emailTextValue = "";
+      emailTextValue = '';
     } else {
       this.setState({
-        errorMessage: "Please Enter a Valid Email Addresss",
+        errorMessage: 'Please Enter a Valid Email Addresss',
         addMoreEmails: false,
 
       });
     }
   };
+
   addMoreEmail = () => {
     const { validEmail } = this.state;
 
-    emailTextValue = "";
+    emailTextValue = '';
     if (validEmail) {
       this.setState({
-        addMoreEmails: true
+        addMoreEmails: true,
       });
-    }
-    else {
+    } else {
       this.setState({
-        errorMessage: "Please Enter a Valid Email Addresss",
+        errorMessage: 'Please Enter a Valid Email Addresss',
       });
     }
   };
+
   sendInvitation = () => {
     const { emailAddress } = this.state;
-    emailTextValue = "";
+    emailTextValue = '';
     this.setState({
       emailAddress: [],
-      emailText: "",
+      emailText: '',
       validEmail: false,
-      errorMessage: "",
-      addMoreEmails: false
+      errorMessage: '',
+      addMoreEmails: false,
 
     });
-    console.log("Send Invitation To : ", emailAddress);
+    console.log('Send Invitation To : ', emailAddress);
   };
+
   render = () => {
     const { emailAddress, errorMessage, addMoreEmails } = this.state;
     return (
-      <section className="custom-body-container-wrapper">
+
+      <section
+        className="custom-body-container-wrapper"
+        style={{ paddingLeft: '50px' }}
+      >
         <div className="custom-body-container">
           <div className="custom-section">
             <div className="custom-sidebar-tab">
@@ -146,17 +154,11 @@ class QuestionierInviteEmail extends Component {
                       <div className="row">
                         <div className="col-sm-6 axeyn-tab-email-left-col">
                           <h3>Invite to Apply By Email Address</h3>
-                          <p>Suppliers can be invited by indivisual emails.</p>
+                          <p>Suppliers can be invited by indivisual emails, or by copying and pasting your list from elsewhere (such as Excel, Google Sheets, etc).</p>
                         </div>
                         <div className="col-sm-6 axeyn-tab-email-right-col">
                           <div className="axeyn-tab-email-right-col-btn-grp">
-                            <a
-                              className="custom-btn"
-                              href="#"
-                              onClick={this.sendInvitation}
-                            >
-                              Invite Selected Suppliers
-                            </a>
+                            <a className="custom-btn" onClick={this.sendInvitation} href="#">Invite Selected Suppliers</a>
                           </div>
                           <div className="custom-email-form-section">
                             <InviteEmailFormConnect

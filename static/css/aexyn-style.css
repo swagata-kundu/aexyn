@@ -685,6 +685,18 @@ form .additional-input {
     margin: 10px 0;
 }
 
+.custom-edit-ques-group {
+    display: none;
+}
+
+.show-ques .custom-edit-ques-group {
+    display: block;
+}
+
+.show-ques .custom-preview-ques-group {
+    display: none;
+}
+
 .form-field.input-column.three-form-field {
     width: 100%;
 }
@@ -1738,7 +1750,7 @@ a.email-verify-btn.custom-btn {
     border-right: 1px solid;
 }
 
-.custom-sidebar-form .custom-sidebar-form-field>label {
+.custom-sidebar-form .custom-sidebar-form-field>lable {
     font-weight: 600;
     font-size: 14px;
     display: block;
