@@ -128,7 +128,8 @@ export default class Login extends Component {
                 {this.renderForm()}
                 <div className="form-bottom-content">
                   <center>
-                    <a onClick={this.toogleAccount}>Need an Account?</a>
+                    <a href="/forget-password">Forget Password ?a</a>
+                    <a onClick={this.toogleAccount}>Need an Account ?</a>
                   </center>
                   {needAccount ? (
                     <div>

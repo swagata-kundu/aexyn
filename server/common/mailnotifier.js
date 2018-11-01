@@ -31,6 +31,14 @@ export class MailNotifier {
       ...data,
     }, done);
   }
+
+  sendResetPassword=(data, done) => {
+    this.transporter.sendMail({
+      ...this.defaultConfig,
+      subject: 'Verify Account',
+      ...data,
+    }, done);
+  }
 }
 
 export default new MailNotifier();

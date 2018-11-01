@@ -4,7 +4,7 @@ import Boom from 'boom';
 import Query from '../../db/Query';
 import { tables } from '../../db';
 
-module.exports = function checkEmail(db) {
+module.exports = function verifyAccount(db) {
   return async (req, res, next) => {
     const validtaionSchema = {
       hash: Joi.string().required().trim(),
