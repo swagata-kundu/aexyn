@@ -1,27 +1,36 @@
 import React from 'react';
 import Select from 'react-select';
-import _ from 'lodash';
 
-const multiSelect = (field) => {
+let newValues;
+
+const multiSelectLocation = (field) => {
   const { options, input } = field;
-  const moded_options = options.map(o => ({
-    value: o.id,
-    label: o.name,
-  }));
 
+  const moded_options = options.map(o => ({
+    value: o,
+    label: o,
+  }));
   const change = (e) => {
-    let newValues = e || [];
-    newValues = newValues.map(v => parseInt(v.value, 10));
+    newValues = e || [];
+    newValues = newValues.map(v => v.value);
     input.onChange(newValues);
   };
 
   const current = input.value || [];
-  const currentValues = _.map(current, c => _.find(moded_options, o => o.value === c));
+
+
+  const finalArray = [];
+  moded_options.forEach(x => current.forEach((y) => {
+    if (x.value === y) {
+      finalArray.push(x);
+    }
+  }));
+
 
   return (
     <div>
       <Select
-        value={currentValues}
+        value={finalArray}
         onChange={change}
         placeholder={field.placeholder}
         isMulti
@@ -32,4 +41,4 @@ const multiSelect = (field) => {
   );
 };
 
-export default multiSelect;
+export default multiSelectLocation;

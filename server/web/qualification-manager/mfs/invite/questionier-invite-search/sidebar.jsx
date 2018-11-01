@@ -4,6 +4,7 @@ import { reduxForm, Field } from 'redux-form';
 import MultiSelect from '../../../../components/multi-select';
 import { filterCompany } from '../../../../service/qualification-manager';
 import { filterCompanyData } from '../../../state/action';
+import multiSelectLocation from './multiselect-location';
 
 const DropdownForm = (props) => {
   const {
@@ -15,8 +16,8 @@ const DropdownForm = (props) => {
         <lable>Search by Location</lable>
         <Field
           required
-          component={MultiSelect}
-          options={selectOptions}
+          component={multiSelectLocation}
+          options={location}
           name="company"
           placeholder="Select "
         />
@@ -45,7 +46,7 @@ const DropdownForm = (props) => {
         <label>Qualification Status</label>
         {qualificationStatus.length > 0
           ? qualificationStatus.map(qualification => (
-            <div className="checkbox-item">
+            <div key={qualification} className="checkbox-item">
               <Field key={qualification} name={qualification} id={qualification} component="input" type="checkbox" />
               <label>{qualification}</label>
             </div>
