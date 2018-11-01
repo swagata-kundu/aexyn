@@ -53,7 +53,7 @@ const createResetLink = db => (req, res) => {
       const link = `${config.get('host')}reset-password/${email}/${uid}`;
       mailNotifier.sendResetPassword({
         to: email,
-        text: link,
+        link,
       }, () => {});
       return cb();
     }],

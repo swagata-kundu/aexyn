@@ -11,7 +11,7 @@ const user_schema = {
 const office_profile = {
   job_title: Joi.string().required(),
   work_phone: Joi.string().required(),
-  work_performed: Joi.array().items(Joi.number()),
+  work_performed: Joi.array().items(Joi.number()).default([]).optional(),
 };
 
 export const user_account = {

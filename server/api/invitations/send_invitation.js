@@ -2,13 +2,14 @@
 import Async from 'async';
 import Joi from 'joi';
 import passerror from 'passerror';
-import _ from 'lodash';
 import Questions from '../../models/question';
 import QryHelper from '../../db/Query';
 import { send_invite } from './schema';
 import { INVITE_USER_QUALIFICATION } from '../../db/sp';
+import mailNotifier from '../../common/mailnotifier';
 
-module.exports = db => (req, res, next) => {
+
+const sendInvitation = db => (req, res, next) => {
   const { userInfo } = res.locals;
   const qry = new QryHelper(db);
   const quest = new Questions(qry);
@@ -16,17 +17,39 @@ module.exports = db => (req, res, next) => {
   Async.auto({
     validate: cb => Joi.validate(req.body, send_invite, cb),
 
-    questionSet: ['validate', cb => quest.getQuestionSet(userInfo.company_id, cb)],
+    questionSet: ['validate', (results, cb) => quest.getQuestionSet(userInfo.company_id, cb)],
 
-    sendInvite: ['questionSet', (results, cb) => {
+    addInvite: ['questionSet', (results, cb) => {
       const { emails = [] } = results.validate;
-      const {questionSet}=results;
+      const { questionSet } = results;
       Async.eachSeries(emails, (email, cb2) => {
         const query = {
-          text: 'CALL ?? (?,?,?,?,?,?,?);',
-          values: []
- };
+          text: 'CALL ?? (?,?,?);',
+          values: [INVITE_USER_QUALIFICATION, userInfo.company_id, questionSet.id, email],
+        };
+        qry.query(query, cb2);
+      }, cb);
+    }],
+    sendmail: ['addInvite', (results, cb) => {
+      const { questionSet } = results;
+      const { emails = [] } = results.validate;
+      const link = quest.createQuestionSetShareLink(questionSet.hash);
+      Async.eachLimit(emails, 2, (email, cb2) => {
+        mailNotifier.sendQualificationInviteEmail({ to: email, link }, () => cb2());
       });
+      return cb();
     }],
   }, passerror(next, () => res.send('ok')));
+};
+
+const getInvitationLink = db => (req, res, next) => {
+  const { userInfo } = res.locals;
+  const qry = new QryHelper(db);
+  const quest = new Questions(qry);
+  return quest.getInvitaionShareLink(userInfo.company_id, passerror(next, link => res.json({ link })));
+};
+
+module.exports = {
+  sendInvitation,
+  getInvitationLink,
 };
