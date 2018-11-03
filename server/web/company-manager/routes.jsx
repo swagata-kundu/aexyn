@@ -2,15 +2,15 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Header from '../components/dashboard-header';
 import Footer from '../components/dashboard-footer';
-import Mfs from './mfs';
 import RouteG from '../components/route-guard';
+import Offices from './screens/offices';
 
-const basename = '/qualification-manager/';
+const basename = '/company-manager/';
 const Routes = () => (
   <Router basename={basename}>
     <div>
       <Header />
-      <Route path="/manage-food-suppliers/" component={Mfs} />
+      <Route exact path="/" component={Offices} />
       <Footer />
     </div>
   </Router>

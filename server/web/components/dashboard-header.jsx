@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const DashBoardHeader = () => (
   <header className="custom-header-container-wrapper">
@@ -93,7 +93,7 @@ Expired (Click hare to
             </a>
           </li>
           <li>
-            <a href="/companies">
+            <a href="/company-manager">
               <i className="fa fa-building-o" aria-hidden="true" />
               <span className="menu-text">Company</span>
             </a>

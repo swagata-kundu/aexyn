@@ -16,3 +16,5 @@ module.exports = {
     APPROVED_EXCEPTION: 'approved-exception',
   },
 };
+// 'NO','VIEW','LIMITED','ADMIN'
+// 'ALL', 'DESIGNATED'

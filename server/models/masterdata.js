@@ -18,34 +18,26 @@ export default class MasterData {
 
     country=(done) => {
       const query = {
-        text: `SELECT C.*,CONCAT('[',
-      GROUP_CONCAT(JSON_OBJECT('state_id',
-                  S.id,
-                  'state_name',
-                  S.name)),
-      ']') AS states FROM country C JOIN state S ON S.country_id=C.id GROUP BY C.id;`,
+        text: `SELECT 
+        country.*, state.name AS state_name, state.id AS state_id
+    FROM
+        country
+            JOIN
+        state ON country.id = state.country_id
+        ORDER BY country.name ASC, state.name ASC; `,
         values: [],
       };
-      this.con.query(query, (err, result) => {
-        if (err) {
-          return done(err);
-        }
-        const mod = result.map((r) => {
-          try {
-            let {
-              states,
-            } = r;
-            states = JSON.parse(states);
-            return {
-              ...r,
-              states,
-            };
-          } catch (pe) {
-            return r;
-          }
-        });
-        return done(null, mod);
-      });
+      this.con.query(query, passerror(done, (result) => {
+        const a = _.chain(result).groupBy('name').map((v) => {
+          const { id, name } = _.first(v);
+          return {
+            id,
+            name,
+            states: _.map(v, ({ state_name, state_id }) => ({ state_name, state_id })),
+          };
+        }).values();
+        return done(null, a);
+      }));
     }
 
     workPerformed=(done) => {
