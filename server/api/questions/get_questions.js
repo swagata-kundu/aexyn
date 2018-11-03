@@ -3,6 +3,8 @@ import passerror from 'passerror';
 import QryHelper from '../../db/Query';
 import Questions from '../../models/question';
 
+const knex = require('knex')({ client: 'mysql' });
+
 module.exports = db => (req, res, next) => {
   const { userInfo } = res.locals;
   const qry = new QryHelper(db);
@@ -12,11 +14,20 @@ module.exports = db => (req, res, next) => {
 
     questions: ['questionSet', (results, cb) => {
       const { questionSet } = results;
+      const where = {
+        'questions.isDeleted': false,
+        'questions.question_set_id': questionSet.id,
+      };
+      if (req.query.include) {
+        where['questions.isIncluded'] = true;
+      }
+      const q = knex('questions').select('questions.*', 'question_types.name AS type_name', 'question_types.type')
+        .innerJoin('question_types', 'questions.question_type', 'question_types.id')
+        .where(where)
+        .orderBy('questions.section', 'ASC')
+        .orderBy('questions.id', 'ASC');
       qry.query({
-        text: `SELECT Q.*,QT.type,QT.name AS type_name FROM questions Q JOIN question_types QT ON Q.question_type=QT.id 
-          WHERE Q.isDeleted=false AND Q.question_set_id=?
-          ORDER BY Q.section ASC,Q.id ASC;`,
-        values: [questionSet.id],
+        text: q.toQuery(),
       }, cb);
     }],
 

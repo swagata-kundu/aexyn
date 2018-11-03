@@ -44,7 +44,7 @@ const DashBoard = () => {
                     <div className="col-sm-6 mfs-layout-top-bar-left-col">
                       <ul>
                         <li>
-                          <Link to="/manage-food-suppliers/configure-questions">
+                          <Link to="/manage-food-suppliers/preview-questions">
                             <i className="fa fa-tasks" aria-hidden="true" />{' '}
                             Questionnaire
                           </Link>

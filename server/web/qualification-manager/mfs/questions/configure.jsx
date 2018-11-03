@@ -13,10 +13,21 @@ class Configure extends Component {
   }
 
   saveQuestions= async (values) => {
+    const { history } = this.props;
     try {
       await saveQuestions({ ...values, questionSet: this.questionSet });
+      history.push('/manage-food-suppliers/preview-questions');
     } catch (error) {
+      alert('Something went wrong');
+    }
+  }
 
+  cancel=() => {
+    const { history } = this.props;
+    if (history.length) {
+      history.replace('/manage-food-suppliers/preview-questions');
+    } else {
+      history.push('/manage-food-suppliers/preview-questions');
     }
   }
 
@@ -39,7 +50,7 @@ class Configure extends Component {
           <SideMenu />
 
           <div className="custom-right-group">
-            <Form onSubmit={this.saveQuestions} />
+            <Form onSubmit={this.saveQuestions} onCancel={this.cancel} />
           </div>
         </div>
       </section>
