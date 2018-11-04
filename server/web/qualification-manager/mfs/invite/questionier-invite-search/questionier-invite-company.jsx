@@ -1,7 +1,23 @@
 import React from 'react';
 
+let str_array = [];
+let calulateLength = 0;
+
 const QuestionierCompany = (props) => {
-  const { data } = props;
+  const { data, selectCompany } = props;
+  if (data !== undefined && data.locations !== undefined) {
+    str_array = data.locations.split(',');
+
+
+    for (let i = 0; i < str_array.length; i += 1) {
+      str_array[i] = str_array[i].replace(/^\s*/, '').replace(/\s*$/, '');
+    }
+  }
+
+  if (str_array.length > 4) {
+    calulateLength = str_array.length - 4;
+  }
+
   return (
     <tr className="has-border">
       <td className="custom-search-tb-data">
@@ -14,19 +30,21 @@ const QuestionierCompany = (props) => {
             {' '}
             <span className="devider">|</span>
             {' '}
-            <span>{data.locations}</span>
+            <span>{str_array[0]}</span>
           </div>
           <div className="tb-row-1">
-            <span className="custom-tag">tag-1</span>
-            <span className="custom-tag">tag-2</span>
-            <span className="custom-tag">tag-3</span>
-            <span className="custom-tag">tag-4</span>
+            {str_array.length > 0
+            && str_array.map((tagname, index) => (
+              <span key={index} className="custom-tag">{tagname}</span>
+            ))}
+
             <span className="custom-tag more-tag">
 +
-              <i className="more-tag-val">10</i>
+              <i className="more-tag-val">{calulateLength}</i>
               {' '}
 more
             </span>
+
           </div>
         </div>
       </td>
@@ -35,7 +53,13 @@ more
         <i>None for this work performed</i>
       </td>
       <td>
-        <div className="align-center"><a href="#" className="custom-more-btn">Click Here for Invite</a></div>
+        <div
+          className="align-center"
+          onClick={() => selectCompany(data.id)}
+        >
+          <a href="#" className="custom-more-btn">Click Here for Invite</a>
+
+        </div>
       </td>
     </tr>);
 };

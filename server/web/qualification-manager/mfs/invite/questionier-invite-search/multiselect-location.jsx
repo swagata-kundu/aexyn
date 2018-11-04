@@ -1,7 +1,9 @@
 import React from 'react';
 import Select from 'react-select';
+import { selectedFilter } from '../../../../service/qualification-manager';
 
 let newValues;
+let updatevalue = false;
 
 const multiSelectLocation = (field) => {
   const { options, input } = field;
@@ -14,6 +16,7 @@ const multiSelectLocation = (field) => {
     newValues = e || [];
     newValues = newValues.map(v => v.value);
     input.onChange(newValues);
+    updatevalue = true;
   };
 
   const current = input.value || [];
@@ -25,7 +28,10 @@ const multiSelectLocation = (field) => {
       finalArray.push(x);
     }
   }));
-
+  if (updatevalue) {
+    selectedFilter(finalArray, field.input.name);
+    updatevalue = false;
+  }
 
   return (
     <div>

@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
 import { reducer as reduxFormReducer } from 'redux-form';
 import {
-  LOAD_INITIAL_QUESTIONS, SEARCH_COMPANIES, GET_COMPANIES_DETAIL, FILTER_COMPANY_DATA,
+  LOAD_INITIAL_QUESTIONS, SEARCH_COMPANY, GET_COMPANIES_DETAIL, FILTER_COMPANY_DATA, FILTER_DATA_LOCATION,
+  COMPANY_POPUP,
 } from './type';
 import common from '../../state/reducer';
 
@@ -13,6 +14,8 @@ const INITIAL_STATE = {
   companies: {},
   getCompanies: [],
   filterCompanies: {},
+  filterValues: {},
+  showCompanypopup: false,
 };
 
 function qualificationReducer(state = INITIAL_STATE, action) {
@@ -24,7 +27,7 @@ function qualificationReducer(state = INITIAL_STATE, action) {
         ...payload,
       });
     }
-    case SEARCH_COMPANIES: {
+    case SEARCH_COMPANY: {
       return ({
         ...state,
         companies: action.payload,
@@ -40,6 +43,18 @@ function qualificationReducer(state = INITIAL_STATE, action) {
       return ({
         ...state,
         filterCompanies: action.payload,
+      });
+    }
+    case FILTER_DATA_LOCATION: {
+      return ({
+        ...state,
+        filterValues: action.payload,
+      });
+    }
+    case COMPANY_POPUP: {
+      return ({
+        ...state,
+        showCompanypopup: action.payload,
       });
     }
     default: return state;

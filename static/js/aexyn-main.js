@@ -182,18 +182,18 @@ $(document).ready(() => {
   $('.section-header').wrap('<div class="custom-section-header-main-wrapper"></div>');
   $('.custom-data-invite-pop').before('<span class="custom-pop-overlay"></span>');
   $('.custom-data-invite-pop .custom-search-table').append('<a class="close-pop"><i class="fa fa-times"></i></a');
-  $(document).on('click', '.custom-more-btn', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    $(this).closest('.custom-search-table').addClass('show-pop');
-  });
-  $('.custom-data-invite-pop .custom-search-table').click((b) => {
-    b.stopPropagation();
-  });
+  // $(document).on('click', '.custom-more-btn', function (e) {
+  //   e.preventDefault();
+  //   e.stopPropagation();
+  //   $(this).closest('.custom-search-table').addClass('show-pop');
+  // });
+  // $('.custom-data-invite-pop .custom-search-table').click((b) => {
+  //   b.stopPropagation();
+  // });
 
-  $('body, .close-pop').click(() => {
-    $('.custom-search-table').removeClass('show-pop');
-  });
+  // $('body, .close-pop').click(() => {
+  //   $('.custom-search-table').removeClass('show-pop');
+  // });
 
   function GetSecHeight() {
     $('.custom-section-header-main-wrapper').css('min-height', $('.section-header').outerHeight());
