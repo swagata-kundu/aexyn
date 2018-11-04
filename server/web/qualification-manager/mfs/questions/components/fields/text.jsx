@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field } from 'redux-form';
 
-const text = ({ name, questionInfo }) => (
+const Text = ({ name, questionInfo }) => (
   <div className="form-field single-col left-label">
     <div className="label-text">
       <label>{questionInfo.text}</label>
@@ -12,4 +12,4 @@ const text = ({ name, questionInfo }) => (
   </div>
 );
 
-export default text;
+export default Text;

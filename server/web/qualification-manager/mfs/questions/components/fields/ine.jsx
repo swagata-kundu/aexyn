@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field } from 'redux-form';
 
-const text = ({ name, questionInfo }) => (
+const IfNoExplain = ({ name, questionInfo }) => (
   <div>
     <div className="form-field">
       <div className="radio-label">
@@ -30,4 +30,4 @@ const text = ({ name, questionInfo }) => (
   </div>
 );
 
-export default text;
+export default IfNoExplain;

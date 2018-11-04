@@ -27,16 +27,26 @@ export class MailNotifier {
   sendVerificationMail=(data, done) => {
     this.transporter.sendMail({
       ...this.defaultConfig,
-      subject: 'Verify Account',
+      subject: 'Aexyn | Verify Account',
       ...data,
     }, done);
   }
 
-  sendResetPassword=(data, done) => {
+  sendResetPassword=({ to, link }, done) => {
     this.transporter.sendMail({
       ...this.defaultConfig,
-      subject: 'Verify Account',
-      ...data,
+      subject: 'Aexyn | Reset Password',
+      to,
+      text: link,
+    }, done);
+  }
+
+  sendQualificationInviteEmail=({ to, link }, done) => {
+    this.transporter.sendMail({
+      ...this.defaultConfig,
+      subject: 'Aexyn | Invitation',
+      to,
+      text: link,
     }, done);
   }
 }

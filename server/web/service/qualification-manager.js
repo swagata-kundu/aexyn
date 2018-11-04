@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { stringify } from 'querystring';
 import { axios } from '../util';
 import {
   QUESTION, SEARCH_COMPANIES, GET_COMPANIES, FILTER_COMPANIES,
@@ -16,8 +17,8 @@ let workPerformedArray = [];
 const laboursArray = [];
 let search;
 
-export const getQuestions = async () => {
-  const url = `${QUESTION}`;
+export const getQuestions = async (query = {}) => {
+  const url = `${QUESTION}?${stringify(query)}`;
   try {
     const result = await axios.get(url);
     return result.data;

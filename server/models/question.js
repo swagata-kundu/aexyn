@@ -1,7 +1,7 @@
 import passerror from 'passerror';
-import Async from 'async';
 import boom from 'boom';
 import _ from 'lodash';
+import config from 'config';
 import { tables } from '../db';
 
 export default class Question {
@@ -51,4 +51,8 @@ export default class Question {
         return done(null, results[0]);
       }));
     }
+
+    createQuestionSetShareLink=hash => `${config.get('host')}aexyn/join-us/${hash}`
+
+    getInvitaionShareLink=(company_id, done) => this.getQuestionSet(company_id, passerror(done, ({ hash }) => done(null, this.createQuestionSetShareLink(hash))))
 }

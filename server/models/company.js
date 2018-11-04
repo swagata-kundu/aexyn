@@ -53,6 +53,15 @@ export default class Company {
             values: [sp.SET_INITIAL_QUESTIONS, company],
           }, cb);
         }],
+        permission: ['questionire', (results, cb) => {
+          const { company } = results;
+          const values = {
+            company_id: company,
+            supplier_permission: 'NO',
+            jungle_permission: 'DESIGNATED',
+          };
+          return this.con.insert({ tableName: tables.COMPANY_PERMISSION, values }, cb);
+        }],
       }, done);
     }
 

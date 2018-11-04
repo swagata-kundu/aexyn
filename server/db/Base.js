@@ -15,7 +15,7 @@ export default class BaseHelper {
     return next();
   }
 
-  query = ({ text, values }, done) => {
+  query = ({ text, values = [] }, done) => {
     const modified_value = this.stringify(values);
     const that = this;
     if (!done || typeof done !== 'function') {

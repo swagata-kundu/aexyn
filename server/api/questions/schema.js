@@ -3,10 +3,10 @@ import Joi from 'joi';
 export const question = {
   question_type: Joi.number().required(),
   text: Joi.string().required(),
-  isDefault: Joi.boolean().required(),
+  isDefault: Joi.boolean().default(false),
   isRequired: Joi.boolean().required(),
-  isIncluded: Joi.boolean().optional(),
-  isDisabled: Joi.boolean().optional(),
+  isIncluded: Joi.boolean().optional().default(false),
+  isDisabled: Joi.boolean().optional().default(false),
 };
 
 export const qset = {
@@ -24,5 +24,5 @@ export const qset = {
 export const create_Question = {
   questions: Joi.object().keys(qset).required(),
   questionSet: Joi.number().required(),
-  opening_statement: Joi.string().optional(),
+  opening_statement: Joi.string().optional().default(''),
 };

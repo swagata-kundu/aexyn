@@ -5,16 +5,18 @@ import Editor from '../../../components/editor';
 import QS from './components/question-selection';
 
 const ConfigureQuestion = (props) => {
-  const { handleSubmit, onSubmit, questionTypes } = props;
+  const {
+    handleSubmit, onSubmit, questionTypes, onCancel,
+  } = props;
   return (
     <form disabled onSubmit={handleSubmit(onSubmit)}>
       <div className="custom-edit-ques-group">
         <div className="top-group clearfix">
           <h1>Qualification Questionnaire</h1>
           <span className="button-group">
-            <a href="#" className="custom-ques-cancel-btn">
+            <button type="button" onClick={onCancel} className="custom-ques-cancel-btn">
               Cancel
-            </a>
+            </button>
             <button type="submit" className="custom-btn custom-ques-btn">
               Save
             </button>

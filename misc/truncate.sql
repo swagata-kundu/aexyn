@@ -1,0 +1,14 @@
+SET FOREIGN_KEY_CHECKS = 0; 
+TRUNCATE table user;
+truncate table company;
+truncate table email_invites;
+truncate table office_package;
+truncate table qualification_invites;
+truncate table questions;
+truncate table question_set;
+truncate table user;
+truncate table user_jungle_permission;
+truncate table user_office_profile;
+truncate table user_reset_password;
+truncate table user_verify_email; 
+SET FOREIGN_KEY_CHECKS = 1;

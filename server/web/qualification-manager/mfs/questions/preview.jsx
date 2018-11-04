@@ -13,7 +13,7 @@ class Preview extends Component {
   }
 
   componentDidMount = async () => {
-    const r = await getQuestions();
+    const r = await getQuestions({ include: true });
     const questions = _.get(r, 'questions', {});
     const questionTypes = _.get(r, 'questionTypes', []);
     const questionSet = _.get(r, 'questionSet', {});
@@ -47,7 +47,7 @@ class Preview extends Component {
             </div>
             <div className="bottom-group">
               <p>This is a preview of questionnaire that your supplier will be asked to complete:</p>
-            <QF onSubmit={()=>{}}/>
+              <QF onSubmit={() => {}} />
             </div>
           </div>
         </div>

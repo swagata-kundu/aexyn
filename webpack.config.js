@@ -15,6 +15,8 @@ module.exports = {
     'create-account': ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', './server/web/create-account'],
     'sign-in': ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', './server/web/sign-in'],
     'qualification-manager': ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', './server/web/qualification-manager'],
+    'company-manager': ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', './server/web/company-manager'],
+
   },
   module: {
     rules: [{

@@ -8,3 +8,6 @@ export const USER_RESET_PASSWORD = 'user_reset_password';
 export const QUESTION_TYPE = 'question_types';
 export const QUESTION = 'questions';
 export const QUESTION_SET = 'question_set';
+export const COMPANY_PERMISSION = 'company_qm_permission';
+export const USER_JUNGLE_PERMISSION = 'user_jungle_permission';
+export const USER_SUPPLIERS_PERMISSION = 'user_mfs_permission';
