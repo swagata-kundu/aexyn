@@ -15,6 +15,12 @@ module.exports = {
     DENIED: 'denied',
     APPROVED_EXCEPTION: 'approved-exception',
   },
+  MFS_PERMISSION: {
+    ADMIN: 'ADMIN',
+    NO: 'NO',
+    LIMITED: 'LIMITED',
+    VIEW: 'VIEW',
+  },
 };
 // 'NO','VIEW','LIMITED','ADMIN'
 // 'ALL', 'DESIGNATED'
