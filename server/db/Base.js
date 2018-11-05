@@ -59,6 +59,16 @@ export default class BaseHelper {
     return this.connection.query(inserts.join('\n'), done);
   }
 
+  delete= async ({ tableName, id }, done) => {
+    const text = `DELETE FROM ${tableName} WHERE id=?;`;
+    try {
+      await this.query({ text, values: [id] });
+      return done(null);
+    } catch (error) {
+      return done(error);
+    }
+  }
+
   stringify=(values) => {
     if (_.isArray(values)) {
       return _.map(values, (v) => {
