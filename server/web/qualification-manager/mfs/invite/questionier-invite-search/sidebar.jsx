@@ -55,7 +55,7 @@ const DropdownForm = (props) => {
                 component="input"
                 type="checkbox"
                 value={qualification}
-                onChange={() => selectCheckbox(index, 'status')}
+                onChange={() => selectCheckbox(qualification, 'status')}
               />
               <label>{qualification}</label>
             </div>
@@ -64,7 +64,7 @@ const DropdownForm = (props) => {
       <div className="custom-sidebar-form-field">
         <label>Labor Requirements</label>
         {labourType.length > 0
-          ? labourType.map((labour, index) => (
+          ? labourType.map(labour => (
             <div key={labour.id} className="checkbox-item">
               <Field
                 name={labour.name}
@@ -72,7 +72,7 @@ const DropdownForm = (props) => {
                 key={labour.id}
                 component="input"
                 type="checkbox"
-                onChange={() => selectCheckbox(index, 'labour')}
+                onChange={() => selectCheckbox(labour.id, 'labour')}
               />
               <label>{labour.name}</label>
             </div>

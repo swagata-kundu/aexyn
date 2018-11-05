@@ -8,3 +8,5 @@ export const QUESTION = 'questions';
 export const SEARCH_COMPANIES = 'http://localhost:3001/api/invitations/search';
 export const GET_COMPANIES = 'http://localhost:3001/api/invitations/search/company/';
 export const FILTER_COMPANIES = 'http://localhost:3001/api/master-data/invitaion-filter';
+export const GET_INVITE_LINK = 'http://localhost:3001/api/invitaion/link';
+export const SEND_INVITATION_LINK = 'http://localhost:3001/api/invitaion/send';

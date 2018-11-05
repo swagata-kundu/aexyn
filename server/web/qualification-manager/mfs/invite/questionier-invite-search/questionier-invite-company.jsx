@@ -17,7 +17,6 @@ const QuestionierCompany = (props) => {
   if (str_array.length > 4) {
     calulateLength = str_array.length - 4;
   }
-
   return (
     <tr className="has-border">
       <td className="custom-search-tb-data">
@@ -38,12 +37,15 @@ const QuestionierCompany = (props) => {
               <span key={index} className="custom-tag">{tagname}</span>
             ))}
 
+            {calulateLength > 0 && (
             <span className="custom-tag more-tag">
 +
               <i className="more-tag-val">{calulateLength}</i>
               {' '}
 more
-            </span>
+                        </span>
+            )
+           }
 
           </div>
         </div>

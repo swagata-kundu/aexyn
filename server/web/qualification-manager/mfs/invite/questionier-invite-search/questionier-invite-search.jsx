@@ -111,7 +111,11 @@ Best matches
 
                                     {companies.suggestions !== undefined
                                       ? companies.suggestions.map(company => (
-                                        <QuestionierCompany key={company.id} data={company} />
+                                        <QuestionierCompany
+                                          key={company.id}
+                                          data={company}
+                                          selectCompany={this.selectCompany}
+                                        />
                                       ))
                                       : null}
                                   </tbody>

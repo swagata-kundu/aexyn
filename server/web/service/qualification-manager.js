@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { stringify } from 'querystring';
 import { axios } from '../util';
 import {
-  QUESTION, SEARCH_COMPANIES, GET_COMPANIES, FILTER_COMPANIES,
+  QUESTION, SEARCH_COMPANIES, GET_COMPANIES, FILTER_COMPANIES, GET_INVITE_LINK, SEND_INVITATION_LINK
 } from '../endpoint';
 
 import {
@@ -10,11 +10,12 @@ import {
 } from '../qualification-manager/state/type';
 import store from '../qualification-manager/state/store';
 
-let tagsArray = [];
-let locationsArray = [];
 const statusArray = [];
-let workPerformedArray = [];
 const laboursArray = [];
+let locationsArray = [];
+let tagsArray = [];
+let workPerformedArray = [];
+
 let search;
 
 export const getQuestions = async (query = {}) => {
@@ -97,6 +98,18 @@ export const selectedFilter = async (data, field) => {
   if (field === 'location') {
     if (data.length === 0) {
       locationsArray = [];
+    } else if (locationsArray.length > 0) {
+      data.map((value) => {
+        findStatus = statusArray.indexOf(value.label);
+      });
+      if (findStatus !== -1) {
+        statusArray.splice(findStatus, 1);
+      } else {
+        locationsArray = [];
+        data.map((value) => {
+          locationsArray.push(value.label);
+        });
+      }
     } else {
       data.map((value) => {
         locationsArray.push(value.label);
@@ -106,9 +119,21 @@ export const selectedFilter = async (data, field) => {
   if (field === 'workPerformance') {
     if (data.length === 0) {
       workPerformedArray = [];
+    } else if (workPerformedArray.length > 0) {
+      data.map((value) => {
+        findStatus = statusArray.indexOf(value.value);
+      });
+      if (findStatus !== -1) {
+        statusArray.splice(findStatus, 1);
+      } else {
+        workPerformedArray = [];
+        data.map((value) => {
+          workPerformedArray.push(value.value);
+        });
+      }
     } else {
       data.map((value) => {
-        workPerformedArray.push(value.label);
+        workPerformedArray.push(value.value);
       });
     }
   }
@@ -122,29 +147,27 @@ export const selectedFilter = async (data, field) => {
     }
   }
   if (field === 'status') {
-    const dataValue = data + 1;
     if (statusArray.length > 0) {
-      findStatus = statusArray.indexOf(String(dataValue));
+      findStatus = statusArray.indexOf(data);
       if (findStatus !== -1) {
         statusArray.splice(findStatus, 1);
       } else {
-        statusArray.push(String(dataValue));
+        statusArray.push(data);
       }
     } else {
-      statusArray.push(String(dataValue));
+      statusArray.push(data);
     }
   }
   if (field === 'labour') {
-    const dataValue = data + 1;
     if (laboursArray.length > 0) {
-      findLabour = laboursArray.indexOf(String(dataValue));
+      findLabour = laboursArray.indexOf(data);
       if (findLabour !== -1) {
         laboursArray.splice(findLabour, 1);
       } else {
-        laboursArray.push(String(dataValue));
+        laboursArray.push(data);
       }
     } else {
-      laboursArray.push(String(dataValue));
+      laboursArray.push(data);
     }
   }
   if (field === 'string') {
@@ -171,6 +194,30 @@ export const selectedFilter = async (data, field) => {
       type: SEARCH_COMPANY,
       payload: result.data,
     });
+  } catch (error) {
+    return {};
+  }
+};
+
+export const getLink = async () => {
+  const url = `${GET_INVITE_LINK}`;
+
+  try {
+    const result = await axios.get(url);
+    return result.data;
+  } catch (error) {
+    return {};
+  }
+};
+
+export const invitationEmail = async (data) => {
+  const url = `${SEND_INVITATION_LINK}`;
+  const body = {
+    emails: data,
+  };
+  try {
+    const result = await axios.post(url, body);
+    return result.data;
   } catch (error) {
     return {};
   }

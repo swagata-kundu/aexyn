@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import QuestionierInviteHeader from './questionier-invite-header';
+import { getLink } from '../../../service/qualification-manager';
 
 class QuestionierInviteLink extends Component {
   constructor(props) {
@@ -9,6 +10,10 @@ class QuestionierInviteLink extends Component {
       linkValue: 'https://www.google.com/',
       copied: false,
     };
+  }
+
+  componentDidMount = async () => {
+    const linkUrl = await getLink();
   }
 
   handleAfterCopy = () => {

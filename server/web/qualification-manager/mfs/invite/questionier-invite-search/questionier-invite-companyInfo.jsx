@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
-import { getCompany } from '../../../../service/qualification-manager';
+import { getCompany, invitationEmail } from '../../../../service/qualification-manager';
 import { getCompanyDetail, companyPopup } from '../../../state/action';
 
 const QuestionierCompany = (props) => {
@@ -49,6 +49,12 @@ class QuestionierCompanyInfo extends React.Component {
     this.props.companyPopup(false);
   }
 
+  inviteEmail = async (data) => {
+    const emails = [];
+    emails.push(data.email);
+    const companieDetails = await invitationEmail(emails);
+  }
+
   render() {
     const { getCompanies } = this.props;
     const { companyId } = this.state;
@@ -89,7 +95,8 @@ class QuestionierCompanyInfo extends React.Component {
                             ? employee.employees.map(data => (
                               <div className="tb-row-1" key={data.office_id}>
                                 <a
-                                  href="#"
+                                  onClick={() => this.inviteEmail(data)}
+
                                   className="tb-btn"
                                   style={data.isInvited ? { cursor: 'not-allowed' } : null}
                                 >
