@@ -98,7 +98,7 @@ class QuestionierCompanyInfo extends React.Component {
                                   onClick={() => this.inviteEmail(data)}
 
                                   className="tb-btn"
-                                  style={data.isInvited ? { cursor: 'not-allowed' } : null}
+                                  style={data.isInvited ? { cursor: 'not-allowed' } : { cursor: 'pointer'}}
                                 >
                                   {!data.isInvited ? '+ INVITE' : 'INVITED'}
                                 </a>
