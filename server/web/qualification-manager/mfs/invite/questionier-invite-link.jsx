@@ -7,29 +7,19 @@ class QuestionierInviteLink extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      linkValue: 'https://www.google.com/',
-      copied: false,
+      linkValue: '',
     };
   }
 
   componentDidMount = async () => {
     const linkUrl = await getLink();
+    this.setState({
+      linkValue: linkUrl.link,
+    });
   }
 
-  handleAfterCopy = () => {
-    this.setState({
-      copied: true,
-    });
-
-    setTimeout(() => {
-      this.setState({
-        copied: false,
-      });
-    }, 500);
-  };
-
   render = () => {
-    const { linkValue, copied } = this.state;
+    const { linkValue } = this.state;
     return (
       <section
         className="custom-body-container-wrapper"
@@ -62,7 +52,6 @@ and once completed, they will
                 {' '}
                 <p />
                 {' '}
-                {copied ? <span> Copied </span> : null}
                 {' '}
               </div>
               {' '}
@@ -75,7 +64,6 @@ and once completed, they will
                 />
                 <CopyToClipboard
                   text={linkValue}
-                  onCopy={this.handleAfterCopy}
                 >
                   <button className="copy-link-btn">Copy Link</button>
                 </CopyToClipboard>

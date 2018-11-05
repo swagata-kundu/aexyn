@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import QuestionierInviteHeader from './questionier-invite-header';
+import { invitationEmail } from '../../../service/qualification-manager';
 
 let validate = false;
 let emailTextValue = '';
@@ -121,7 +122,7 @@ class QuestionierInviteEmail extends Component {
     }
   };
 
-  sendInvitation = () => {
+  sendInvitation = async () => {
     const { emailAddress } = this.state;
     emailTextValue = '';
     this.setState({
@@ -133,6 +134,7 @@ class QuestionierInviteEmail extends Component {
 
     });
     console.log('Send Invitation To : ', emailAddress);
+    const companieDetails = await invitationEmail(emailAddress);
   };
 
   render = () => {
