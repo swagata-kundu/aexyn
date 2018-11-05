@@ -4,27 +4,31 @@ import QuestionierInviteHeader from '../questionier-invite-header';
 import SideBar from './sidebar';
 import QuestionierCompany from './questionier-invite-company';
 import QuestionierCompanyInfo from './questionier-invite-companyInfo';
-import { searchCompany } from '../../../state/action';
-import { searchCompanyList } from '../../../../service/qualification-manager';
+import { searchCompany, companyPopup } from '../../../state/action';
+import { selectedFilter } from '../../../../service/qualification-manager';
 
 class QuestionierInviteSearch extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      companyId: null,
+    };
   }
 
   searchCompanies = async (event) => {
-    let companies = {};
-    if (event.target.value !== '') {
-      companies = await searchCompanyList(event.target.value);
-      this.props.searchCompany(companies);
-    } else {
-      this.props.searchCompany(companies);
-    }
+    selectedFilter(event.target.value, 'string');
+  }
+
+  selectCompany = (companyId) => {
+    this.props.companyPopup(true);
+    this.setState({
+      companyId,
+    });
   }
 
   render() {
-    const { companies } = this.props;
+    const { companies, showCompanypopup } = this.props;
+    const { companyId } = this.state;
     const matchesCount = companies.matches !== undefined ? companies.matches.length : 'No';
     return (
       <section
@@ -52,7 +56,7 @@ class QuestionierInviteSearch extends Component {
                                 />
                               </div>
                             </form>
-                            <div className="custom-search-table table-1">
+                            <div className="custom-search-table table-1 show-pop">
                               <table>
                                 <tbody>
                                   <tr>
@@ -75,39 +79,46 @@ Best matches
                                     : null}
                                   {companies.matches !== undefined
                                     ? companies.matches.map(company => (
-                                      <QuestionierCompany key={company.id} data={company} />
+                                      <QuestionierCompany
+                                        key={company.id}
+                                        data={company}
+                                        selectCompany={this.selectCompany}
+                                      />
                                     ))
                                     : null}
                                 </tbody>
                               </table>
-                              <QuestionierCompanyInfo />
+                              {showCompanypopup ? <QuestionierCompanyInfo id={companyId} /> : null}
                             </div>
                             <div className="custom-search-table table-2">
-                              <table>
-                                <tbody>
-                                  <tr>
-                                    <td>
-                                      <h6>Did you mean one of these?</h6>
-                                    </td>
-                                  </tr>
-                                  {companies.suggestions !== undefined
-                                    ? (
-                                      <tr className="has-border">
-                                        <td>Company</td>
-                                        <td>Private Info</td>
-                                        <td>Recent Work History</td>
-                                      </tr>
-                                    )
-                                    : null}
+                              {companies.suggestions !== undefined ? (
+                                <table>
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        <h6>Did you mean one of these?</h6>
+                                      </td>
+                                    </tr>
+                                    {companies.suggestions !== undefined
+                                      ? (
+                                        <tr className="has-border">
+                                          <td>Company</td>
+                                          <td>Private Info</td>
+                                          <td>Recent Work History</td>
+                                        </tr>
+                                      )
+                                      : null}
 
-                                  {companies.suggestions !== undefined
-                                    ? companies.suggestions.map(company => (
-                                      <QuestionierCompany key={company.id} data={company} />
-                                    ))
-                                    : null}
-                                </tbody>
-                              </table>
-                              <QuestionierCompanyInfo />
+                                    {companies.suggestions !== undefined
+                                      ? companies.suggestions.map(company => (
+                                        <QuestionierCompany key={company.id} data={company} />
+                                      ))
+                                      : null}
+                                  </tbody>
+                                </table>
+                              ) : null
+                              }
+                              {showCompanypopup ? <QuestionierCompanyInfo id={companyId} /> : null}
                             </div>
                           </div>
                         </div>
@@ -127,6 +138,7 @@ function mapStateToProps(state) {
   return {
     companies: state.qualification.companies,
     getCompanies: state.qualification.getCompanies,
+    showCompanypopup: state.qualification.showCompanypopup,
   };
 }
-export default connect(mapStateToProps, ({ searchCompany }))(QuestionierInviteSearch);
+export default connect(mapStateToProps, ({ searchCompany, companyPopup }))(QuestionierInviteSearch);

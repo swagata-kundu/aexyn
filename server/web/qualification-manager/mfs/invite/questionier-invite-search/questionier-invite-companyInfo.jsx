@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { getCompany } from '../../../../service/qualification-manager';
-import { getCompanyDetail } from '../../../state/action';
+import { getCompanyDetail, companyPopup } from '../../../state/action';
 
 const QuestionierCompany = (props) => {
   const { data, selectCompany } = props;
@@ -12,7 +12,7 @@ const QuestionierCompany = (props) => {
         {data !== undefined && data.length > 0
           ? data.map(companyData => (
             <option key={companyData.office_id} id={companyData.office_id} value={companyData.office_id}>
-              {companyData.company_name}
+              {companyData.office}
             </option>
           ))
           : null}
@@ -34,7 +34,8 @@ class QuestionierCompanyInfo extends React.Component {
   }
 
   componentDidMount = async () => {
-    const companieDetails = await getCompany();
+    const { id } = this.props;
+    const companieDetails = await getCompany(id);
     this.props.getCompanyDetail(companieDetails);
   };
 
@@ -44,17 +45,21 @@ class QuestionierCompanyInfo extends React.Component {
     });
   }
 
+  closePopup = () => {
+    this.props.companyPopup(false);
+  }
+
   render() {
     const { getCompanies } = this.props;
     const { companyId } = this.state;
     return (
-      <div className="custom-data-invite-pop">
+      <div className="custom-data-invite-pop show-pop">
         <div className="custom-data-invite-pop-inner">
           <div className="custom-search-table">
             <table>
               <tbody>
                 <tr className="has-border">
-                  <td>Company</td>
+                  <td>{getCompanies.length > 0 ? getCompanies[0].company_name : 'Company'}</td>
                   <td>Private Info</td>
                   <td>Recent Work History</td>
                   <td />
@@ -66,11 +71,11 @@ class QuestionierCompanyInfo extends React.Component {
                     </div>
                     <div className="custom-tb-rght-col">
                       <div className="tb-row-1">
-                        <a href="#">{getCompanies.company_name}</a>
+                        <a href="#">{getCompanies.office}</a>
                         {' '}
                         <span className="devider">|</span>
                         {' '}
-                        <span>Corona</span>
+                        <span>{getCompanies.length > 0 ? getCompanies[0].company_name : 'Company'}</span>
                       </div>
                       <div className="custom-tb-select">
                         <QuestionierCompanys
@@ -80,15 +85,15 @@ class QuestionierCompanyInfo extends React.Component {
                       </div>
                       {getCompanies !== undefined && getCompanies.length > 0
                         ? getCompanies.map(employee => (
-                          employee.employees !== undefined && employee.employees.length > 0 && employee.office_id === Number(companyId)
+                          employee.employees !== undefined && employee.employees.length > 0 && (employee.office_id === getCompanies[0].office_id || employee.office_id === Number(companyId))
                             ? employee.employees.map(data => (
-                              <div className="tb-row-1">
+                              <div className="tb-row-1" key={data.office_id}>
                                 <a
                                   href="#"
                                   className="tb-btn"
                                   style={data.isInvited ? { cursor: 'not-allowed' } : null}
                                 >
-                            + INVITE
+                                  {!data.isInvited ? '+ INVITE' : 'INVITED'}
                                 </a>
                                 {' '}
                                 <a href="#">
@@ -117,6 +122,9 @@ class QuestionierCompanyInfo extends React.Component {
                 </tr>
               </tbody>
             </table>
+            <a className="close-pop" onClick={() => this.closePopup()}>
+              <i className="fa fa-times" />
+            </a>
           </div>
         </div>
       </div>
@@ -131,5 +139,5 @@ function mapStateToProps(state) {
 }
 export default connect(
   mapStateToProps,
-  { getCompanyDetail },
+  { getCompanyDetail, companyPopup },
 )(QuestionierCompanyInfo);

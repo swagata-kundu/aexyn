@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import MultiSelect from '../../../../components/multi-select';
-import { filterCompany } from '../../../../service/qualification-manager';
+import { filterCompany, selectedFilter } from '../../../../service/qualification-manager';
 import { filterCompanyData } from '../../../state/action';
 import multiSelectLocation from './multiselect-location';
 
 const DropdownForm = (props) => {
   const {
-    selectOptions, workPerformanceOptions, tagsOptions, qualificationStatus, location,
+    workPerformanceOptions, tagsOptions, qualificationStatus, location, labourType,
+    selectCheckbox,
   } = props;
   return (
     <form className="custom-sidebar-form">
@@ -18,8 +19,8 @@ const DropdownForm = (props) => {
           required
           component={multiSelectLocation}
           options={location}
-          name="company"
-          placeholder="Select "
+          name="location"
+          placeholder="Select Location"
         />
       </div>
       <div className="custom-sidebar-form-field">
@@ -28,7 +29,7 @@ const DropdownForm = (props) => {
           required
           component={MultiSelect}
           options={workPerformanceOptions}
-          name="company1"
+          name="workPerformance"
           placeholder="Select "
         />
       </div>
@@ -38,34 +39,44 @@ const DropdownForm = (props) => {
           required
           component={MultiSelect}
           options={tagsOptions}
-          name="company2"
+          name="tags"
           placeholder="Select "
         />
       </div>
       <div className="custom-sidebar-form-field">
         <label>Qualification Status</label>
         {qualificationStatus.length > 0
-          ? qualificationStatus.map(qualification => (
+          ? qualificationStatus.map((qualification, index) => (
             <div key={qualification} className="checkbox-item">
-              <Field key={qualification} name={qualification} id={qualification} component="input" type="checkbox" />
+              <Field
+                key={qualification}
+                name={qualification}
+                id={qualification}
+                component="input"
+                type="checkbox"
+                value={qualification}
+                onChange={() => selectCheckbox(index, 'status')}
+              />
               <label>{qualification}</label>
             </div>
           )) : null}
       </div>
       <div className="custom-sidebar-form-field">
         <label>Labor Requirements</label>
-        <div className="checkbox-item">
-          <Field name="Union" id="Union" component="input" type="checkbox" />
-          <label>Union</label>
-        </div>
-        <div className="checkbox-item">
-          <Field name="nonUnion" id="nonUnion" component="input" type="checkbox" />
-          <label>Non-Union</label>
-        </div>
-        <div className="checkbox-item">
-          <Field name="Wages" id="Wages" component="input" type="checkbox" />
-          <label>Prevalling Wages</label>
-        </div>
+        {labourType.length > 0
+          ? labourType.map((labour, index) => (
+            <div key={labour.id} className="checkbox-item">
+              <Field
+                name={labour.name}
+                id={labour.id}
+                key={labour.id}
+                component="input"
+                type="checkbox"
+                onChange={() => selectCheckbox(index, 'labour')}
+              />
+              <label>{labour.name}</label>
+            </div>
+          )) : null}
       </div>
     </form>
   );
@@ -87,9 +98,12 @@ class SideBar extends Component {
     this.props.filterCompanyData(Filter);
   }
 
+  selectCheckbox = (index, value) => {
+    selectedFilter(index, value);
+  }
+
   render = () => {
     const { filterCompanies } = this.props;
-
     return (
       <div className="col-sm-2 custom-axeyn-tab-search-sidebar">
         <div className="custom-search-sidebar-col">
@@ -102,11 +116,12 @@ class SideBar extends Component {
           {Object.keys(filterCompanies).length > 0
             ? (
               <SideBarDropDown
-                selectOptions={filterCompanies.workPerformed}
                 workPerformanceOptions={filterCompanies.workPerformed}
-                tagsOptions={filterCompanies.workPerformed}
+                tagsOptions={filterCompanies.tasg}
                 qualificationStatus={filterCompanies.status}
                 location={filterCompanies.locations}
+                labourType={filterCompanies.labourType}
+                selectCheckbox={this.selectCheckbox}
               />
             ) : null}
         </div>

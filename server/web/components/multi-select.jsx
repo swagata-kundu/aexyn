@@ -1,6 +1,9 @@
 import React from 'react';
 import Select from 'react-select';
 import _ from 'lodash';
+import { selectedFilter } from '../service/qualification-manager';
+
+let updatevalue = false;
 
 const multiSelect = (field) => {
   const { options = [], input } = field;
@@ -13,10 +16,20 @@ const multiSelect = (field) => {
     let newValues = e || [];
     newValues = newValues.map(v => parseInt(v.value, 10));
     input.onChange(newValues);
+    if (field.input.name === 'workPerformance'
+    || field.input.name === 'tags') {
+      updatevalue = true;
+    }
   };
 
   const current = input.value || [];
   const currentValues = _.map(current, c => _.find(moded_options, o => o.value === c));
+
+  if (updatevalue && (field.input.name === 'workPerformance'
+  || field.input.name === 'tags')) {
+    selectedFilter(currentValues, field.input.name);
+    updatevalue = false;
+  }
 
   return (
     <div>
