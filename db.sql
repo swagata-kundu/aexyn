@@ -24,6 +24,29 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/ `aexyn` /*!40100 DEFAULT CHARACTER SET 
 USE `aexyn`;
 
 --
+-- Table structure for table `business_type`
+--
+
+DROP TABLE IF EXISTS `business_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `business_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `business_type`
+--
+
+LOCK TABLES `business_type` WRITE;
+/*!40000 ALTER TABLE `business_type` DISABLE KEYS */;
+/*!40000 ALTER TABLE `business_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `company`
 --
 
@@ -34,11 +57,12 @@ CREATE TABLE `company` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(300) NOT NULL,
   `labour_type` json DEFAULT NULL,
+  `business_type` json DEFAULT NULL,
   `img` varchar(500) DEFAULT '',
-  `date_created` datetime DEFAULT NULL,
-  `date_updated` datetime DEFAULT NULL,
+  `date_created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `date_updated` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,7 +71,7 @@ CREATE TABLE `company` (
 
 LOCK TABLES `company` WRITE;
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
-INSERT INTO `company` VALUES (4,'Test','[1]','',NULL,NULL),(5,'Test','[1]','',NULL,NULL),(8,'Test','[1]','',NULL,NULL),(9,'sasas','[2, 3]','',NULL,NULL),(10,'sasas','[1]','',NULL,NULL),(11,'One.com','[1]','',NULL,NULL);
+INSERT INTO `company` VALUES (1,'Aexyn','[1]','[]','','2018-11-03 21:40:06','2018-11-03 21:40:06'),(2,'One.com','[1]','[]','','2018-11-04 15:30:03','2018-11-04 15:30:03');
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,6 +86,7 @@ CREATE TABLE `company_office` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `address1` mediumtext NOT NULL,
   `address2` mediumtext NOT NULL,
+  `phone_no` varchar(20) DEFAULT '',
   `city` varchar(200) NOT NULL,
   `zip` varchar(10) NOT NULL,
   `state_id` int(11) NOT NULL,
@@ -70,7 +95,7 @@ CREATE TABLE `company_office` (
   `company_id` int(11) NOT NULL,
   `office_order` int(11) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,8 +104,36 @@ CREATE TABLE `company_office` (
 
 LOCK TABLES `company_office` WRITE;
 /*!40000 ALTER TABLE `company_office` DISABLE KEYS */;
-INSERT INTO `company_office` VALUES (1,'Noida','Noida','Noida','122001',1,NULL,NULL,1,1),(2,'Noida','Noida','Noida','122001',1,NULL,NULL,2,1),(3,'Noida','Noida','Noida','122001',1,NULL,NULL,2,1),(4,'Gurgaon','ha','Gurgaon','1234',1,NULL,NULL,10,1),(5,'Gurgaon','ha','Gurgaon','1234',1,NULL,NULL,11,1),(6,'Gurgaon','ha','Gurgaon','1234',1,NULL,NULL,4,1),(7,'Gurgaon','ha','Gurgaon','1234',1,NULL,NULL,5,1),(10,'Gurgaon','ha','Gurgaon','1234',1,NULL,NULL,8,1),(16,'om nagar','ha','Gurgaon','1234',1,NULL,NULL,4,1),(17,'Gurgaon','ha','Gurgaon','1234',1,NULL,NULL,9,1),(18,'Gurgaon','ha','Gurgaon','1234',1,NULL,NULL,10,1),(19,'sasas','sasas','sasas','1',20,NULL,NULL,9,1),(20,'sasas','sasas','sasas','1',20,NULL,NULL,4,1),(21,'sasas','sasas','sasas','1',20,NULL,NULL,10,1),(22,'Dlf c','DLF Phase 2 Sector 24','Gurugram','122022',6,NULL,NULL,11,1);
+INSERT INTO `company_office` VALUES (1,'743/21 Omnagar','Khandsha Road','','Hurgaon','122001',6,NULL,NULL,1,1),(2,'Dlf Phase 2','Dlf','','Gurgaon','122001',6,NULL,NULL,2,1);
 /*!40000 ALTER TABLE `company_office` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `company_qm_permission`
+--
+
+DROP TABLE IF EXISTS `company_qm_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `company_qm_permission` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `jungle_permission` enum('ALL','DESIGNATED') DEFAULT 'ALL',
+  `supplier_permission` enum('NO','VIEW','LIMITED','ADMIN') DEFAULT 'VIEW',
+  PRIMARY KEY (`id`),
+  KEY `fk_company_id` (`company_id`),
+  CONSTRAINT `fk_company_id` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `company_qm_permission`
+--
+
+LOCK TABLES `company_qm_permission` WRITE;
+/*!40000 ALTER TABLE `company_qm_permission` DISABLE KEYS */;
+INSERT INTO `company_qm_permission` VALUES (1,1,'DESIGNATED','NO'),(2,2,'DESIGNATED','NO');
+/*!40000 ALTER TABLE `company_qm_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -134,6 +187,31 @@ INSERT INTO `country` VALUES (1,'India');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `email_invites`
+--
+
+DROP TABLE IF EXISTS `email_invites`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `email_invites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(200) DEFAULT NULL,
+  `qset_id` int(11) DEFAULT NULL,
+  `date_created` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `email_invites`
+--
+
+LOCK TABLES `email_invites` WRITE;
+/*!40000 ALTER TABLE `email_invites` DISABLE KEYS */;
+/*!40000 ALTER TABLE `email_invites` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `labour_type`
 --
 
@@ -177,7 +255,7 @@ CREATE TABLE `office_package` (
   KEY `fk_office_package_2_idx` (`package_id`),
   CONSTRAINT `fk_office_package_1` FOREIGN KEY (`office_id`) REFERENCES `company_office` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_office_package_2` FOREIGN KEY (`package_id`) REFERENCES `package` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -186,7 +264,7 @@ CREATE TABLE `office_package` (
 
 LOCK TABLES `office_package` WRITE;
 /*!40000 ALTER TABLE `office_package` DISABLE KEYS */;
-INSERT INTO `office_package` VALUES (1,10,1,'2018-10-16',NULL,NULL,NULL),(7,16,1,'2018-10-17',NULL,NULL,NULL),(8,17,1,'2018-10-18',NULL,NULL,NULL),(9,18,1,'2018-10-18',NULL,NULL,NULL),(10,19,1,'2018-10-21',NULL,NULL,NULL),(11,20,1,'2018-10-21',NULL,NULL,NULL),(12,21,1,'2018-10-21',NULL,NULL,NULL),(13,22,1,'2018-10-26',NULL,NULL,NULL);
+INSERT INTO `office_package` VALUES (1,1,1,'2018-11-03',NULL,NULL,NULL),(2,2,1,'2018-11-04',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `office_package` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -223,18 +301,13 @@ DROP TABLE IF EXISTS `qualification_invites`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `qualification_invites` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `question_set_id` int(11) NOT NULL,
-  `invited_company_id` int(11) NOT NULL,
-  `invitee_email` varchar(200) DEFAULT '',
-  `isEdited` tinyint(4) NOT NULL DEFAULT '0',
+  `invited_company_id` int(11) DEFAULT NULL,
+  `qset_id` int(11) DEFAULT NULL,
+  `isDraft` tinyint(1) DEFAULT '0',
   `expiry_date` date DEFAULT NULL,
-  `created` datetime DEFAULT CURRENT_TIMESTAMP,
-  `updated` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `fk_qualification_invites_2_idx` (`question_set_id`),
-  KEY `fk_qualification_invites_1_idx` (`invited_company_id`),
-  CONSTRAINT `fk_qualification_invites_1` FOREIGN KEY (`invited_company_id`) REFERENCES `company` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_qualification_invites_2` FOREIGN KEY (`question_set_id`) REFERENCES `question_set` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `date_created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `date_updated` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -257,13 +330,14 @@ DROP TABLE IF EXISTS `question_set`;
 CREATE TABLE `question_set` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `company_id` int(11) NOT NULL,
+  `hash` varchar(50) DEFAULT NULL,
   `opening_statement` text,
   `isDeleted` tinyint(1) DEFAULT '0',
   `created` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `fk_question_set_1` (`company_id`),
-  CONSTRAINT `fk_question_set_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_question_set_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -272,7 +346,7 @@ CREATE TABLE `question_set` (
 
 LOCK TABLES `question_set` WRITE;
 /*!40000 ALTER TABLE `question_set` DISABLE KEYS */;
-INSERT INTO `question_set` VALUES (2,4,NULL,0,'2018-10-24 13:07:21'),(3,11,NULL,0,'2018-10-26 17:06:39');
+INSERT INTO `question_set` VALUES (1,1,'edda1004-df82-11e8-9490-448500d9a666',NULL,0,'2018-11-03 21:40:06'),(2,2,'66723d0b-e018-11e8-9e73-448500d9a666',NULL,0,'2018-11-04 15:30:03');
 /*!40000 ALTER TABLE `question_set` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -289,7 +363,7 @@ CREATE TABLE `question_types` (
   `configurable` tinyint(1) DEFAULT NULL,
   `type` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -298,7 +372,7 @@ CREATE TABLE `question_types` (
 
 LOCK TABLES `question_types` WRITE;
 /*!40000 ALTER TABLE `question_types` DISABLE KEYS */;
-INSERT INTO `question_types` VALUES (1,'text response',1,'TEXT'),(2,'list of office locations',0,'OFFICES'),(3,'multi-select',0,'MS'),(4,'business structure (corporate type drop-down options (LLP, PVT. ltd, Public company, proprietor)',0,'BS'),(5,'yes/no, if yes explain',1,'YN-YE'),(6,'yes/no, if no explain',1,'YN-NE'),(7,'yes/no',1,'YN'),(8,'list of employees by dept',0,'EMPLOYEES'),(9,'list of name/email/phone',0,'EMAILS'),(10,'list of licenses',0,'LICENSES'),(11,'list of unions incl expiration',0,'UNIONS'),(12,'list of industry affiliation',0,'IAFFILIATION'),(13,'attach file',1,'FILE'),(14,'data for last 4 years',0,'4YRDATA'),(15,'frequently dropdown (Options will be Annual, Monthly, Weekly, daily, as needed)',0,'FREQUENTLY_DDL'),(16,'dollar amount',1,'AMOUNT'),(17,'percentage',1,'PERCENT'),(18,'general, workers comp, auto',0,'WORKERS'),(19,'list of company contact',0,'COMPANY_CONTACT'),(20,'list of project details',0,'PROJECT_LIST'),(21,'project details',0,'PROJECT_DETAIL'),(22,'number',1,'NUMBER');
+INSERT INTO `question_types` VALUES (1,'text response',1,'TEXT'),(2,'list of office locations',0,'OFFICES'),(3,'multi-select',0,'MS'),(4,'business structure (corporate type drop-down options (LLP, PVT. ltd, Public company, proprietor)',0,'BS'),(5,'yes/no, if yes explain',1,'YN-YE'),(6,'yes/no, if no explain',1,'YN-NE'),(7,'yes/no',1,'YN'),(8,'list of employees by dept',0,'EMPLOYEES'),(9,'list of name/email/phone',0,'EMAILS'),(10,'list of licenses',0,'LICENSES'),(11,'list of unions incl expiration',0,'UNIONS'),(12,'list of industry affiliation',0,'IAFFILIATION'),(13,'attach file',1,'FILE'),(14,'data for last 4 years',0,'4YRDATA'),(15,'frequently dropdown (Options will be Annual, Monthly, Weekly, daily, as needed)',0,'FREQUENTLY'),(16,'dollar amount',1,'AMOUNT'),(17,'percentage',1,'PERCENT'),(18,'general, workers comp, auto',0,'WORKERS'),(19,'list of company contact',0,'COMPANY_CONTACT'),(20,'list of project details',0,'PROJECT_LIST'),(21,'project details',0,'PROJECT_DETAIL'),(22,'number',1,'NUMBER'),(23,'yes/no please describe',1,'YN-PD');
 /*!40000 ALTER TABLE `question_types` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -319,6 +393,7 @@ CREATE TABLE `questions` (
   `isRequired` tinyint(1) NOT NULL DEFAULT '1',
   `isDeleted` tinyint(1) DEFAULT '0',
   `isIncluded` tinyint(1) DEFAULT '1',
+  `isDisabled` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_questions_1_idx` (`question_set_id`),
   KEY `fk_questions_2_idx` (`question_type`),
@@ -333,7 +408,7 @@ CREATE TABLE `questions` (
 
 LOCK TABLES `questions` WRITE;
 /*!40000 ALTER TABLE `questions` DISABLE KEYS */;
-INSERT INTO `questions` VALUES (1,2,1,'CP','Company Name',1,1,0,1),(2,2,2,'CP','Office location',1,1,0,1),(3,2,3,'CP','Business Type',1,0,0,1),(4,2,3,'CP','Labour Type',1,0,0,1),(5,2,3,'CP','Work Performed',1,0,0,1),(6,2,4,'CP','Ownership/Business Structure',1,0,0,1),(7,2,5,'CP','Has a company ever done business under diferent name?',1,0,0,1),(8,2,5,'CP','Is your company owned or controlled by a parent corporation?',1,0,0,1),(9,2,5,'CP','Does someone outside of your company perform your estimating?',1,0,0,1),(10,2,8,'CP','Number of employees',1,0,0,1),(11,2,9,'CP','Owner or officers of your company',1,0,0,1),(12,2,10,'CL','Professional Licenses',1,0,0,1),(13,2,11,'CL','Trade unions',1,0,0,1),(14,2,12,'CL','Industry affilations or Memberships',1,0,0,1),(15,2,13,'HS','Attach a copy of your safety program',1,0,0,1),(16,2,5,'HS','Do you have a safety officer or department?',1,0,0,1),(17,2,14,'HS','Provide your workers compensation Experience Modification Rate(EMR)',1,0,0,1),(18,2,5,'HS','Attach your insurance agent\'s EMR verification Letter',1,0,0,1),(19,2,15,'HS','How often do you hold regular safety meetings for field supervisors?',1,0,0,1),(20,2,15,'HS','how often does your company hold a job site safety metting?',1,0,0,1),(21,2,5,'HS','Does your copmpany have a substance abuse program?',1,0,0,1),(22,2,5,'HS','Does your company have an orientation program for newly appointed supervisors?',1,0,0,1),(23,2,14,'HS','Man-hours worked',1,0,0,1),(24,2,14,'HS','First Aid cases',1,0,0,1),(25,2,14,'HS','Recordable Incident Rate(RIR)',1,0,0,1),(26,2,14,'HS','Lost Time/Workday cases',1,0,0,1),(27,2,14,'HS','Lost Time/Workday Incident cases(LTWR)',1,0,0,1),(28,2,14,'HS','fatalities',1,0,0,1),(29,2,14,'HS','Average number of employees',1,0,0,1),(30,2,16,'IS','Total Bonding capacity',1,0,0,1),(31,2,16,'IS','Bonding capacity per project',1,0,0,1),(32,2,16,'IS','Average bonding capacity as of this date',1,0,0,1),(33,2,17,'IS','bond rate(%)',1,0,0,1),(34,2,5,'IS','Attach a reference letter stating aggregrate and single project bonding capacity from your surety company',1,0,0,1),(35,2,18,'IS','Insurance Limits',1,0,0,1),(36,2,19,'IS','Bonding Agent references',1,0,0,1),(37,2,19,'IS','surety References',1,0,0,1),(38,2,19,'IS','Insurance References',1,0,0,1),(39,2,5,'FIN','Attach a current financial statement. Ideally this is an audited finacial statement covering the last three years',1,0,0,1),(40,2,14,'FIN','Revenue',1,0,0,1),(41,2,14,'FIN','Net worth',1,0,0,1),(42,2,16,'FIN','Current working capital',1,0,0,1),(43,2,16,'FIN','Current Assests',1,0,0,1),(44,2,16,'FIN','Currrent Liabilities',1,0,0,1),(45,2,16,'FIN','What is your current backlog',1,0,0,1),(46,2,5,'FIN','Are there are outstanding debts or loans that exceed 20% of your company\'s current net worth?',1,0,0,1),(47,2,14,'FIN','Numbers of contrats completed',1,0,0,1),(48,2,14,'FIN','Average contract size',1,0,0,1),(49,2,19,'FIN','Banking References',1,0,0,1),(50,2,20,'WEX','List atleast three major projects your company currently has under contract',1,0,0,1),(51,2,21,'WEX','What is the largest contract your company has completed in last three years?',1,0,0,1),(52,2,20,'WEX','List atleast three additional projects your company  has completed in the last  five years',1,0,0,1),(53,2,5,'LGL','Has your company, its owners, or officers  been in involved in litigation regarding a construction contract within the last three years?',1,0,0,1),(54,2,5,'LGL','Has your company falled to complete a construction contract, defaulted, or terminated for cause within the last three years?',1,0,0,1),(55,2,5,'LGL','Has your company had any safety or environmental related citations from authorities in last three years?',1,0,0,1),(56,2,5,'LGL','Has your company, Its owners, or officers filed for bankruptcy protection within the last three years?',1,0,0,1),(57,2,5,'LGL','Has a complaint ever been filed with a licensing agency against your firm?',1,0,0,1),(58,2,5,'LGL','Has a surety ever finished one or more of your construction project?',1,0,0,1),(59,2,5,'LGL','Has your firm ever been assessed liquidated damages on a project?',1,0,0,1),(60,2,5,'LGL','Are threre any remaining issues or conflicts or  interest that would have material effect on your company, its owners or officers, In their operation, financial structure, or ability to perform work for our company?',1,0,0,1),(61,2,5,'OTH','Would you like to provide any additional information you feel would help our company determine your company\'s  qualification and expertise?',1,0,0,1),(62,2,1,'SIG','Full Name',1,1,0,1),(63,2,1,'SIG','Title',1,0,0,1),(64,3,1,'CP','Company Name',1,1,0,1),(65,3,2,'CP','Office location',1,1,0,1),(66,3,3,'CP','Business Type',1,0,0,1),(67,3,3,'CP','Labour Type',1,0,0,1),(68,3,3,'CP','Work Performed',1,0,0,1),(69,3,4,'CP','Ownership/Business Structure',1,0,0,1),(70,3,5,'CP','Has a company ever done business under diferent name?',1,0,0,1),(71,3,5,'CP','Is your company owned or controlled by a parent corporation?',1,0,0,1),(72,3,5,'CP','Does someone outside of your company perform your estimating?',1,0,0,1),(73,3,8,'CP','Number of employees',1,0,0,1),(74,3,9,'CP','Owner or officers of your company',1,0,0,1),(75,3,10,'CL','Professional Licenses',1,0,0,1),(76,3,11,'CL','Trade unions',1,0,0,1),(77,3,12,'CL','Industry affilations or Memberships',1,0,0,1),(78,3,13,'HS','Attach a copy of your safety program',1,0,0,1),(79,3,5,'HS','Do you have a safety officer or department?',1,0,0,1),(80,3,14,'HS','Provide your workers compensation Experience Modification Rate(EMR)',1,0,0,1),(81,3,5,'HS','Attach your insurance agent\'s EMR verification Letter',1,0,0,1),(82,3,15,'HS','How often do you hold regular safety meetings for field supervisors?',1,0,0,1),(83,3,15,'HS','how often does your company hold a job site safety metting?',1,0,0,1),(84,3,5,'HS','Does your copmpany have a substance abuse program?',1,0,0,1),(85,3,5,'HS','Does your company have an orientation program for newly appointed supervisors?',1,0,0,1),(86,3,14,'HS','Man-hours worked',1,0,0,1),(87,3,14,'HS','First Aid cases',1,0,0,1),(88,3,14,'HS','Recordable Incident Rate(RIR)',1,0,0,1),(89,3,14,'HS','Lost Time/Workday cases',1,0,0,1),(90,3,14,'HS','Lost Time/Workday Incident cases(LTWR)',1,0,0,1),(91,3,14,'HS','fatalities',1,0,0,1),(92,3,14,'HS','Average number of employees',1,0,0,1),(93,3,16,'IS','Total Bonding capacity',1,0,0,1),(94,3,16,'IS','Bonding capacity per project',1,0,0,1),(95,3,16,'IS','Average bonding capacity as of this date',1,0,0,1),(96,3,17,'IS','bond rate(%)',1,0,0,1),(97,3,5,'IS','Attach a reference letter stating aggregrate and single project bonding capacity from your surety company',1,0,0,1),(98,3,18,'IS','Insurance Limits',1,0,0,1),(99,3,19,'IS','Bonding Agent references',1,0,0,1),(100,3,19,'IS','surety References',1,0,0,1),(101,3,19,'IS','Insurance References',1,0,0,1),(102,3,5,'FIN','Attach a current financial statement. Ideally this is an audited finacial statement covering the last three years',1,0,0,1),(103,3,14,'FIN','Revenue',1,0,0,1),(104,3,14,'FIN','Net worth',1,0,0,1),(105,3,16,'FIN','Current working capital',1,0,0,1),(106,3,16,'FIN','Current Assests',1,0,0,1),(107,3,16,'FIN','Currrent Liabilities',1,0,0,1),(108,3,16,'FIN','What is your current backlog',1,0,0,1),(109,3,5,'FIN','Are there are outstanding debts or loans that exceed 20% of your company\'s current net worth?',1,0,0,1),(110,3,14,'FIN','Numbers of contrats completed',1,0,0,1),(111,3,14,'FIN','Average contract size',1,0,0,1),(112,3,19,'FIN','Banking References',1,0,0,1),(113,3,20,'WEX','List atleast three major projects your company currently has under contract',1,0,0,1),(114,3,21,'WEX','What is the largest contract your company has completed in last three years?',1,0,0,1),(115,3,20,'WEX','List atleast three additional projects your company  has completed in the last  five years',1,0,0,1),(116,3,5,'LGL','Has your company, its owners, or officers  been in involved in litigation regarding a construction contract within the last three years?',1,0,0,1),(117,3,5,'LGL','Has your company falled to complete a construction contract, defaulted, or terminated for cause within the last three years?',1,0,0,1),(118,3,5,'LGL','Has your company had any safety or environmental related citations from authorities in last three years?',1,0,0,1),(119,3,5,'LGL','Has your company, Its owners, or officers filed for bankruptcy protection within the last three years?',1,0,0,1),(120,3,5,'LGL','Has a complaint ever been filed with a licensing agency against your firm?',1,0,0,1),(121,3,5,'LGL','Has a surety ever finished one or more of your construction project?',1,0,0,1),(122,3,5,'LGL','Has your firm ever been assessed liquidated damages on a project?',1,0,0,1),(123,3,5,'LGL','Are threre any remaining issues or conflicts or  interest that would have material effect on your company, its owners or officers, In their operation, financial structure, or ability to perform work for our company?',1,0,0,1),(124,3,5,'OTH','Would you like to provide any additional information you feel would help our company determine your company\'s  qualification and expertise?',1,0,0,1),(125,3,1,'SIG','Full Name',1,1,0,1),(126,3,1,'SIG','Title',1,0,0,1);
+INSERT INTO `questions` VALUES (1,1,1,'CP','Company Name',1,1,0,1,0),(2,1,2,'CP','Office location',1,1,0,1,0),(3,1,3,'CP','Business Type',1,0,0,1,0),(4,1,3,'CP','Labour Type',1,0,0,1,0),(5,1,3,'CP','Work Performed',1,0,0,1,0),(6,1,4,'CP','Ownership/Business Structure',1,0,0,1,0),(7,1,5,'CP','Has a company ever done business under diferent name?',1,0,0,1,0),(8,1,5,'CP','Is your company owned or controlled by a parent corporation?',1,0,0,1,0),(9,1,5,'CP','Does someone outside of your company perform your estimating?',1,0,0,1,0),(10,1,8,'CP','Number of employees',1,0,0,1,0),(11,1,9,'CP','Owner or officers of your company',1,0,0,1,0),(12,1,10,'CL','Professional Licenses',1,0,0,1,0),(13,1,11,'CL','Trade unions',1,0,0,1,0),(14,1,12,'CL','Industry affilations or Memberships',1,0,0,1,0),(15,1,13,'HS','Attach a copy of your safety program',1,0,0,1,0),(16,1,5,'HS','Do you have a safety officer or department?',1,0,0,1,0),(17,1,14,'HS','Provide your workers compensation Experience Modification Rate(EMR)',1,0,0,1,0),(18,1,5,'HS','Attach your insurance agent\'s EMR verification Letter',1,0,0,1,0),(19,1,15,'HS','How often do you hold regular safety meetings for field supervisors?',1,0,0,1,0),(20,1,15,'HS','how often does your company hold a job site safety metting?',1,0,0,1,0),(21,1,5,'HS','Does your copmpany have a substance abuse program?',1,0,0,1,0),(22,1,5,'HS','Does your company have an orientation program for newly appointed supervisors?',1,0,0,1,0),(23,1,14,'HS','Man-hours worked',1,0,0,1,0),(24,1,14,'HS','First Aid cases',1,0,0,1,0),(25,1,14,'HS','Recordable Incident Rate(RIR)',1,0,0,1,0),(26,1,14,'HS','Lost Time/Workday cases',1,0,0,1,0),(27,1,14,'HS','Lost Time/Workday Incident cases(LTWR)',1,0,0,1,0),(28,1,14,'HS','fatalities',1,0,0,1,0),(29,1,14,'HS','Average number of employees',1,0,0,1,0),(30,1,16,'IS','Total Bonding capacity',1,0,0,1,0),(31,1,16,'IS','Bonding capacity per project',1,0,0,1,0),(32,1,16,'IS','Average bonding capacity as of this date',1,0,0,1,0),(33,1,17,'IS','bond rate(%)',1,0,0,1,0),(34,1,5,'IS','Attach a reference letter stating aggregrate and single project bonding capacity from your surety company',1,0,0,1,0),(35,1,18,'IS','Insurance Limits',1,0,0,1,0),(36,1,19,'IS','Bonding Agent references',1,0,0,1,0),(37,1,19,'IS','surety References',1,0,0,1,0),(38,1,19,'IS','Insurance References',1,0,0,1,0),(39,1,5,'FIN','Attach a current financial statement. Ideally this is an audited finacial statement covering the last three years',1,0,0,1,0),(40,1,14,'FIN','Revenue',1,0,0,1,0),(41,1,14,'FIN','Net worth',1,0,0,1,0),(42,1,16,'FIN','Current working capital',1,0,0,1,0),(43,1,16,'FIN','Current Assests',1,0,0,1,0),(44,1,16,'FIN','Currrent Liabilities',1,0,0,1,0),(45,1,16,'FIN','What is your current backlog',1,0,0,1,0),(46,1,5,'FIN','Are there are outstanding debts or loans that exceed 20% of your company\'s current net worth?',1,0,0,1,0),(47,1,14,'FIN','Numbers of contrats completed',1,0,0,1,0),(48,1,14,'FIN','Average contract size',1,0,0,1,0),(49,1,19,'FIN','Banking References',1,0,0,1,0),(50,1,20,'WEX','List atleast three major projects your company currently has under contract',1,0,0,1,0),(51,1,21,'WEX','What is the largest contract your company has completed in last three years?',1,0,0,1,0),(52,1,20,'WEX','List atleast three additional projects your company  has completed in the last  five years',1,0,0,1,0),(53,1,5,'LGL','Has your company, its owners, or officers  been in involved in litigation regarding a construction contract within the last three years?',1,0,0,1,0),(54,1,5,'LGL','Has your company falled to complete a construction contract, defaulted, or terminated for cause within the last three years?',1,0,0,1,0),(55,1,5,'LGL','Has your company had any safety or environmental related citations from authorities in last three years?',1,0,0,1,0),(56,1,5,'LGL','Has your company, Its owners, or officers filed for bankruptcy protection within the last three years?',1,0,0,1,0),(57,1,5,'LGL','Has a complaint ever been filed with a licensing agency against your firm?',1,0,0,1,0),(58,1,5,'LGL','Has a surety ever finished one or more of your construction project?',1,0,0,1,0),(59,1,5,'LGL','Has your firm ever been assessed liquidated damages on a project?',1,0,0,1,0),(60,1,5,'LGL','Are threre any remaining issues or conflicts or  interest that would have material effect on your company, its owners or officers, In their operation, financial structure, or ability to perform work for our company?',1,0,0,1,0),(61,1,5,'OTH','Would you like to provide any additional information you feel would help our company determine your company\'s  qualification and expertise?',1,0,0,1,0),(62,1,1,'SIG','Full Name',1,1,0,1,0),(63,1,1,'SIG','Title',1,0,0,1,0),(64,2,1,'CP','Company Name',1,1,0,1,0),(65,2,2,'CP','Office location',1,1,0,1,0),(66,2,3,'CP','Business Type',1,0,0,1,0),(67,2,3,'CP','Labour Type',1,0,0,1,0),(68,2,3,'CP','Work Performed',1,0,0,1,0),(69,2,4,'CP','Ownership/Business Structure',1,0,0,1,0),(70,2,5,'CP','Has a company ever done business under diferent name?',1,0,0,1,0),(71,2,5,'CP','Is your company owned or controlled by a parent corporation?',1,0,0,1,0),(72,2,5,'CP','Does someone outside of your company perform your estimating?',1,0,0,1,0),(73,2,8,'CP','Number of employees',1,0,0,1,0),(74,2,9,'CP','Owner or officers of your company',1,0,0,1,0),(75,2,10,'CL','Professional Licenses',1,0,0,1,0),(76,2,11,'CL','Trade unions',1,0,0,1,0),(77,2,12,'CL','Industry affilations or Memberships',1,0,0,1,0),(78,2,13,'HS','Attach a copy of your safety program',1,0,0,1,0),(79,2,5,'HS','Do you have a safety officer or department?',1,0,0,1,0),(80,2,14,'HS','Provide your workers compensation Experience Modification Rate(EMR)',1,0,0,1,0),(81,2,5,'HS','Attach your insurance agent\'s EMR verification Letter',1,0,0,1,0),(82,2,15,'HS','How often do you hold regular safety meetings for field supervisors?',1,0,0,1,0),(83,2,15,'HS','how often does your company hold a job site safety metting?',1,0,0,1,0),(84,2,5,'HS','Does your copmpany have a substance abuse program?',1,0,0,1,0),(85,2,5,'HS','Does your company have an orientation program for newly appointed supervisors?',1,0,0,1,0),(86,2,14,'HS','Man-hours worked',1,0,0,1,0),(87,2,14,'HS','First Aid cases',1,0,0,1,0),(88,2,14,'HS','Recordable Incident Rate(RIR)',1,0,0,1,0),(89,2,14,'HS','Lost Time/Workday cases',1,0,0,1,0),(90,2,14,'HS','Lost Time/Workday Incident cases(LTWR)',1,0,0,1,0),(91,2,14,'HS','fatalities',1,0,0,1,0),(92,2,14,'HS','Average number of employees',1,0,0,1,0),(93,2,16,'IS','Total Bonding capacity',1,0,0,1,0),(94,2,16,'IS','Bonding capacity per project',1,0,0,1,0),(95,2,16,'IS','Average bonding capacity as of this date',1,0,0,1,0),(96,2,17,'IS','bond rate(%)',1,0,0,1,0),(97,2,5,'IS','Attach a reference letter stating aggregrate and single project bonding capacity from your surety company',1,0,0,1,0),(98,2,18,'IS','Insurance Limits',1,0,0,1,0),(99,2,19,'IS','Bonding Agent references',1,0,0,1,0),(100,2,19,'IS','surety References',1,0,0,1,0),(101,2,19,'IS','Insurance References',1,0,0,1,0),(102,2,5,'FIN','Attach a current financial statement. Ideally this is an audited finacial statement covering the last three years',1,0,0,1,0),(103,2,14,'FIN','Revenue',1,0,0,1,0),(104,2,14,'FIN','Net worth',1,0,0,1,0),(105,2,16,'FIN','Current working capital',1,0,0,1,0),(106,2,16,'FIN','Current Assests',1,0,0,1,0),(107,2,16,'FIN','Currrent Liabilities',1,0,0,1,0),(108,2,16,'FIN','What is your current backlog',1,0,0,1,0),(109,2,5,'FIN','Are there are outstanding debts or loans that exceed 20% of your company\'s current net worth?',1,0,0,1,0),(110,2,14,'FIN','Numbers of contrats completed',1,0,0,1,0),(111,2,14,'FIN','Average contract size',1,0,0,1,0),(112,2,19,'FIN','Banking References',1,0,0,1,0),(113,2,20,'WEX','List atleast three major projects your company currently has under contract',1,0,0,1,0),(114,2,21,'WEX','What is the largest contract your company has completed in last three years?',1,0,0,1,0),(115,2,20,'WEX','List atleast three additional projects your company  has completed in the last  five years',1,0,0,1,0),(116,2,5,'LGL','Has your company, its owners, or officers  been in involved in litigation regarding a construction contract within the last three years?',1,0,0,1,0),(117,2,5,'LGL','Has your company falled to complete a construction contract, defaulted, or terminated for cause within the last three years?',1,0,0,1,0),(118,2,5,'LGL','Has your company had any safety or environmental related citations from authorities in last three years?',1,0,0,1,0),(119,2,5,'LGL','Has your company, Its owners, or officers filed for bankruptcy protection within the last three years?',1,0,0,1,0),(120,2,5,'LGL','Has a complaint ever been filed with a licensing agency against your firm?',1,0,0,1,0),(121,2,5,'LGL','Has a surety ever finished one or more of your construction project?',1,0,0,1,0),(122,2,5,'LGL','Has your firm ever been assessed liquidated damages on a project?',1,0,0,1,0),(123,2,5,'LGL','Are threre any remaining issues or conflicts or  interest that would have material effect on your company, its owners or officers, In their operation, financial structure, or ability to perform work for our company?',1,0,0,1,0),(124,2,5,'OTH','Would you like to provide any additional information you feel would help our company determine your company\'s  qualification and expertise?',1,0,0,1,0),(125,2,1,'SIG','Full Name',1,1,0,1,0),(126,2,1,'SIG','Title',1,0,0,1,0);
 /*!40000 ALTER TABLE `questions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -350,8 +425,11 @@ CREATE TABLE `questions_default` (
   `text` varchar(1000) NOT NULL,
   `isDefault` tinyint(4) NOT NULL DEFAULT '1',
   `isRequired` tinyint(4) NOT NULL DEFAULT '1',
-  `isIncluded` tinyint(1) DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `isIncluded` tinyint(1) DEFAULT '1',
+  `isDisabled` tinyint(1) DEFAULT '0',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -360,7 +438,7 @@ CREATE TABLE `questions_default` (
 
 LOCK TABLES `questions_default` WRITE;
 /*!40000 ALTER TABLE `questions_default` DISABLE KEYS */;
-INSERT INTO `questions_default` VALUES (1,'CP','Company Name',1,1,1),(2,'CP','Office location',1,1,1),(3,'CP','Business Type',1,0,1),(3,'CP','Labour Type',1,0,1),(3,'CP','Work Performed',1,0,1),(4,'CP','Ownership/Business Structure',1,0,1),(5,'CP','Has a company ever done business under diferent name?',1,0,1),(5,'CP','Is your company owned or controlled by a parent corporation?',1,0,1),(5,'CP','Does someone outside of your company perform your estimating?',1,0,1),(8,'CP','Number of employees',1,0,1),(9,'CP','Owner or officers of your company',1,0,1),(10,'CL','Professional Licenses',1,0,1),(11,'CL','Trade unions',1,0,1),(12,'CL','Industry affilations or Memberships',1,0,1),(13,'HS','Attach a copy of your safety program',1,0,1),(5,'HS','Do you have a safety officer or department?',1,0,1),(14,'HS','Provide your workers compensation Experience Modification Rate(EMR)',1,0,1),(5,'HS','Attach your insurance agent\'s EMR verification Letter',1,0,1),(15,'HS','How often do you hold regular safety meetings for field supervisors?',1,0,1),(15,'HS','how often does your company hold a job site safety metting?',1,0,1),(5,'HS','Does your copmpany have a substance abuse program?',1,0,1),(5,'HS','Does your company have an orientation program for newly appointed supervisors?',1,0,1),(14,'HS','Man-hours worked',1,0,1),(14,'HS','First Aid cases',1,0,1),(14,'HS','Recordable Incident Rate(RIR)',1,0,1),(14,'HS','Lost Time/Workday cases',1,0,1),(14,'HS','Lost Time/Workday Incident cases(LTWR)',1,0,1),(14,'HS','fatalities',1,0,1),(14,'HS','Average number of employees',1,0,1),(16,'IS','Total Bonding capacity',1,0,1),(16,'IS','Bonding capacity per project',1,0,1),(16,'IS','Average bonding capacity as of this date',1,0,1),(17,'IS','bond rate(%)',1,0,1),(5,'IS','Attach a reference letter stating aggregrate and single project bonding capacity from your surety company',1,0,1),(18,'IS','Insurance Limits',1,0,1),(19,'IS','Bonding Agent references',1,0,1),(19,'IS','surety References',1,0,1),(19,'IS','Insurance References',1,0,1),(5,'FIN','Attach a current financial statement. Ideally this is an audited finacial statement covering the last three years',1,0,1),(14,'FIN','Revenue',1,0,1),(14,'FIN','Net worth',1,0,1),(16,'FIN','Current working capital',1,0,1),(16,'FIN','Current Assests',1,0,1),(16,'FIN','Currrent Liabilities',1,0,1),(16,'FIN','What is your current backlog',1,0,1),(5,'FIN','Are there are outstanding debts or loans that exceed 20% of your company\'s current net worth?',1,0,1),(14,'FIN','Numbers of contrats completed',1,0,1),(14,'FIN','Average contract size',1,0,1),(19,'FIN','Banking References',1,0,1),(20,'WEX','List atleast three major projects your company currently has under contract',1,0,1),(21,'WEX','What is the largest contract your company has completed in last three years?',1,0,1),(20,'WEX','List atleast three additional projects your company  has completed in the last  five years',1,0,1),(5,'LGL','Has your company, its owners, or officers  been in involved in litigation regarding a construction contract within the last three years?',1,0,1),(5,'LGL','Has your company falled to complete a construction contract, defaulted, or terminated for cause within the last three years?',1,0,1),(5,'LGL','Has your company had any safety or environmental related citations from authorities in last three years?',1,0,1),(5,'LGL','Has your company, Its owners, or officers filed for bankruptcy protection within the last three years?',1,0,1),(5,'LGL','Has a complaint ever been filed with a licensing agency against your firm?',1,0,1),(5,'LGL','Has a surety ever finished one or more of your construction project?',1,0,1),(5,'LGL','Has your firm ever been assessed liquidated damages on a project?',1,0,1),(5,'LGL','Are threre any remaining issues or conflicts or  interest that would have material effect on your company, its owners or officers, In their operation, financial structure, or ability to perform work for our company?',1,0,1),(5,'OTH','Would you like to provide any additional information you feel would help our company determine your company\'s  qualification and expertise?',1,0,1),(1,'SIG','Full Name',1,1,1),(1,'SIG','Title',1,0,1);
+INSERT INTO `questions_default` VALUES (1,'CP','Company Name',1,1,1,1,1),(2,'CP','Office location',1,1,1,1,2),(3,'CP','Business Type',1,0,1,0,3),(3,'CP','Labour Type',1,0,1,0,4),(3,'CP','Work Performed',1,0,1,0,5),(4,'CP','Ownership/Business Structure',1,0,1,0,6),(5,'CP','Has a company ever done business under diferent name?',1,0,1,0,7),(5,'CP','Is your company owned or controlled by a parent corporation?',1,0,1,0,8),(5,'CP','Does someone outside of your company perform your estimating?',1,0,1,0,9),(8,'CP','Number of employees',1,0,1,0,10),(9,'CP','Owner or officers of your company',1,0,1,0,11),(10,'CL','Professional Licenses',1,0,1,0,12),(11,'CL','Trade unions',1,0,1,0,13),(12,'CL','Industry affilations or Memberships',1,0,1,0,14),(13,'HS','Attach a copy of your safety program',1,0,1,0,15),(5,'HS','Do you have a safety officer or department?',1,0,1,0,16),(14,'HS','Provide your workers compensation Experience Modification Rate(EMR)',1,0,1,0,17),(5,'HS','Attach your insurance agent\'s EMR verification Letter',1,0,1,0,18),(15,'HS','How often do you hold regular safety meetings for field supervisors?',1,0,1,0,19),(15,'HS','how often does your company hold a job site safety metting?',1,0,1,0,20),(5,'HS','Does your copmpany have a substance abuse program?',1,0,1,0,21),(5,'HS','Does your company have an orientation program for newly appointed supervisors?',1,0,1,0,22),(14,'HS','Man-hours worked',1,0,1,0,23),(14,'HS','First Aid cases',1,0,1,0,24),(14,'HS','Recordable Incident Rate(RIR)',1,0,1,0,25),(14,'HS','Lost Time/Workday cases',1,0,1,0,26),(14,'HS','Lost Time/Workday Incident cases(LTWR)',1,0,1,0,27),(14,'HS','fatalities',1,0,1,0,28),(14,'HS','Average number of employees',1,0,1,0,29),(16,'IS','Total Bonding capacity',1,0,1,0,30),(16,'IS','Bonding capacity per project',1,0,1,0,31),(16,'IS','Average bonding capacity as of this date',1,0,1,0,32),(17,'IS','bond rate(%)',1,0,1,0,33),(5,'IS','Attach a reference letter stating aggregrate and single project bonding capacity from your surety company',1,0,1,0,34),(18,'IS','Insurance Limits',1,0,1,0,35),(19,'IS','Bonding Agent references',1,0,1,0,36),(19,'IS','surety References',1,0,1,0,37),(19,'IS','Insurance References',1,0,1,0,38),(5,'FIN','Attach a current financial statement. Ideally this is an audited finacial statement covering the last three years',1,0,1,0,39),(14,'FIN','Revenue',1,0,1,0,40),(14,'FIN','Net worth',1,0,1,0,41),(16,'FIN','Current working capital',1,0,1,0,42),(16,'FIN','Current Assests',1,0,1,0,43),(16,'FIN','Currrent Liabilities',1,0,1,0,44),(16,'FIN','What is your current backlog',1,0,1,0,45),(5,'FIN','Are there are outstanding debts or loans that exceed 20% of your company\'s current net worth?',1,0,1,0,46),(14,'FIN','Numbers of contrats completed',1,0,1,0,47),(14,'FIN','Average contract size',1,0,1,0,48),(19,'FIN','Banking References',1,0,1,0,49),(20,'WEX','List atleast three major projects your company currently has under contract',1,0,1,0,50),(21,'WEX','What is the largest contract your company has completed in last three years?',1,0,1,0,51),(20,'WEX','List atleast three additional projects your company  has completed in the last  five years',1,0,1,0,52),(5,'LGL','Has your company, its owners, or officers  been in involved in litigation regarding a construction contract within the last three years?',1,0,1,0,53),(5,'LGL','Has your company falled to complete a construction contract, defaulted, or terminated for cause within the last three years?',1,0,1,0,54),(5,'LGL','Has your company had any safety or environmental related citations from authorities in last three years?',1,0,1,0,55),(5,'LGL','Has your company, Its owners, or officers filed for bankruptcy protection within the last three years?',1,0,1,0,56),(5,'LGL','Has a complaint ever been filed with a licensing agency against your firm?',1,0,1,0,57),(5,'LGL','Has a surety ever finished one or more of your construction project?',1,0,1,0,58),(5,'LGL','Has your firm ever been assessed liquidated damages on a project?',1,0,1,0,59),(5,'LGL','Are threre any remaining issues or conflicts or  interest that would have material effect on your company, its owners or officers, In their operation, financial structure, or ability to perform work for our company?',1,0,1,0,60),(5,'OTH','Would you like to provide any additional information you feel would help our company determine your company\'s  qualification and expertise?',1,0,1,0,61),(1,'SIG','Full Name',1,1,1,0,62),(1,'SIG','Title',1,0,1,0,63);
 /*!40000 ALTER TABLE `questions_default` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -405,7 +483,7 @@ CREATE TABLE `user` (
   `verified` tinyint(1) NOT NULL DEFAULT '0',
   `user_role_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -414,8 +492,62 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (15,'sas','sasas','as@assa.cc','sasas',0,1),(16,'sas','sasas','as@asasa.cc','sasas',0,1),(17,'sas','sasas','as@asasa.cca','$2b$10$hgxpJr1Iy6EgToPw983WSed.CcUPZF9uT7kMjaT8YHBc/QI1aDbfu',0,1),(18,'sas','sasas','as1@asasa.cca','$2b$10$j2F9cfWPT.BmscMzSC.SR.ELx4YlPTkN05Fg5jr8ZBAhWlsbVhqSi',0,1),(32,'sas','sasas','as1@asasa.ccaa','$2b$10$qGLkCf7vr9de1Cbf6PWT2OfvNGzSWOh63R2/1nGPqSIO1lSTNM7q6',0,1),(33,'s','s','swagatak@one.com','$2b$10$uGkueZ/HtqGQ/4oz./dd3O.AUtUh7w5m30EBeQSvIFoQEr6GIsXgC',1,1),(34,'s','s','swagatak1@one.com','$2b$10$uGkueZ/HtqGQ/4oz./dd3O.AUtUh7w5m30EBeQSvIFoQEr6GIsXgC',0,1),(35,'s','s','swagatak2@one.com','$2b$10$PNDa/5F9ykQsVaq1g77I5eOX2r6KtSyJloynXZx.xnVBL1ojaxzt.',0,1),(36,'Swagata','Kundu','me@swagatak.one','$2b$10$ZgwaC8ooxo2IKxyna.g5kuAP6BNTN4WZCd6FYSEGMHpotLyZSl5au',0,1),(37,'s','Kundu','me2@swagatak.one','$2b$10$1ukzQ24i/afNz9iqYNV5DuknNoaItYWdCn1Qm35p2Nv5ppeb0QwFq',1,1),(38,'Swagata','Kundu','me4@swagatak.one','$2b$10$yMR4LsdyuJX8CvKtMPic2.8kd6uhjMkQi8NI8LaxHcw4CFOPH4lo2',0,1),(39,'Swagata','Kundu','swagatak3@one.com','$2b$10$uudgaMUl.eJh6xX5iMTVBeFtzfyQQnZEeuW8QekrOVTinYzzKCDjq',0,1),(40,'Swagata','Kundu','me1@swagatak.one','$2b$10$ejVwYRRxOSK9ep/P57SR0uw2Xb4/gnszFAstCHsmfIcez7U9tFu.C',0,1);
+INSERT INTO `user` VALUES (1,'Swagata','Kundu','swagatak@one.com','$2b$10$2BGv374IaWm/NR0Kl1s9ZewYVqQ8GTFS/IZ5GcrgjIoz1Od5zaDFm',1,1),(2,'Swagata','Kundu','me@swagatak.one','$2b$10$FlF3iMcHEbhZQfQYIoSffO7UlNshOgeJbE9FLjl9TW/oZZEb2wTy.',1,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_jungle_permission`
+--
+
+DROP TABLE IF EXISTS `user_jungle_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_jungle_permission` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_company_id` (`user_id`),
+  CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_jungle_permission`
+--
+
+LOCK TABLES `user_jungle_permission` WRITE;
+/*!40000 ALTER TABLE `user_jungle_permission` DISABLE KEYS */;
+INSERT INTO `user_jungle_permission` VALUES (1,2);
+/*!40000 ALTER TABLE `user_jungle_permission` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_mfs_permission`
+--
+
+DROP TABLE IF EXISTS `user_mfs_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_mfs_permission` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `autoAdd` tinyint(1) DEFAULT '0',
+  `permission` enum('NO','VIEW','LIMITED','ADMIN') DEFAULT 'VIEW',
+  PRIMARY KEY (`id`),
+  KEY `fk_user_mfs_permission_user_id` (`user_id`),
+  CONSTRAINT `fk_user_mfs_permission_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_mfs_permission`
+--
+
+LOCK TABLES `user_mfs_permission` WRITE;
+/*!40000 ALTER TABLE `user_mfs_permission` DISABLE KEYS */;
+INSERT INTO `user_mfs_permission` VALUES (1,2,1,'ADMIN');
+/*!40000 ALTER TABLE `user_mfs_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -429,14 +561,17 @@ CREATE TABLE `user_office_profile` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `office_id` int(11) NOT NULL,
+  `technical_lead` tinyint(1) DEFAULT '0',
   `job_title` varchar(100) NOT NULL,
   `work_phone` varchar(15) NOT NULL,
   `pic` varchar(300) DEFAULT NULL,
   `work_performed` json NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_user_company_profile_1_idx` (`office_id`),
-  CONSTRAINT `fk_user_company_profile_1` FOREIGN KEY (`office_id`) REFERENCES `company_office` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+  KEY `fk_user_office_profile_1_idx` (`user_id`),
+  CONSTRAINT `fk_user_company_profile_1` FOREIGN KEY (`office_id`) REFERENCES `company_office` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_office_profile_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -445,8 +580,32 @@ CREATE TABLE `user_office_profile` (
 
 LOCK TABLES `user_office_profile` WRITE;
 /*!40000 ALTER TABLE `user_office_profile` DISABLE KEYS */;
-INSERT INTO `user_office_profile` VALUES (1,15,16,'Test','1234',NULL,'[1, 3, 4]'),(2,16,16,'Test','1234',NULL,'[1, 3, 4]'),(3,17,16,'Test','1234',NULL,'[1, 3, 4]'),(4,18,16,'Test','1234',NULL,'[1, 3, 4]'),(5,32,16,'','',NULL,'[]'),(6,33,16,'','',NULL,'[]'),(7,34,19,'Test','123456',NULL,'[1]'),(8,35,10,'','',NULL,'[]'),(9,36,7,'','',NULL,'[]'),(10,37,16,'','',NULL,'[]'),(11,38,20,'','',NULL,'[]'),(12,39,21,'Test','123456',NULL,'[1]'),(13,40,22,'Developer','9748162576',NULL,'[1]');
+INSERT INTO `user_office_profile` VALUES (1,1,1,0,'Developer','9748162576',NULL,'[1]'),(2,2,2,0,'Developer','8750912129',NULL,'[]');
 /*!40000 ALTER TABLE `user_office_profile` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_reset_password`
+--
+
+DROP TABLE IF EXISTS `user_reset_password`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_reset_password` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(200) NOT NULL,
+  `hash` varchar(500) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_reset_password`
+--
+
+LOCK TABLES `user_reset_password` WRITE;
+/*!40000 ALTER TABLE `user_reset_password` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_reset_password` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -461,8 +620,10 @@ CREATE TABLE `user_verify_email` (
   `email` varchar(200) NOT NULL,
   `user_id` int(11) NOT NULL,
   `hash` varchar(500) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `fk_user_verify_email_user_id_idx` (`user_id`),
+  CONSTRAINT `fk_user_verify_email_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -471,7 +632,7 @@ CREATE TABLE `user_verify_email` (
 
 LOCK TABLES `user_verify_email` WRITE;
 /*!40000 ALTER TABLE `user_verify_email` DISABLE KEYS */;
-INSERT INTO `user_verify_email` VALUES (1,'swagatak@one.com',1,'$2b$10$pplJAtdK/mdhd5l1cCEQHup3TiRioNe3aXDceAquNjz4c.yZPqk8C'),(4,'me4@swagatak.one',38,'$2b$10$MN0/YHBYo7NWqHljtI6PUuojDVIxjVnlRkzMpgSmN7F167tpCXwCO'),(5,'swagatak3@one.com',39,'$2b$10$vDsJA3tytV0WAD67ER2Za.TuDjmqaiUaquzZZfzLwg6N1jlRDJaIq'),(6,'me1@swagatak.one',40,'$2b$10$Xj764.ajVN626apXxkEy0eob6s1HZkodEpAUKsdWJg9tNj3CGX0LC');
+INSERT INTO `user_verify_email` VALUES (1,'me@swagatak.one',2,'$2b$10$qTmjaBhgiICtm.L040JFBO8xeZArdpcqp3S4N58LkIIhBnttZSxA2');
 /*!40000 ALTER TABLE `user_verify_email` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -539,20 +700,20 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_create_first_questionier`(
+CREATE  PROCEDURE `sp_create_first_questionier`(
 in company_id int(11))
 BEGIN
 DECLARE question_set_id INT;
 
-INSERT INTO question_set(`company_id`,`isDeleted`)values(company_id,false);
+INSERT INTO question_set(`company_id`,`isDeleted`,`hash`)values(company_id,false,UUID());
 
 SET question_set_id= LAST_INSERT_ID();
 
 SELECT question_set_id;
 
-INSERT INTO questions(`question_set_id`,`question_type`,`section`,`text`,`isDefault`,`isRequired`,`isIncluded`)
+INSERT INTO questions(`question_set_id`,`question_type`,`section`,`text`,`isDefault`,`isRequired`,`isIncluded`,`isDisabled`)
 SELECT question_set_id,
- `question_type`,`section`,`text`,`isDefault`,`isRequired`,`isIncluded` from questions_default;
+ `question_type`,`section`,`text`,`isDefault`,`isRequired`,`isIncluded`,`isDisabled` from questions_default;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -569,7 +730,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_office_employee_invitations`(
+CREATE  PROCEDURE `sp_get_office_employee_invitations`(
 in company_id int(11))
 BEGIN
 SELECT 
@@ -598,6 +759,59 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_qualification_invite_by_email` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE  PROCEDURE `sp_qualification_invite_by_email`(
+in company_id int(11),
+in qset_id int(11),
+in email varchar(200))
+BEGIN
+DECLARE invited_company_id INT;
+
+#GET company_id for the user if exists
+SET invited_company_id= (SELECT 
+    CO.company_id
+FROM
+    user_office_profile UOP
+        JOIN
+    user U ON UOP.user_id = U.id
+        JOIN
+    company_office CO ON CO.id = UOP.office_id
+    WHERE U.email=email LIMIT 1);
+
+IF invited_company_id<>company_id THEN
+ 
+	INSERT INTO email_invites(`email`,`qset_id`)VALUES (email,qset_id);
+		 
+	IF invited_company_id THEN
+			
+			#If the company is already invited then donot add invitation for the company.
+			IF (SELECT COUNT(QI.id) FROM
+			qualification_invites QI
+			JOIN question_set QSET ON QI.qset_id = QSET.id
+			WHERE QI.invited_company_id=invited_company_id
+			AND QSET.company_id=company_id) =0 THEN 
+			
+				INSERT INTO qualification_invites(`invited_company_id`,`qset_id`) VALUES(invited_company_id,qset_id);
+			
+			END IF;    
+		END IF; 
+END IF; 
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_search_company_for_invite` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -608,7 +822,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_search_company_for_invite`(
+CREATE  PROCEDURE `sp_search_company_for_invite`(
 in ignore_company int(11),
 in searchText varchar (100),
 in locations varchar(500),
@@ -700,4 +914,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-29 14:31:45
+-- Dump completed on 2018-11-05 14:34:11
