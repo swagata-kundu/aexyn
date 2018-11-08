@@ -1,5 +1,4 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 
 const DashBoardHeader = () => (
   <header className="custom-header-container-wrapper">
@@ -87,13 +86,13 @@ Expired (Click hare to
       <div className="sidebar-nav">
         <ul>
           <li>
-            <a href="/user">
+            <a href="/profile-manager">
               <i className="fa fa-user-circle-o" aria-hidden="true" />
               <span className="menu-text">User</span>
             </a>
           </li>
           <li>
-            <a href="/company-manager">
+            <a href="/company-manager/offices">
               <i className="fa fa-building-o" aria-hidden="true" />
               <span className="menu-text">Company</span>
             </a>
@@ -111,10 +110,10 @@ Expired (Click hare to
             </a>
           </li>
           <li>
-            <NavLink to="/manage-food-suppliers" activeClassName="active">
+            <a href="/qualification-manager/manage-food-suppliers">
               <i className="fa fa-tasks" aria-hidden="true" />
               <span className="menu-text">Qualifications</span>
-            </NavLink>
+            </a>
           </li>
         </ul>
       </div>

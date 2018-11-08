@@ -1,4 +1,5 @@
 import React from 'react';
+import Nav from '../components/nav';
 
 const Offices = () => (
   <section
@@ -9,28 +10,7 @@ const Offices = () => (
       <div className="custom-section">
         <div className="custom-sidebar-tab">
           <div className="custom-tabber-group ">
-            <div
-              className="custom-section-header-main-wrapper"
-              style={{ minHeight: 105 }}
-            >
-              <div className="section-header clearfix">
-                <div className="container-fluid">
-                  <div className="row">
-                    <div className="col-sm-12">
-                      <h1>Company Name</h1>
-                      <ul className="clearfix">
-                        <li className="active">
-                          <a href="#">Offices</a>
-                        </li>
-                        <li>
-                          <a href="#">Company Profile</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <Nav heading="Offices" />
             <div className="custom-company-section">
               <div className="container-fluid">
                 <div className="row">

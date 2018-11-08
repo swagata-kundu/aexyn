@@ -10,7 +10,7 @@ const Routes = () => (
   <Router basename={basename}>
     <div>
       <Header />
-      <Route exact path="/" component={Offices} />
+      <Route exact path="/offices" component={Offices} />
       <Footer />
     </div>
   </Router>
