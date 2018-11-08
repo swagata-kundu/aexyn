@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const Tabs = () => (
   <div
@@ -13,14 +14,14 @@ const Tabs = () => (
           </div>
           <div className="col-sm-12">
             <ul>
-              <li className="active">
-                <a href="#">Manage Food Suppliers</a>
+              <li>
+                <NavLink to="/manage-food-suppliers/">Manage Food Suppliers</NavLink>
               </li>
               <li>
-                <a href="#">Invitations From Jungles</a>
+                <NavLink to="/not-implemented/">Invitations From Jungles</NavLink>
               </li>
               <li>
-                <a href="#">Permissions &amp; Settings</a>
+                <NavLink to="/permission-settings/">Permissions &amp; Settings</NavLink>
               </li>
             </ul>
           </div>

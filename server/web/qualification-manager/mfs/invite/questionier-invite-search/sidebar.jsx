@@ -14,7 +14,7 @@ const DropdownForm = (props) => {
   return (
     <form className="custom-sidebar-form">
       <div className="custom-sidebar-form-field">
-        <lable>Search by Location</lable>
+        <label>Search by Location</label>
         <Field
           required
           component={multiSelectLocation}
@@ -24,7 +24,7 @@ const DropdownForm = (props) => {
         />
       </div>
       <div className="custom-sidebar-form-field">
-        <lable>Work Performed</lable>
+        <label>Work Performed</label>
         <Field
           required
           component={MultiSelect}

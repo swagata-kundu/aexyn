@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 import Query from '../../db/Query';
 import Permission from '../../models/permission';
-import { add_supplier_permission } from './schema';
+import { add_supplier_permission, update_company_permission, update_supplier_permission } from './schema';
 import { MFS_PERMISSION } from '../../common/constants';
 import { tables } from '../../db';
 
@@ -77,8 +77,40 @@ const deleteSupplierPermission = db => (req, res, next) => {
   ], passerror(next, () => res.send('ok')));
 };
 
+const changeCompanyPermission = db => (req, res, next) => {
+  const { company_id } = res.locals.userInfo;
+  const qry = new Query(db);
+  Async.series([
+    cb => Joi.validate(req.body, update_company_permission, cb),
+    (cb) => {
+      qry.query({
+        text: 'UPDATE ?? SET ? WHERE ??=?;',
+        values: [tables.COMPANY_PERMISSION, req.body, 'company_id', company_id],
+      }, cb);
+    },
+  ], passerror(next, () => res.send('ok')));
+};
+
+const changeEmployeeSupplierPermission = db => (req, res, next) => {
+  const qry = new Query(db);
+  Async.series([
+    cb => Joi.validate(req.body, update_supplier_permission, cb),
+    (cb) => {
+      const update_values = { ...req.body };
+      delete update_values.supplier_permissionId;
+      qry.query({
+        text: 'UPDATE ?? SET ? WHERE ??=?;',
+        values: [tables.USER_SUPPLIERS_PERMISSION, update_values, 'id', req.body.supplier_permissionId],
+      }, cb);
+    },
+  ], passerror(next, () => res.send('ok')));
+};
+
+
 module.exports = {
   getPermissions,
   addSupplierPermission,
   deleteSupplierPermission,
+  changeCompanyPermission,
+  changeEmployeeSupplierPermission,
 };

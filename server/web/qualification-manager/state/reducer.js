@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
 import { reducer as reduxFormReducer } from 'redux-form';
+import { fromJS } from 'immutable';
 import {
   LOAD_INITIAL_QUESTIONS, SEARCH_COMPANY, GET_COMPANIES_DETAIL, FILTER_COMPANY_DATA, FILTER_DATA_LOCATION,
-  COMPANY_POPUP,
+  COMPANY_POPUP, LOAD_PERMISSION,
+  CHANGE_COMPANY_PERMISSION,
 } from './type';
 import common from '../../state/reducer';
 
-const INITIAL_STATE = {
+const INITIAL_STATE_MFS = {
   questions: {
   },
   questionTypes: [],
@@ -18,7 +20,7 @@ const INITIAL_STATE = {
   showCompanypopup: false,
 };
 
-function qualificationReducer(state = INITIAL_STATE, action) {
+function qualificationReducer(state = INITIAL_STATE_MFS, action) {
   const { type, payload } = action;
   switch (type) {
     case LOAD_INITIAL_QUESTIONS: {
@@ -61,9 +63,33 @@ function qualificationReducer(state = INITIAL_STATE, action) {
   }
 }
 
+const INITIAL_STATE_PERMISSION = fromJS({
+  permissions: [],
+  suppliers: {
+    employees: [],
+    permitted_employees: [],
+  },
+  jungles: {
+    employees: [],
+    permitted_employees: [],
+  },
+  companyPermission: {},
+});
+
+function permissionReducer(state = INITIAL_STATE_PERMISSION, { type, payload }) {
+  switch (type) {
+    case LOAD_PERMISSION: return fromJS(payload);
+    case CHANGE_COMPANY_PERMISSION: {
+      return state.mergeIn(['companyPermission'], fromJS(payload));
+    }
+    default: return state;
+  }
+}
+
 const reducer = combineReducers({
   form: reduxFormReducer,
   qualification: qualificationReducer,
   common,
+  permission: permissionReducer,
 });
 export default reducer;

@@ -9,3 +9,7 @@ export const FILTER_COMPANY_DATA = 'filter_company_data';
 export const FILTER_DATA_LOCATION = 'filter_data_location';
 
 export const COMPANY_POPUP = 'company_popup';
+
+export const LOAD_PERMISSION = 'permission-load-permission';
+
+export const CHANGE_COMPANY_PERMISSION = 'permission-change-company-permission';

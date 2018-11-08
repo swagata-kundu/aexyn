@@ -15,6 +15,7 @@ export default class Permission {
         UMP.permission AS supplier_permission,
         UMP.autoAdd AS supplier_autoAdd,
         U.id AS user_id,
+        UOP.job_title,
         UJP.id AS jungle_permissionId
     FROM
         user U
@@ -44,6 +45,6 @@ export default class Permission {
       `,
         values: [company_id],
       };
-      return this.con.query(query, done);
+      return this.con.query(query, passerror(done, result => done(null, _.get(result, '0', {}))));
     }
 }

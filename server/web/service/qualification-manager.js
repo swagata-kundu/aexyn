@@ -55,19 +55,6 @@ export const saveQuestions = (data) => {
   return axios.post(url, params);
 };
 
-export const searchCompanyList = async (data) => {
-  const url = `${SEARCH_COMPANIES}`;
-  const body = {
-    searchText: data,
-  };
-  try {
-    const result = await axios.post(url, body);
-    return result.data;
-  } catch (error) {
-    return {};
-  }
-};
-
 export const getCompany = async (companyId) => {
   const id = String(companyId);
   const url = `${GET_COMPANIES + id}`;

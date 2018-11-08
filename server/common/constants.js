@@ -17,7 +17,7 @@ module.exports = {
   },
   MFS_PERMISSION: {
     ADMIN: 'ADMIN',
-    NO: 'NO',
+    // NO: 'NO',
     LIMITED: 'LIMITED',
     VIEW: 'VIEW',
   },

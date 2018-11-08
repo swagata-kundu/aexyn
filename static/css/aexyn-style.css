@@ -174,13 +174,12 @@ img {
 
 .form-field {
     margin-bottom: 16px;
-    overflow: hidden;
 }
 
 form input,
 form select,
 textarea {
-    border: 1px solid #85ac92;
+    border: 1px solid #cfe5d6;
     display: block;
     margin: 0;
     width: 100%;
@@ -189,7 +188,7 @@ textarea {
     padding: 5px 10px;
     -moz-box-shadow: 2px 1px 1px rgba(68, 68, 68, 0.6);
     -webkit-box-shadow: 2px 1px 1px rgba(68, 68, 68, 0.6);
-    box-shadow: 2px 1px 1px rgba(68, 68, 68, 0.6);
+    box-shadow: 1px 0px 1px rgba(68, 68, 68, 0.4);
     margin-bottom: 5px;
     color: #333333;
     border-radius: 2px;
@@ -227,11 +226,7 @@ form label {
     margin-bottom: 3px;
 }
 
-.input-column>div {
-    margin-bottom: 15px;
-}
-
-.three-form-field .column-2 {}
+.three-col-form-field .column-2 {}
 
 body input[type=checkbox],
 body input[type=radio] {
@@ -693,26 +688,42 @@ form .upload-file-input {
 .form-field.input-column.two-col-form-field,
 .four-col-form-field.with-add-field{
     position: relative;
-    padding-right: 30px;
 }
 .form-field.input-column.two-col-form-field  span.remove-row-value{
     position: absolute;
     top: 45%;
     right: 0px;
 }
-.form-field.input-column.three-form-field {
+.form-field.input-column.three-col-form-field {
     width: 100%;
-    padding-right: 30px; 
 }
-.form-field.input-column.three-form-field span.remove-row-value{
+.three-col-form-field span.remove-row-value{
     position: absolute;
-    top: 50%;
+    top: 5px;
     right: -30px;
 }
-.four-col-form-field span.remove-row-value{
+.one-col-addition-field .input-field,
+.four-col-additional-form-field{
+    position: relative;
+    padding-right: 30px;
+}
+.one-col-addition-field span.remove-row-value {
     position: absolute;
-    top: 32%;
+    top: 5px;
     right: 0px;
+}
+.four-col-additional-form-field span.remove-row-value{
+    position: absolute;
+    top: 64px;
+    right: 0px;
+}
+.four-col-additional-form-field.list-of-project-details span.remove-row-value {
+    position: absolute;
+    top: 5px;
+    right: -30px;
+}
+.three-col-form-field {
+    position: relative;
 }
 .radio-label {
     overflow: hidden;
@@ -743,9 +754,6 @@ form .upload-file-input {
 .radio-label .radio-check {
     width: 6%;
     float: left;
-}
-.four-col-form-field .additional-input {
-    margin-top: 0;
 }
 .selected {
     padding: 10px;
@@ -1371,6 +1379,20 @@ input[type="submit"] {
 .custom-account-container-wrapper .form-group h2 {
     text-align: center;
 }
+.custom-account-container-wrapper .form-group h3 {
+    text-align: center;
+}
+.account-settings .form-field .input .field-text {
+    color: #000;
+    font-size: 12px;
+    font-weight: bold;
+}
+.account-settings .form-field .buttom-group button {
+    margin-top: 20px;
+}
+.account-settings .label-text label{
+    margin: 0;
+} 
 
 
 /********   Company Selection   ********/
@@ -2198,7 +2220,7 @@ a.tb-more-btn i {
     cursor: text;
 }
 
-.three-form-field>div {
+.three-col-form-field .three-col {
     width: 33.3333333333%;
     float: left;
     vertical-align: top;
@@ -2213,7 +2235,7 @@ a.tb-more-btn i {
 
 /* =================== Questionnaire ==================== */
 
-.three-form-field>div .form-text {
+.three-col-form-field>div .form-text {
     border-bottom: 1px solid #ccc;
     margin-bottom: 10px;
 }
@@ -2243,12 +2265,14 @@ input::placeholder {
     font-style: italic;
 }
 
-.three-form-field .column-2 {
+.three-col-form-field .column-2 {
     padding: 0 10px;
 }
 
 .two-col-form-field .form-text {
-    border-bottom: 2px solid #ccc;
+   border-bottom: 2px solid #ccc;
+   margin-bottom: 10px;
+   padding-bottom: 5px;
 }
 
 .two-col-form-field .form-text .department,
@@ -2274,13 +2298,13 @@ input::placeholder {
     padding-bottom: 0;
 }
 
-.four-col-form-field>div {
+.four-col-form-field .four-col {
     float: left;
     width: 25%;
     padding-right: 10px;
 }
 
-.four-col-form-field>div:last-child {
+.four-col-form-field .four-col.column-4 {
     padding-right: 0;
 }
 
@@ -2369,13 +2393,16 @@ input::placeholder {
     text-align: right;
 }
 
-.form-field.dollar .input-field span.dollar-icon {
+.form-field .dollar span.dollar-icon {
     position: absolute;
     left: 10px;
     top: 5px;
 }
-
-.form-field.dollar .input-field input[type="number"] {
+.three-col-additional-field{
+    position: relative;
+    padding-right: 30px;
+}
+.form-field .dollar .input-field input[type="number"] {
     text-align: right;
 }
 
@@ -2857,15 +2884,29 @@ table.Company-detail-table tr td .sort i {
 }
 .add-office-info .form-field .label {
     float: left;
-    width: 115px;
-    margin-right: 10px;
+    width: 150px;
 }
 .add-office-info .form-field .input {
     float: left;
-    width: calc(100% - 125px);
+    width: calc(100% - 150px);
     margin: 0;
+    padding-left: 10px;
 }
-
+.add-office-info .form-field .input small{
+    color: #000;
+    line-height: 1.5;
+    display: inline-block;
+    margin: 10px 0px;
+}
+.add-office-info .form-field .input small a {
+    color: rgba(16, 95, 43, 0.7);
+}
+.account-settings .top-bar {
+    margin-top: 40px;
+}
+.account-settings .top-bar:first-child {
+    margin-top: 0;
+}
 .add-office-info form {
     max-width: 500px;
 }
@@ -3544,6 +3585,36 @@ ul.custom-sidebar-reviw-listing {
 }
 
 
+
+/* =================== Notification Preferences ==================== */
+
+.notification-preferences {
+    padding: 50px;
+}
+.notification-inner .form-field .label-text {
+    width: 20px;
+}
+.notification-inner .form-field .input-field {
+    width: calc(100% - 20px);
+}
+.notification-inner .form-field .input-field label {
+    color: #000;
+}
+.notification-inner .botton-group ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.notification-inner .botton-group ul li {
+    display: inline-block;
+}
+.notification-inner .botton-group {
+    text-align: right;
+}
+.notification-inner .botton-group ul li.cancel button {
+    background-color: transparent;
+    color: #000;
+}
 
 
 

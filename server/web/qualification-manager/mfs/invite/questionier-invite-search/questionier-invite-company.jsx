@@ -8,7 +8,6 @@ const QuestionierCompany = (props) => {
   if (data !== undefined && data.locations !== undefined) {
     str_array = data.locations.split(',');
 
-
     for (let i = 0; i < str_array.length; i += 1) {
       str_array[i] = str_array[i].replace(/^\s*/, '').replace(/\s*$/, '');
     }
@@ -33,37 +32,38 @@ const QuestionierCompany = (props) => {
           </div>
           <div className="tb-row-1">
             {str_array.length > 0
-            && str_array.map((tagname, index) => (
-              <span key={index} className="custom-tag">{tagname}</span>
-            ))}
+              && str_array.map((tagname, index) => (
+                <span key={index} className="custom-tag">
+                  {tagname}
+                </span>
+              ))}
 
             {calulateLength > 0 && (
-            <span className="custom-tag more-tag">
-+
-              <i className="more-tag-val">{calulateLength}</i>
-              {' '}
+              <span className="custom-tag more-tag">
+                +
+                <i className="more-tag-val">{calulateLength}</i>
+                {' '}
 more
-                        </span>
-            )
-           }
-
+              </span>
+            )}
           </div>
         </div>
       </td>
-      <td><b>NOT INVITED TO QUALITY</b></td>
+      <td>
+        <b>NOT INVITED TO QUALITY</b>
+      </td>
       <td>
         <i>None for this work performed</i>
       </td>
       <td>
-        <div
-          className="align-center"
-          onClick={() => selectCompany(data.id)}
-        >
-          <a href="#" className="custom-more-btn">Click Here for Invite</a>
-
+        <div className="align-center" onClick={() => selectCompany(data.id)}>
+          <a href="#" className="custom-more-btn">
+            Click Here for Invite
+          </a>
         </div>
       </td>
-    </tr>);
+    </tr>
+  );
 };
 
 export default QuestionierCompany;
