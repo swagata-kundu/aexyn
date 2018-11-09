@@ -2,7 +2,9 @@ import { fromJS } from 'immutable';
 import { load_master_data } from './type';
 
 const INITIAL_STATE = fromJS({
-  masterData: {},
+  masterData: {
+    workPerformed: [],
+  },
   userInfo: window._user_ ? window._user_ : {},
 });
 

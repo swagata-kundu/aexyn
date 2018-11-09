@@ -2,9 +2,7 @@ import React from 'react';
 
 export const customField = ({
   input, label, type, meta: { touched, error },
-}) =>{
-    console.log(touched, error);
-    return (
+}) => (
   <div>
     <div className="input">
       <input {...input} placeholder={label} type={type} />
@@ -15,4 +13,4 @@ export const customField = ({
     </div>
     )}
   </div>
-)};
+);

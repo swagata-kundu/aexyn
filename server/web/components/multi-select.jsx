@@ -40,6 +40,7 @@ const multiSelect = (field) => {
         isMulti
         options={moded_options}
         closeMenuOnSelect={false}
+        isDisabled={field.disabled}
       />
     </div>
   );

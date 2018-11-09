@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { reduxForm, Field, submit } from 'redux-form';
+import { reduxForm, Field } from 'redux-form';
 
 import Header from '../components/header';
 import Welcome from '../components/welcome';
@@ -20,7 +20,7 @@ const CompanyForm = (props) => {
             <div className="company-information">
               <h3>
                 <i className="fa fa-building-o" aria-hidden="true" />
-{' '}
+                {' '}
                        Company Information
               </h3>
               <div className="form-field">
@@ -65,7 +65,7 @@ const PersonalInfoForm = (props) => {
       <div className="company-information">
         <h3>
           <i className="fa fa-building-o" aria-hidden="true" />
-{' '}
+          {' '}
                        Personal Information
         </h3>
         {' '}
