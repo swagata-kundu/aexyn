@@ -95,9 +95,13 @@ module.exports = function createAccount(db) {
         const jungle_permission = {
           user_id: results.user,
         };
+        const preference = {
+          user_id: results.user,
+        };
         Async.series([
           cb2 => tx.insert({ tableName: tables.USER_SUPPLIERS_PERMISSION, values: mfs_permission }, cb2),
           cb2 => tx.insert({ tableName: tables.USER_JUNGLE_PERMISSION, values: jungle_permission }, cb2),
+          cb2 => tx.insert({ tableName: tables.USER_PREFERENCE, values: preference }, cb2),
         ], cb);
       }],
     }, (err, results) => {

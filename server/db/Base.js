@@ -69,6 +69,16 @@ export default class BaseHelper {
     }
   }
 
+  update=async ({ tableName, values }, done) => {
+    const text = `UPDATE ${tableName} SET ? WHERE ??=?;`;
+    try {
+      await this.query({ text, values });
+      return done(null);
+    } catch (error) {
+      return done(error);
+    }
+  }
+
   stringify=(values) => {
     if (_.isArray(values)) {
       return _.map(values, (v) => {

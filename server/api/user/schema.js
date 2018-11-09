@@ -11,6 +11,7 @@ const user_schema = {
 const office_profile = {
   job_title: Joi.string().required(),
   work_phone: Joi.string().required(),
+  personal_phone: Joi.string().optional(),
   work_performed: Joi.array().items(Joi.number()).default([]).optional(),
 };
 
@@ -25,5 +26,18 @@ export const user_account = {
   office_id: Joi.number().optional(),
   company_id: Joi.number().optional(),
 };
+
+const user_schema_update = {
+  first_name: Joi.string().required(),
+  last_name: Joi.string().required(),
+  pic: Joi.string().optional(),
+};
+
+export const update_profile = {
+  user_id: Joi.number().required(),
+  user_info: Joi.object().keys(user_schema_update).required(),
+  office_profile: Joi.object().keys(office_profile).required(),
+};
+
 
 export const login = {};

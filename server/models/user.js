@@ -51,7 +51,8 @@ export default class User {
     JOIN office_package PACKAGE ON PACKAGE.office_id=OP.office_id
     JOIN company_office CO ON CO.id = OP.office_id
     JOIN company C ON CO.company_id= C.id
-    WHERE U.id=?`;
+    WHERE OP.isPrimaryOffice=true
+    AND U.id=?`;
     return this.con.query({ text, values: [user_id] }, done);
   }
 

@@ -17,7 +17,7 @@ module.exports = db => (req, res, next) => {
   // } = req.session;
   return user.getUserInfo(cookie_user, passerror(next, (result) => {
     if (!result.length) {
-      return next(Boom.unauthorized('Invalide User'));
+      return next(Boom.unauthorized('Invalid User'));
     }
     const userInfo = result[0];
     delete userInfo.password;
