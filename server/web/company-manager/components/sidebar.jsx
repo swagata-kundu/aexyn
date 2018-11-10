@@ -6,8 +6,8 @@ const SideBar = () => (
       <div className="custom-user-company-name">
         <h3>COMPANY:</h3>
         <ul>
-            <li>Karvie</li>
-          </ul>
+          <li>Karvie</li>
+        </ul>
       </div>
     </div>
     <div className="top-group">

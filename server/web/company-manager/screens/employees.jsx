@@ -14,7 +14,7 @@ class Employees extends Component {
   }
 
   render() {
-    const { getEmployees } = this.props;
+    const { getEmployees, commonData } = this.props;
     return (
       <section className="custom-body-container-wrapper">
         <div className="custom-body-container">
@@ -59,8 +59,15 @@ Lead
                           <EmployeeName {...val} />
                         </td>
                         <td><span className="custom-employee">{val.email}</span></td>
-                        <td><input type="checkbox" /></td>
-                        <td><span className="custom-address"><i className="fa fa-minus-circle" aria-hidden="true" /></span></td>
+                        <td><input type="checkbox" defaultChecked={val.technical_lead} /></td>
+
+                        {commonData.id !== val.user_id ? (
+                          <td>
+                            <span className="custom-address">
+                              <i className="fa fa-times-circle" aria-hidden="true" onClick={deleteEmployeePermission} />
+                            </span>
+                          </td>
+                        ) : null}
                       </tr>
                     ))}
                   </tbody>
@@ -78,6 +85,7 @@ Lead
 function mapStateToProps(state) {
   return {
     getEmployees: state.company.getEmployees,
+    commonData: state.common.get('userInfo').toJS(),
   };
 }
 export default connect(mapStateToProps, { getEmployee })(Employees);
