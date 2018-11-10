@@ -1688,7 +1688,6 @@ a.email-verify-btn.custom-btn {
 
 .custom-axeyn-tabber-item {
     padding: 20px;
-    display: none;
 }
 
 .custom-axeyn-tabber-item#aexyn-tab1 {
@@ -3110,7 +3109,7 @@ table.Company-detail-table tr td .sort i {
 .jungle-bottom-group table tr th {
     padding: 5px 0;
 }
-.jungle-bottom-group table tr td .member-detail .icon-group {
+ .member-detail .icon-group {
     width: 35px;
     height: 35px;
     text-align: center;
@@ -3120,12 +3119,12 @@ table.Company-detail-table tr td .sort i {
     color: #fff;
     float: left;
 }
-.jungle-bottom-group table tr td .member-detail .detail-group {
+ .member-detail .detail-group {
     float: left;
     width: calc(100% - 35px);
     padding-left: 10px;
 }
-.jungle-bottom-group table tr td .member-detail .detail-group small.designation {
+ .member-detail .detail-group small.designation {
     display: block;
 }
 .custom-permission-section-2 {

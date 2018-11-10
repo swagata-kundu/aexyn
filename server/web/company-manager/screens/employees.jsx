@@ -16,7 +16,7 @@ class Employees extends Component {
   render() {
     const { getEmployees, commonData } = this.props;
     return (
-      <section className="custom-body-container-wrapper">
+      <section className="custom-body-container-wrapper" style={{ paddingLeft: '50px' }}>
         <div className="custom-body-container">
           <div className="custom-questionnaire-section">
             <SideBar />
@@ -53,21 +53,17 @@ Lead
                     {getEmployees.length > 0 && getEmployees.map(val => (
                       <tr key={val.id}>
                         <td>
-                          <div className="custom-user-left-col">
-                            <i className="fa fa-user-circle-o" aria-hidden="true" />
-                          </div>
                           <EmployeeName {...val} />
                         </td>
                         <td><span className="custom-employee">{val.email}</span></td>
                         <td><input type="checkbox" defaultChecked={val.technical_lead} /></td>
-
-                        {commonData.id !== val.user_id ? (
-                          <td>
+                        <td>
+                          {commonData.id !== val.user_id ? (
                             <span className="custom-address">
                               <i className="fa fa-times-circle" aria-hidden="true" onClick={deleteEmployeePermission} />
                             </span>
-                          </td>
-                        ) : null}
+                          ) : null}
+                        </td>
                       </tr>
                     ))}
                   </tbody>

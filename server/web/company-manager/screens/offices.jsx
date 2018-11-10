@@ -8,13 +8,12 @@ import { masterData } from '../../state/action';
 
 class Editor extends Component {
   componentDidMount = async () => {
-    this.props.masterData();
     const offices = await getOfficeData();
     this.props.getOffice(offices);
   }
 
   render() {
-    const { getOffices, commonData } = this.props;
+    const { getOffices } = this.props;
     return (
       <section
         className="custom-body-container-wrapper"
@@ -59,11 +58,11 @@ class Editor extends Component {
                                 <span className="custom-address">Address</span>
                               </td>
                             </tr>
-                            {getOffices.length > 0 && getOffices.map((value, index) => (
-                              <tr key={index}>
+                            {getOffices.length > 0 && getOffices.map(value => (
+                              <tr key={value.id}>
                                 <td>
                                   <span className="custom-name">
-                                    <NavLink to={`/offices/${commonData.company_id}/employees`}>{value.city}</NavLink>
+                                    <NavLink to={`/offices/${value.id}/employees`}>{value.city}</NavLink>
                                     <i
                                       className="fa fa-user-circle"
                                       aria-hidden="true"
@@ -74,7 +73,7 @@ class Editor extends Component {
                                   <span className="custom-employee">{value.employee_count}</span>
                                 </td>
                                 <td>
-                                  <span className="custom-phone">{value.phone_no}</span>
+                                  <span className="custom-phone">{value.phone_no ? value.phone_no : 'NA'}</span>
                                 </td>
                                 <td>
                                   <span className="custom-address">
@@ -85,7 +84,6 @@ class Editor extends Component {
                                 </td>
                               </tr>
                             ))}
-
                           </tbody>
                         </table>
                       </div>
@@ -104,8 +102,7 @@ class Editor extends Component {
 function mapStateToProps(state) {
   return {
     getOffices: state.company.getOffices,
-    common: state.common.get('masterData').toJS(),
-    commonData: state.common.get('userInfo').toJS(),
+    userInfo: state.common.get('userInfo').toJS(),
   };
 }
 export default connect(mapStateToProps, ({ getOffice, masterData }))(Editor);

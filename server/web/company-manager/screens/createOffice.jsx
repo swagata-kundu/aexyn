@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm, Field, submit } from 'redux-form';
+import { masterData } from '../../state/action';
 import Nav from '../components/nav';
 import OfficeFields from '../../create-account/components/offfice-fields';
-import { mergeKeys } from '../../create-account/state/action';
 
 const OfficeForm = (props) => {
   const { handleSubmit, onSubmit } = props;
@@ -37,28 +37,30 @@ const OfficeForm = (props) => {
           />
         </div>
       </div>
-      <center>
-        <button
-          type="submit"
-          className="company-selection-btn custom-btn"
-        >
-          Submit
-        </button>
-      </center>
     </form>
   );
 };
 
 const OfficeFormConnected = reduxForm({
   form: 'office',
-  destroyOnUnmount: false,
 })(OfficeForm);
 
 class CreateOffice extends Component {
-    getStarted = (data) => {
+    createOffice = (data) => {
       console.log('Form Submit', data);
     };
-    back = () => this.props.mergeKeys({ step: 'COMPANY' });
+
+    back = () => {
+      this.props.history.push('/offices');
+    };
+
+    submitForm=() => {
+      this.props.submit('office');
+    }
+
+    componentDidMount() {
+      this.props.masterData();
+    }
 
     render() {
       return (
@@ -83,14 +85,14 @@ class CreateOffice extends Component {
                                 </div>
                                 <div className="right-group col-md-4">
                                   <ul>
-                                    <li><a href="val" onClick={this.back}>Cancel</a></li>
-                                    <li className="green"><a className="custom-btn" href="save">Save</a></li>
+                                    <li><button type="button" onClick={this.back}>Cancel</button></li>
+                                    <li className="green"><button type="button" onClick={this.submitForm} className="custom-btn">Save</button></li>
                                   </ul>
                                 </div>
                               </div>
                             </div>
                             <div className="bottom-group">
-                              <OfficeFormConnected onSubmit={this.getStarted} />
+                              <OfficeFormConnected onSubmit={this.createOffice} />
                             </div>
                           </div>
                           <div className="office-profile col-md-4">
@@ -112,4 +114,4 @@ class CreateOffice extends Component {
     }
 }
 
-export default connect(null, { mergeKeys })(CreateOffice);
+export default connect(null, { submit, masterData })(CreateOffice);
