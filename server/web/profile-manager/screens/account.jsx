@@ -22,7 +22,9 @@ class Account extends Component {
   }
 
   render() {
-    const { allLinkedOffices, office_profile, user_preferences } = this.props.profile;
+    const {
+      allLinkedOffices, office_profile, user_preferences, user_info,
+    } = this.props.profile;
     const { start_page, tz } = user_preferences;
     const office_options = allLinkedOffices.map(o => ({ id: o.office_id, name: o.city }));
 
@@ -69,7 +71,7 @@ class Account extends Component {
                         <label>Primary Work Email</label>
                       </div>
                       <div className="input">
-                        <div className="field-text">nishant@karvi.com</div>
+                        <div className="field-text">{user_info.email}</div>
                         <small>
   Your primary email will be displayed on your profile.
                           <br />

@@ -2,6 +2,8 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import MultiSelect from '../../components/multi-select';
+import { customField } from '../../components/field';
+import { number, required } from '../../components/validation';
 
 
 const UserProfileForm = (props) => {
@@ -14,81 +16,71 @@ const UserProfileForm = (props) => {
         <div className="label label-text">
           <label>First Name</label>
         </div>
-        <div className="input">
-          <Field
-            component="input"
-            type="text"
-            name="user_info.first_name"
-            placeholder="First Name"
-            maxLength={20}
-            required
-            disabled={disabled}
-          />
-        </div>
+        <Field
+          component={customField}
+          validate={[required]}
+          type="text"
+          name="user_info.first_name"
+          placeholder="First Name"
+          maxLength={20}
+          disabled={disabled}
+        />
       </div>
       <div className="form-field">
         <div className="label label-text">
           <label>Last Name</label>
         </div>
-        <div className="input">
-          <Field
-            component="input"
-            type="text"
-            name="user_info.last_name"
-            placeholder="Last Name"
-            maxLength={20}
-            required
-            disabled={disabled}
-          />
-        </div>
+        <Field
+          component={customField}
+          type="text"
+          name="user_info.last_name"
+          placeholder="Last Name"
+          validate={[required]}
+          maxLength={20}
+          disabled={disabled}
+        />
       </div>
       <div className="form-field">
         <div className="label label-text">
           <label>Job Title</label>
         </div>
-        <div className="input">
-          <Field
-            component="input"
-            type="text"
-            name="office_profile.job_title"
-            placeholder="Job Title"
-            maxLength={20}
-            required
-            disabled={disabled}
-          />
-        </div>
+        <Field
+          component={customField}
+          type="text"
+          name="office_profile.job_title"
+          placeholder="Job Title"
+          maxLength={20}
+          validate={[required]}
+          disabled={disabled}
+        />
       </div>
       <div className="form-field">
         <div className="label label-text">
           <label>Work Phone</label>
         </div>
-        <div className="input">
-          <Field
-            component="input"
-            type="text"
-            name="office_profile.work_phone"
-            placeholder="Work Phone"
-            maxLength={20}
-            required
-            disabled={disabled}
-          />
-        </div>
+        <Field
+          component={customField}
+          type="text"
+          name="office_profile.work_phone"
+          placeholder="Work Phone"
+          maxLength={20}
+          validate={[required, number]}
+          disabled={disabled}
+        />
       </div>
       <div className="form-field">
         <div className="label label-text">
           <label>Personal Phone</label>
         </div>
-        <div className="input">
-          <Field
-            component="input"
-            type="text"
-            name="office_profile.personal_phone"
-            placeholder="Personal Phone"
-            maxLength={20}
-            required
-            disabled={disabled}
-          />
-        </div>
+        <Field
+          component={customField}
+          type="text"
+          name="office_profile.personal_phone"
+          placeholder="Personal Phone"
+          maxLength={20}
+          validate={[required, number]}
+          disabled={disabled}
+        />
       </div>
       <div className="form-field">
         <div className="label label-text">
