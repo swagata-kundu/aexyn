@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { load_user_profile } from '../state/action';
+import { load_user_profile, change_user_preference } from '../state/action';
 import Nav from '../components/nav';
+import ChangePassword from '../components/change-password';
 
 class Account extends Component {
   componentDidMount() {
@@ -9,9 +10,20 @@ class Account extends Component {
     this.props.load_user_profile(userInfo.id);
   }
 
-  render() {
-    const { allLinkedOffices, office_profile } = this.props.profile;
+  changePreference=(e) => {
+    const params = {
+      [e.target.name]: e.target.value,
+    };
+    const { userInfo } = this.props;
+    this.props.change_user_preference({
+      user_id: userInfo.id,
+      params,
+    });
+  }
 
+  render() {
+    const { allLinkedOffices, office_profile, user_preferences } = this.props.profile;
+    const { start_page, tz } = user_preferences;
     const office_options = allLinkedOffices.map(o => ({ id: o.office_id, name: o.city }));
 
     return (
@@ -72,12 +84,10 @@ class Account extends Component {
                       </div>
                       <div className="input">
                         <small>
-  To leave
+To leave
                           {' '}
                           <span className="company-name">AA</span>
-                          {' '}
   printers, remove yourself from the
-                          {' '}
                           <a href="#">Employees Table.</a>
                         </small>
                       </div>
@@ -98,12 +108,10 @@ class Account extends Component {
                         <label>Start Page</label>
                       </div>
                       <div className="input">
-                        <select>
-                          <option value="project Manager">
-  Project Manager
-                          </option>
-                          <option value="Opportunity Manager">opportunity Manager</option>
-                          <option value="Qualification Manager">Qualification Manager</option>
+                        <select value={start_page} name="start_page" onChange={this.changePreference}>
+                          <option value="PM">Project Manager</option>
+                          <option value="OM">Opportunity Manager</option>
+                          <option value="QM">Qualification Manager</option>
                         </select>
                       </div>
                     </div>
@@ -112,55 +120,53 @@ class Account extends Component {
                         <label>Time Zone</label>
                       </div>
                       <div className="input">
-                        <select>
-                          <option value="Iten-1">
-  Item-1
-                          </option>
-                          <option value="Item-2">Item-2</option>
-                          <option value="Item-3">Item-3</option>
+                        <select value={tz} name="tz" onChange={this.changePreference}>
+                          <option value="-12:00">(GMT -12:00) Eniwetok, Kwajalein</option>
+                          <option value="-11:00">(GMT -11:00) Midway Island, Samoa</option>
+                          <option value="-10:00">(GMT -10:00) Hawaii</option>
+                          <option value="-09:50">(GMT -9:30) Taiohae</option>
+                          <option value="-09:00">(GMT -9:00) Alaska</option>
+                          <option value="-08:00">(GMT -8:00) Pacific Time (US &amp; Canada)</option>
+                          <option value="-07:00">(GMT -7:00) Mountain Time (US &amp; Canada)</option>
+                          <option value="-06:00">(GMT -6:00) Central Time (US &amp; Canada), Mexico City</option>
+                          <option value="-05:00">(GMT -5:00) Eastern Time (US &amp; Canada), Bogota, Lima</option>
+                          <option value="-04:50">(GMT -4:30) Caracas</option>
+                          <option value="-04:00">(GMT -4:00) Atlantic Time (Canada), Caracas, La Paz</option>
+                          <option value="-03:50">(GMT -3:30) Newfoundland</option>
+                          <option value="-03:00">(GMT -3:00) Brazil, Buenos Aires, Georgetown</option>
+                          <option value="-02:00">(GMT -2:00) Mid-Atlantic</option>
+                          <option value="-01:00">(GMT -1:00) Azores, Cape Verde Islands</option>
+                          <option value="+00:00">(GMT) Western Europe Time, London, Lisbon, Casablanca</option>
+                          <option value="+01:00">(GMT +1:00) Brussels, Copenhagen, Madrid, Paris</option>
+                          <option value="+02:00">(GMT +2:00) Kaliningrad, South Africa</option>
+                          <option value="+03:00">(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg</option>
+                          <option value="+03:50">(GMT +3:30) Tehran</option>
+                          <option value="+04:00">(GMT +4:00) Abu Dhabi, Muscat, Baku, Tbilisi</option>
+                          <option value="+04:50">(GMT +4:30) Kabul</option>
+                          <option value="+05:00">(GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent</option>
+                          <option value="+05:50">(GMT +5:30) Bombay, Calcutta, Madras, New Delhi</option>
+                          <option value="+05:75">(GMT +5:45) Kathmandu, Pokhara</option>
+                          <option value="+06:00">(GMT +6:00) Almaty, Dhaka, Colombo</option>
+                          <option value="+06:50">(GMT +6:30) Yangon, Mandalay</option>
+                          <option value="+07:00">(GMT +7:00) Bangkok, Hanoi, Jakarta</option>
+                          <option value="+08:00">(GMT +8:00) Beijing, Perth, Singapore, Hong Kong</option>
+                          <option value="+08:75">(GMT +8:45) Eucla</option>
+                          <option value="+09:00">(GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk</option>
+                          <option value="+09:50">(GMT +9:30) Adelaide, Darwin</option>
+                          <option value="+10:00">(GMT +10:00) Eastern Australia, Guam, Vladivostok</option>
+                          <option value="+10:50">(GMT +10:30) Lord Howe Island</option>
+                          <option value="+11:00">(GMT +11:00) Magadan, Solomon Islands, New Caledonia</option>
+                          <option value="+11:50">(GMT +11:30) Norfolk Island</option>
+                          <option value="+12:00">(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka</option>
+                          <option value="+12:75">(GMT +12:45) Chatham Islands</option>
+                          <option value="+13:00">(GMT +13:00) Apia, Nukualofa</option>
+                          <option value="+14:00">(GMT +14:00) Line Islands, Tokelau</option>
                         </select>
                       </div>
                     </div>
                   </form>
                 </div>
-                <div className="top-bar">
-                  <div className="row">
-                    <div className="left-group col-md-8">
-                      <p>PASSWORD</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="bottom-group">
-                  <form>
-                    <div className="form-field">
-                      <div className="label label-text">
-                        <label>Old Password</label>
-                      </div>
-                      <div className="input">
-                        <input type="text" name="oldpassword" placeholder />
-                      </div>
-                    </div>
-                    <div className="form-field">
-                      <div className="label label-text">
-                        <label>New Password</label>
-                      </div>
-                      <div className="input">
-                        <input type="text" name="newpassword" placeholder />
-                      </div>
-                    </div>
-                    <div className="form-field">
-                      <div className="label label-text">
-                        <label>Confirm Password</label>
-                      </div>
-                      <div className="input">
-                        <input type="text" name="confirmpassword" placeholder />
-                      </div>
-                      <div className="buttom-group text-right">
-                        <button type="submit">Change Password</button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
+                <ChangePassword />
               </div>
             </div>
           </div>
@@ -173,4 +179,4 @@ export default connect(state => ({
   profile: state.profile,
   userInfo: state.common.get('userInfo').toJS(),
 
-}), ({ load_user_profile }))(Account);
+}), ({ load_user_profile, change_user_preference }))(Account);
