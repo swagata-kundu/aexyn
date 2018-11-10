@@ -6,7 +6,7 @@ import Recaptcha from 'react-recaptcha';
 import Header from '../../sign-in/components/header';
 import Footer from '../../sign-in/components/footer';
 import { checkEmail } from '../../service/auth';
-import { customField } from '../components/field';
+import { customField } from '../../components/field';
 import { mergeKeys } from '../state/action';
 
 const SignupForm = (props) => {

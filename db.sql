@@ -87,6 +87,7 @@ CREATE TABLE `company_office` (
   `address1` mediumtext NOT NULL,
   `address2` mediumtext NOT NULL,
   `phone_no` varchar(20) DEFAULT '',
+  `fax_no` varchar(20) DEFAULT NULL,
   `city` varchar(200) NOT NULL,
   `zip` varchar(10) NOT NULL,
   `state_id` int(11) NOT NULL,
@@ -104,7 +105,7 @@ CREATE TABLE `company_office` (
 
 LOCK TABLES `company_office` WRITE;
 /*!40000 ALTER TABLE `company_office` DISABLE KEYS */;
-INSERT INTO `company_office` VALUES (1,'743/21 Omnagar','Khandsha Road','','Hurgaon','122001',6,NULL,NULL,1,1),(2,'Dlf Phase 2','Dlf','','Gurgaon','122001',6,NULL,NULL,2,1);
+INSERT INTO `company_office` VALUES (1,'743/21 Omnagar','Khandsha Road','',NULL,'Hurgaon','122001',6,NULL,NULL,1,1),(2,'Dlf Phase 2','Dlf','',NULL,'Gurgaon','122001',6,NULL,NULL,2,1);
 /*!40000 ALTER TABLE `company_office` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,7 +133,7 @@ CREATE TABLE `company_qm_permission` (
 
 LOCK TABLES `company_qm_permission` WRITE;
 /*!40000 ALTER TABLE `company_qm_permission` DISABLE KEYS */;
-INSERT INTO `company_qm_permission` VALUES (1,1,'DESIGNATED','NO'),(2,2,'DESIGNATED','NO');
+INSERT INTO `company_qm_permission` VALUES (1,1,'ALL','ADMIN'),(2,2,'DESIGNATED','NO');
 /*!40000 ALTER TABLE `company_qm_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -480,6 +481,7 @@ CREATE TABLE `user` (
   `last_name` varchar(100) NOT NULL,
   `email` varchar(300) NOT NULL,
   `password` varchar(500) NOT NULL,
+  `pic` varchar(200) DEFAULT NULL,
   `verified` tinyint(1) NOT NULL DEFAULT '0',
   `user_role_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
@@ -492,8 +494,37 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Swagata','Kundu','swagatak@one.com','$2b$10$2BGv374IaWm/NR0Kl1s9ZewYVqQ8GTFS/IZ5GcrgjIoz1Od5zaDFm',1,1),(2,'Swagata','Kundu','me@swagatak.one','$2b$10$FlF3iMcHEbhZQfQYIoSffO7UlNshOgeJbE9FLjl9TW/oZZEb2wTy.',1,1);
+INSERT INTO `user` VALUES (1,'Swagata','Mundu','swagatak@one.com','$2b$10$D.KadK7MW535lyFTCsHdeO9Mc7g4MzfH.P6vI.Q6kI8s64x57n.O2',NULL,1,1),(2,'Swagata','Kundu','me@swagatak.one','$2b$10$FlF3iMcHEbhZQfQYIoSffO7UlNshOgeJbE9FLjl9TW/oZZEb2wTy.',NULL,1,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_company_notification_link`
+--
+
+DROP TABLE IF EXISTS `user_company_notification_link`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_company_notification_link` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `status` enum('ALLOWED','BLOCKED') DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_user_company_notification_link_1_idx` (`user_id`),
+  KEY `fk_user_company_notification_link_2` (`company_id`),
+  CONSTRAINT `fk_user_company_notification_link_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_company_notification_link_2` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_company_notification_link`
+--
+
+LOCK TABLES `user_company_notification_link` WRITE;
+/*!40000 ALTER TABLE `user_company_notification_link` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_company_notification_link` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -509,7 +540,7 @@ CREATE TABLE `user_jungle_permission` (
   PRIMARY KEY (`id`),
   KEY `fk_company_id` (`user_id`),
   CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -518,7 +549,7 @@ CREATE TABLE `user_jungle_permission` (
 
 LOCK TABLES `user_jungle_permission` WRITE;
 /*!40000 ALTER TABLE `user_jungle_permission` DISABLE KEYS */;
-INSERT INTO `user_jungle_permission` VALUES (1,2);
+INSERT INTO `user_jungle_permission` VALUES (4,1),(1,2);
 /*!40000 ALTER TABLE `user_jungle_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -537,7 +568,7 @@ CREATE TABLE `user_mfs_permission` (
   PRIMARY KEY (`id`),
   KEY `fk_user_mfs_permission_user_id` (`user_id`),
   CONSTRAINT `fk_user_mfs_permission_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -546,7 +577,7 @@ CREATE TABLE `user_mfs_permission` (
 
 LOCK TABLES `user_mfs_permission` WRITE;
 /*!40000 ALTER TABLE `user_mfs_permission` DISABLE KEYS */;
-INSERT INTO `user_mfs_permission` VALUES (1,2,1,'ADMIN');
+INSERT INTO `user_mfs_permission` VALUES (1,2,1,'ADMIN'),(5,1,1,'VIEW');
 /*!40000 ALTER TABLE `user_mfs_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -561,10 +592,11 @@ CREATE TABLE `user_office_profile` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `office_id` int(11) NOT NULL,
+  `isPrimaryOffice` tinyint(1) DEFAULT '1',
   `technical_lead` tinyint(1) DEFAULT '0',
   `job_title` varchar(100) NOT NULL,
+  `personal_phone` varchar(20) DEFAULT NULL,
   `work_phone` varchar(15) NOT NULL,
-  `pic` varchar(300) DEFAULT NULL,
   `work_performed` json NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_user_company_profile_1_idx` (`office_id`),
@@ -580,8 +612,37 @@ CREATE TABLE `user_office_profile` (
 
 LOCK TABLES `user_office_profile` WRITE;
 /*!40000 ALTER TABLE `user_office_profile` DISABLE KEYS */;
-INSERT INTO `user_office_profile` VALUES (1,1,1,0,'Developer','9748162576',NULL,'[1]'),(2,2,2,0,'Developer','8750912129',NULL,'[]');
+INSERT INTO `user_office_profile` VALUES (1,1,1,1,0,'Developer','8750912129','9748162576','[]'),(2,2,2,1,0,'Developer',NULL,'8750912129','[]');
 /*!40000 ALTER TABLE `user_office_profile` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_preference`
+--
+
+DROP TABLE IF EXISTS `user_preference`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_preference` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `notification_preference` enum('ALL','BLOCKED','ALLOWED') NOT NULL DEFAULT 'ALL',
+  `start_page` enum('OM','QM','PM') NOT NULL DEFAULT 'QM',
+  `tz` varchar(45) NOT NULL DEFAULT '+00:00',
+  PRIMARY KEY (`id`),
+  KEY `fk_user_preference_1_idx` (`user_id`),
+  CONSTRAINT `fk_user_preference_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_preference`
+--
+
+LOCK TABLES `user_preference` WRITE;
+/*!40000 ALTER TABLE `user_preference` DISABLE KEYS */;
+INSERT INTO `user_preference` VALUES (1,1,'ALL','QM','+00:00'),(2,2,'ALL','QM','+00:00');
+/*!40000 ALTER TABLE `user_preference` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -914,4 +975,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-05 14:34:11
+-- Dump completed on 2018-11-09 23:00:39
