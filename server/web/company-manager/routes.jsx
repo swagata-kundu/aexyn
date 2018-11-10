@@ -4,6 +4,9 @@ import Header from '../components/dashboard-header';
 import Footer from '../components/dashboard-footer';
 import RouteG from '../components/route-guard';
 import Offices from './screens/offices';
+import CreateOffice from './screens/createOffice';
+import Employee from './screens/employees';
+
 
 const basename = '/company-manager/';
 const Routes = () => (
@@ -11,6 +14,9 @@ const Routes = () => (
     <div>
       <Header />
       <Route exact path="/offices" component={Offices} />
+      <Route exact path="/offices/create" component={CreateOffice} />
+      <Route exact path="/offices/:id/employees" component={Employee} />
+
       <Footer />
     </div>
   </Router>

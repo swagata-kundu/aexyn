@@ -2,7 +2,8 @@ import _ from 'lodash';
 import { stringify } from 'querystring';
 import { axios } from '../util';
 import {
-  QUESTION, SEARCH_COMPANIES, GET_COMPANIES, FILTER_COMPANIES, GET_INVITE_LINK, SEND_INVITATION_LINK
+  QUESTION, SEARCH_COMPANIES, GET_COMPANIES, FILTER_COMPANIES, GET_INVITE_LINK, SEND_INVITATION_LINK,
+  GET_OFFICES,
 } from '../endpoint';
 
 import {
@@ -204,6 +205,27 @@ export const invitationEmail = async (data) => {
   };
   try {
     const result = await axios.post(url, body);
+    return result.data;
+  } catch (error) {
+    return {};
+  }
+};
+
+export const getOfficeData = async () => {
+  const url = `${GET_OFFICES}`;
+
+  try {
+    const result = await axios.get(url);
+    return result.data;
+  } catch (error) {
+    return {};
+  }
+};
+
+export const getEmployeeData = async (url) => {
+  const urls = `company${url}`;
+  try {
+    const result = await axios.get(urls);
     return result.data;
   } catch (error) {
     return {};
