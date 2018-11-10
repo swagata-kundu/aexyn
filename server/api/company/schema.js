@@ -11,6 +11,7 @@ export const office_schema = {
   lng: Joi.optional(),
   office_order: Joi.number().optional(),
   phone_no: Joi.string().optional(),
+  fax_no: Joi.string().optional(),
 };
 
 export const company_info = {
