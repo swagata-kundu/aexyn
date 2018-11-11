@@ -2,24 +2,22 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SideBar from '../components/sidebar';
 import NavBar from '../components/employeeNav';
-import { getEmployeeData } from '../../service/qualification-manager';
 import { getEmployee } from '../state/action';
 import { EmployeeName } from '../../components/employees/index';
 
 class Employees extends Component {
   componentDidMount = async () => {
     const url = this.props.location.pathname;
-    const data = await getEmployeeData(url);
-    this.props.getEmployee(data);
+    await this.props.getEmployee(url);
   }
 
   render() {
-    const { getEmployees, commonData } = this.props;
+    const { getEmployees, commonData, getOffices } = this.props;
     return (
       <section className="custom-body-container-wrapper" style={{ paddingLeft: '50px' }}>
         <div className="custom-body-container">
           <div className="custom-questionnaire-section">
-            <SideBar />
+            <SideBar getOffices={getOffices} />
             <div className="custom-right-group">
               <NavBar />
               <div className="custom-employee-right-col-inner">
@@ -80,6 +78,7 @@ Lead
 
 function mapStateToProps(state) {
   return {
+    getOffices: state.company.getOffices,
     getEmployees: state.company.getEmployees,
     commonData: state.common.get('userInfo').toJS(),
   };

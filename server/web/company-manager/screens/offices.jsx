@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import Nav from '../components/nav';
-import { getOfficeData } from '../../service/qualification-manager';
 import { getOffice } from '../state/action';
 import { masterData } from '../../state/action';
 
 class Editor extends Component {
   componentDidMount = async () => {
-    const offices = await getOfficeData();
-    this.props.getOffice(offices);
+    await this.props.getOffice();
   }
 
   render() {
