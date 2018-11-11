@@ -174,9 +174,56 @@ const changePreference = db => (req, res, next) => {
   }, passerror(next, () => res.send('ok')));
 };
 
+
+const changeNotificationPreference = db => (req, res, next) => {
+  const qry = new QueryHelper(db);
+  const { userInfo } = res.locals;
+
+  Async.auto({
+    validate: (cb) => {
+      const validtaionSchema = {
+        blocked: Joi.array().items(Joi.number()).optional().default([]),
+        allowed: Joi.array().items(Joi.number()).optional().default([]),
+      };
+      Joi.validate(req.body, validtaionSchema, cb);
+    },
+
+    delete_old_preferennce: ['validate', (results, cb) => {
+      qry.query({
+        text: 'DELETE FROM user_company_notification_link where ??=?',
+        values: ['user_id', userInfo.id],
+      }, cb);
+    }],
+
+    add_new_preferennce: ['delete_old_preferennce', (results, cb) => {
+      const { validate } = results;
+      const values = [];
+      _.forEach(validate.blocked, (v) => {
+        values.push({
+          company_id: v,
+          user_id: userInfo.id,
+          status: 'BLOCKED',
+        });
+      });
+      _.forEach(validate.allowed, (v) => {
+        values.push({
+          company_id: v,
+          user_id: userInfo.id,
+          status: 'ALLOWED',
+        });
+      });
+      qry.bulkInsert({
+        tableName: 'user_company_notification_link',
+        values,
+      }, cb);
+    }],
+  }, passerror(next, () => res.send('ok')));
+};
+
 module.exports = {
   getUserDetail,
   updateUserDetail,
   changePassword,
   changePreference,
+  changeNotificationPreference,
 };

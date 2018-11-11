@@ -32,7 +32,7 @@ class OfficeFields extends Component {
     const { states } = this.state;
     return (
       <div className="form-field">
-        <div className="label">
+        <div className="label label-text">
           <label>Office Address</label>
         </div>
         <div className="input">

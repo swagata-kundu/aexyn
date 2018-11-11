@@ -3,7 +3,6 @@ import Joi from 'joi';
 import _ from 'lodash';
 import passerror from 'passerror';
 import Company from '../../models/company';
-import Transaction from '../../db/Transaction';
 import Query from '../../db/Query';
 import { office_schema, company_info } from './schema';
 
@@ -55,6 +54,20 @@ const updateCompany = db => (req, res, next) => {
   }, passerror(next, () => res.send('ok')));
 };
 
+const getAllCompany = db => (req, res, next) => {
+  const { userInfo } = res.locals;
+  const queryHelper = new Query(db);
+  queryHelper.query({
+    text: `SELECT 
+          id, name
+      FROM
+          company
+      WHERE ??<>?
+      ORDER BY name ASC;`,
+    values: ['id', userInfo.company_id],
+  }, passerror(next, result => res.json(result)));
+};
+
 
 module.exports = {
   getCompanyOffices,
@@ -63,4 +76,5 @@ module.exports = {
   updateOffice,
   createOffice,
   updateCompany,
+  getAllCompany,
 };

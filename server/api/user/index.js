@@ -11,6 +11,7 @@ export default function (db) {
     .get('/:user_id', verifyAuth(db), require('./user_profile').getUserDetail(db))
     .put('/change-password', verifyAuth(db), require('./user_profile').changePassword(db))
     .put('/preference', verifyAuth(db), require('./user_profile').changePreference(db))
+    .put('/notification-preference', verifyAuth(db), require('./user_profile').changeNotificationPreference(db))
     .put('/:user_id', verifyAuth(db), require('./user_profile').updateUserDetail(db))
     .get('/verify-account/:hash', require('./verify_account')(db))
     .get('/check-email/:email', require('./checkemail')(db));

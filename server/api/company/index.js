@@ -13,5 +13,6 @@ export default function (db) {
     .put('/offices/:office_id', require('./company_management').updateOffice(db))
     .get('/offices', require('./company_management').getCompanyOffices(db))
     .get('/offices/:office_id', require('./company_management').getOfficeInfo(db))
-    .get('/offices/:office_id/employees', require('./company_management').getOfficeEmployees(db));
+    .get('/offices/:office_id/employees', require('./company_management').getOfficeEmployees(db))
+    .get('/', require('./company_management').getAllCompany(db));
 }

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { reducer as reduxFormReducer } from 'redux-form';
 import common from '../../state/reducer';
-import { LOAD_USER_PROFILE } from './type';
+import { LOAD_USER_PROFILE, LOAD_ALL_COMPANIES, CHANGE_PREFERENCE } from './type';
 
 const INITIAL_STATE = {
   user_info: {},
@@ -12,13 +12,28 @@ const INITIAL_STATE = {
     blocked: [],
     allowed: [],
   },
+  companies: [],
 };
 
 function profileReducer(state = INITIAL_STATE, action) {
   const { type, payload } = action;
   switch (type) {
     case LOAD_USER_PROFILE: {
-      return { ...payload };
+      return { ...state, ...payload };
+    }
+    case CHANGE_PREFERENCE: {
+      return {
+        ...state,
+        user_preferences: {
+          ...payload,
+        },
+      };
+    }
+    case LOAD_ALL_COMPANIES: {
+      return {
+        ...state,
+        companies: [...payload],
+      };
     }
     default: return state;
   }
