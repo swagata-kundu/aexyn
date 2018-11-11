@@ -20,7 +20,7 @@ const OfficeForm = (props) => {
             name="phone_no"
             component="input"
             type="text"
-            placeholder="Phone."
+            placeholder="Phone No"
           />
         </div>
       </div>
@@ -33,7 +33,7 @@ const OfficeForm = (props) => {
             name="fax_no"
             component="input"
             type="text"
-            placeholder="Fax."
+            placeholder="Fax No"
 
           />
         </div>
@@ -47,22 +47,25 @@ const OfficeFormConnected = reduxForm({
 })(OfficeForm);
 
 class CreateOffice extends Component {
-    createOffice = (data) => {
-      const companyId = this.props.commonData.company_id;
-      const status = addOffice(data, companyId);
-      this.props.history.push('/offices');
+  componentDidMount() {
+    const { masterData } = this.props;
+    masterData();
+  }
+
+    createOffice = async (data) => {
+      const { history, commonData } = this.props;
+      const { company_id } = commonData;
+      await addOffice(data, company_id);
+      history.push('/offices');
     };
 
     back = () => {
-      this.props.history.push('/offices');
+      const { history } = this.props;
+      history.push('/offices');
     };
 
     submitForm=() => {
       this.props.submit('office');
-    }
-
-    componentDidMount() {
-      this.props.masterData();
     }
 
     render() {
@@ -83,9 +86,9 @@ class CreateOffice extends Component {
                     </div>
                     <div className="right-group col-md-4">
                       <ul>
-                          <li><button type="button" onClick={this.back}>Cancel</button></li>
-                          <li className="green"><button type="button" onClick={this.submitForm} className="custom-btn">Save</button></li>
-                        </ul>
+                        <li><button type="button" onClick={this.back}>Cancel</button></li>
+                        <li className="green"><button type="button" onClick={this.submitForm} className="custom-btn">Save</button></li>
+                      </ul>
                     </div>
                   </div>
                 </div>

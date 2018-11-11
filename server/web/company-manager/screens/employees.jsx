@@ -7,17 +7,17 @@ import { EmployeeName } from '../../components/employees/index';
 
 class Employees extends Component {
   componentDidMount = async () => {
-    const url = this.props.location.pathname;
-    await this.props.getEmployee(url);
+    const { office_id } = this.props.match.params;
+    await this.props.getEmployee(office_id);
   }
 
   render() {
-    const { getEmployees, commonData, getOffices } = this.props;
+    const { getEmployees, commonData } = this.props;
     return (
       <section className="custom-body-container-wrapper" style={{ paddingLeft: '50px' }}>
         <div className="custom-body-container">
           <div className="custom-questionnaire-section">
-            <SideBar getOffices={getOffices} />
+            <SideBar />
             <div className="custom-right-group">
               <NavBar />
               <div className="custom-employee-right-col-inner">
@@ -78,7 +78,6 @@ Lead
 
 function mapStateToProps(state) {
   return {
-    getOffices: state.company.getOffices,
     getEmployees: state.company.getEmployees,
     commonData: state.common.get('userInfo').toJS(),
   };

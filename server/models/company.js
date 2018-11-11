@@ -70,7 +70,7 @@ export default class Company {
         OFFICE.*, COUNT(UOP.id) AS employee_count
     FROM
         company_office OFFICE
-            JOIN
+            LEFT JOIN
         user_office_profile UOP ON UOP.office_id = OFFICE.id
     WHERE company_id=?
     GROUP BY OFFICE.id;`,

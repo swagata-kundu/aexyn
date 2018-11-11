@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-
+import { connect } from 'react-redux';
 
 const SideBar = (props) => {
   const { getOffices } = props;
@@ -15,26 +15,25 @@ const SideBar = (props) => {
         </div>
       </div>
       <div className="top-group">
-        <a href="#">
+        <NavLink to="/offices">
           <i className="fa fa-long-arrow-left" />
-          {' '}
-Back to Company
-        </a>
+          Back to Company
+        </NavLink>
         <ul>
-          <li><a href="#">Add an office</a></li>
+          <li><NavLink to="/offices/create">Add an office</NavLink></li>
         </ul>
       </div>
       <div className="middle-group">
-        {getOffices.length > 0 && getOffices.map(value => (
-          <h3 key={value.id}><NavLink to={`/offices/${value.id}/employees`}>Offices:</NavLink></h3>
-        ))}
         <ul>
-          <li><a href="#">Delhi</a></li>
-          <li><a href="#">Gurgaon</a></li>
+          {getOffices.map(o => (
+            <li key={o.id}><NavLink to={`/offices/${o.id}/employees`}>{o.city}</NavLink></li>
+          ))}
         </ul>
       </div>
     </div>
   );
 };
 
-export default SideBar;
+export default connect(state => ({
+  getOffices: state.company.getOffices,
+}))(SideBar);

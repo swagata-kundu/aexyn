@@ -3,11 +3,10 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import Nav from '../components/nav';
 import { getOffice } from '../state/action';
-import { masterData } from '../../state/action';
 
 class Editor extends Component {
-  componentDidMount = async () => {
-    await this.props.getOffice();
+  componentDidMount = () => {
+    this.props.getOffice();
   }
 
   render() {
@@ -103,4 +102,4 @@ function mapStateToProps(state) {
     userInfo: state.common.get('userInfo').toJS(),
   };
 }
-export default connect(mapStateToProps, ({ getOffice, masterData }))(Editor);
+export default connect(mapStateToProps, ({ getOffice }))(Editor);
