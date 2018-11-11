@@ -8,7 +8,7 @@ import passerror from 'passerror';
 import Company from '../../models/company';
 import Transaction from '../../db/Transaction';
 import Query from '../../db/Query';
-import { tables } from '../../db';
+import { tables, sp } from '../../db';
 import { user_account } from './schema';
 import { constants } from '../../common';
 import User from '../../models/user';
@@ -104,6 +104,14 @@ module.exports = function createAccount(db) {
           cb2 => tx.insert({ tableName: tables.USER_PREFERENCE, values: preference }, cb2),
         ], cb);
       }],
+      linkUserInvites: ['grantPermission', (results, cb) => {
+        const query = {
+          text: 'CALL ?? (?,?);',
+          values: [sp.LINK_USER_INVITES_ON_SIGNUP, results.company.company_id, user_info.email],
+        };
+        tx.query(query, cb);
+      }],
+
     }, (err, results) => {
       if (err) {
         tx.rollbackTransaction(() => next(err));

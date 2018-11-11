@@ -19,7 +19,8 @@ export default class User {
           if (err) {
             return cb(err);
           }
-          const link = `${config.get('host')}api/user/verify-account/${hash}`;
+          const escaped = encodeURI(hash);
+          const link = `${config.get('host')}api/user/verify-account/${escaped}`;
           return cb(null, { link, hash });
         });
       },

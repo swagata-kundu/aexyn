@@ -24,8 +24,8 @@ const sendInvitation = db => (req, res, next) => {
       const { questionSet } = results;
       Async.eachSeries(emails, (email, cb2) => {
         const query = {
-          text: 'CALL ?? (?,?,?);',
-          values: [INVITE_USER_QUALIFICATION, userInfo.company_id, questionSet.id, email],
+          text: 'CALL ?? (?,?,?,?);',
+          values: [INVITE_USER_QUALIFICATION, userInfo.company_id, questionSet.id, userInfo.id, email],
         };
         qry.query(query, cb2);
       }, cb);

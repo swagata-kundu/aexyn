@@ -60,7 +60,7 @@ Lead
                         <td>
                           {commonData.id !== val.user_id ? (
                             <span className="custom-address">
-                              <i className="fa fa-times-circle" aria-hidden="true" onClick={deleteEmployeePermission} />
+                              <i className="fa fa-times-circle" aria-hidden="true" />
                             </span>
                           ) : null}
                         </td>
