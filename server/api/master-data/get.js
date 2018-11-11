@@ -1,7 +1,7 @@
 import async from 'async';
 import Query from '../../db/Query';
 import MasterData from '../../models/masterdata';
-
+import { BUSINESS_TYPE } from '../../common/constants';
 
 exports.getLabpurType = db => async (req, res, next) => {
   const master = new MasterData(new Query(db));
@@ -40,6 +40,7 @@ exports.all = db => (req, res, next) => {
     labourType: cb => master.labourtype(cb),
     country: cb => master.country(cb),
     workPerformed: cb => master.workPerformed(cb),
+    businessType: cb => cb(null, BUSINESS_TYPE),
   }, (err, results) => {
     if (err) {
       return next(err);

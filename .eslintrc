@@ -4,6 +4,7 @@
     "rules": {
         "global-require":"off",
         "react/prop-types":"off",
-        "camelcase":"off"
+        "camelcase":"off",
+        "no-debugger":"off"
     }
 }

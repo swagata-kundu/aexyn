@@ -59,7 +59,7 @@ class User extends Component {
                     </div>
                     <div className="right-group col-md-4">
                       <ul>
-                        <li><button type="button" onClick={this.cancelChange}>Cancel</button></li>
+                        {isEdit ? <li><button type="button" onClick={this.cancelChange}>Cancel</button></li> : null}
                         {!isEdit ? <li><button type="button" onClick={this.editForm} className="custom-btn">Edit</button></li> : null}
                         {isEdit ? <li><button type="button" onClick={this.saveChanges} className="custom-btn">Save</button></li> : null}
                       </ul>

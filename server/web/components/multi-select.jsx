@@ -32,17 +32,15 @@ const multiSelect = (field) => {
   }
 
   return (
-    <div>
-      <Select
-        value={currentValues}
-        onChange={change}
-        placeholder={field.placeholder}
-        isMulti
-        options={moded_options}
-        closeMenuOnSelect={false}
-        isDisabled={field.disabled}
-      />
-    </div>
+    <Select
+      value={currentValues}
+      onChange={change}
+      placeholder={field.placeholder}
+      isMulti
+      options={moded_options}
+      closeMenuOnSelect={false}
+      isDisabled={field.disabled}
+    />
   );
 };
 
