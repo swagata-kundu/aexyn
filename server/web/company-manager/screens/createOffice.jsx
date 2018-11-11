@@ -4,6 +4,7 @@ import { reduxForm, Field, submit } from 'redux-form';
 import { masterData } from '../../state/action';
 import Nav from '../components/nav';
 import OfficeFields from '../../create-account/components/offfice-fields';
+import { addOffice } from '../state/action';
 
 const OfficeForm = (props) => {
   const { handleSubmit, onSubmit } = props;
@@ -47,7 +48,9 @@ const OfficeFormConnected = reduxForm({
 
 class CreateOffice extends Component {
     createOffice = (data) => {
-      console.log('Form Submit', data);
+      const companyId = this.props.commonData.company_id;
+      const status = addOffice(data, companyId);
+      this.props.history.push('/offices');
     };
 
     back = () => {
@@ -105,4 +108,10 @@ class CreateOffice extends Component {
     }
 }
 
-export default connect(null, { submit, masterData })(CreateOffice);
+function mapStateToProps(state) {
+  return {
+    commonData: state.common.get('userInfo').toJS(),
+  };
+}
+
+export default connect(mapStateToProps, { submit, masterData })(CreateOffice);
