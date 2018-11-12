@@ -12,3 +12,8 @@ export const search_company_schema = {
 export const send_invite = {
   emails: Joi.array().items(Joi.string().email()).required(),
 };
+
+export const mfs_list = {
+  status: Joi.string().optional().default('SENT'),
+  sort_order: Joi.string().optional().default('ASC'),
+};

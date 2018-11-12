@@ -8,7 +8,7 @@ let emailTextValue = '';
 
 const InviteEmailForm = (props) => {
   const {
-    emailAddress, handleSearch, checkEmail, addMoreEmail, errorMessage, emailTextValue,
+    emailAddress, handleSearch, checkEmail, errorMessage,
     addMoreEmailAddres,
   } = props;
 
@@ -47,15 +47,14 @@ const InviteEmailForm = (props) => {
             {errorMessage}
           </span>
         ) : null}
-        {/* <a href="#" className="add-more-email-field">+ More</a> */}
       </form>
-      <button onClick={addMoreEmailAddres}>+ More</button>
+      <button type="button" onClick={addMoreEmailAddres}>+ More</button>
     </div>
   );
 };
 
 const InviteEmailFormConnect = reduxForm({
-  form: 'company',
+  form: 'invite',
   destroyOnUnmount: false,
 })(InviteEmailForm);
 
@@ -133,8 +132,7 @@ class QuestionierInviteEmail extends Component {
       addMoreEmails: false,
 
     });
-    console.log('Send Invitation To : ', emailAddress);
-    const companieDetails = await invitationEmail(emailAddress);
+    await invitationEmail(emailAddress);
   };
 
   render = () => {

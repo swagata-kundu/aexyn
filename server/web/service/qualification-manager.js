@@ -204,9 +204,8 @@ export const invitationEmail = async (data) => {
     emails: data,
   };
   try {
-    const result = await axios.post(url, body);
-    return result.data;
+    await axios.post(url, body);
   } catch (error) {
-    return {};
+    console.log(error);
   }
 };
