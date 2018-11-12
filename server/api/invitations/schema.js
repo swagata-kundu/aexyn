@@ -17,3 +17,8 @@ export const mfs_list = {
   status: Joi.string().optional().default('SENT'),
   sort_order: Joi.string().optional().default('ASC'),
 };
+
+export const jungle_list = {
+  status: Joi.string().optional().default('SENT'),
+  sort_order: Joi.string().optional().default('ASC'),
+};

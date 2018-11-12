@@ -36,7 +36,10 @@ const getSupplierInvites = db => (req, res, next) => {
       const invites = fetchList[0];
       Async.mapLimit(invites, 2, (i, cb2) => fetchInviteInformations(i, qry, cb2), cb);
     }],
-  }, passerror(next, ({ fetchInfo }) => res.json(fetchInfo)));
+  }, passerror(next, ({ fetchInfo, fetchList }) => {
+    const notLinkedInvites = fetchList[1] ? fetchList[1] : [];
+    return res.json([...fetchInfo, ...notLinkedInvites]);
+  }));
 };
 
 module.exports = { getSupplierInvites };
