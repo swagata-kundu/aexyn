@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
 import { reducer as reduxFormReducer } from 'redux-form';
 import common from '../../state/reducer';
-import { GET_OFFICE_DETAILS, GET_EMPLOYEE_DATA } from './type';
+import { GET_OFFICE_DETAILS, GET_EMPLOYEE_DATA, GET_COMPANY_DETAIL } from './type';
 
 const INITIAL_STATE = {
   getOffices: [],
   getEmployees: [],
+  companyInfo: {},
 };
 
 function companyReducer(state = INITIAL_STATE, action) {
@@ -21,6 +22,12 @@ function companyReducer(state = INITIAL_STATE, action) {
       return ({
         ...state,
         getEmployees: payload,
+      });
+    }
+    case GET_COMPANY_DETAIL: {
+      return ({
+        ...state,
+        companyInfo: { ...payload },
       });
     }
     default: return state;

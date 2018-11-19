@@ -12,6 +12,9 @@ export default class BaseHelper {
     if (field.type === 'TINY' && field.length === 1) {
       return (field.string() === '1'); // 1 = true, 0 = false
     }
+    if (field.type === 'JSON' && field.length > 0) {
+      return (JSON.parse(field.string()));
+    }
     return next();
   }
 

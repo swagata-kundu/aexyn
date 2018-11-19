@@ -118,7 +118,7 @@ function mapStateToProps(state) {
       personal_phone: office_profile.personal_phone,
       work_phone: office_profile.work_phone,
       work_performed:
-      office_profile.work_performed ? JSON.parse(office_profile.work_performed) : [],
+      office_profile.work_performed ? office_profile.work_performed : [],
     },
   };
   return ({

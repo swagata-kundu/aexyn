@@ -1,6 +1,7 @@
 import Joi from 'joi';
 
 export const office_schema = {
+  name: Joi.string().default('').optional(),
   address1: Joi.string().required(),
   address2: Joi.string().required(),
   city: Joi.string().required(),
@@ -18,6 +19,8 @@ export const company_info = {
   name: Joi.string().required(),
   labour_type: Joi.array().items(Joi.number()).default([]).optional(),
   business_type: Joi.array().items(Joi.number()).default([]).optional(),
+  tagLine: Joi.string().default('').optional(),
+  websiteUrl: Joi.string().default('').optional(),
   img: Joi.optional(),
 };
 

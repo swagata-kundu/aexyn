@@ -1,6 +1,7 @@
-import { GET_OFFICE_DETAILS, GET_EMPLOYEE_DATA } from './type';
+import { GET_OFFICE_DETAILS, GET_EMPLOYEE_DATA, GET_COMPANY_DETAIL } from './type';
 import { axios } from '../../util';
 import { GET_OFFICES, COMPANY } from '../../endpoint';
+import { get_company_info_service } from '../../service/company';
 
 export const getOffice = () => async (dispatch) => {
   const url = `${GET_OFFICES}`;
@@ -40,4 +41,16 @@ export const addOffice = async (data, company_id) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+
+export const get_company_info = company_id => (dispatch) => {
+  get_company_info_service(company_id).then((response) => {
+    dispatch({
+      type: GET_COMPANY_DETAIL,
+      payload: response.data,
+    });
+  }).catch((error) => {
+    console.log(error);
+  });
 };

@@ -39,10 +39,8 @@ module.exports = function searchCompany(db) {
     }
     const mod = result.map((r) => {
       try {
-        let { offices, labour_type } = r;
-        offices = JSON.parse(offices);
-        labour_type = JSON.parse(labour_type);
-        return { ...r, offices, labour_type };
+        const { offices, labour_type } = r;
+        return { ...r };
       } catch (pe) {
         return r;
       }

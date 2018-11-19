@@ -5,15 +5,18 @@ import Header from '../components/dashboard-header';
 import Footer from '../components/dashboard-footer';
 import RouteG from '../components/route-guard';
 import Offices from './screens/offices';
-import CreateOffice from './screens/createOffice';
+import CreateOffice from './screens/addoffice';
 import Employee from './screens/employees';
+import CompanyProfile from './screens/company';
 import { getOffice } from './state/action';
+import { masterData } from '../state/action';
 
 
 const basename = '/company-manager/';
 class Routes extends React.Component {
   componentDidMount() {
     this.props.getOffice();
+    this.props.masterData();
   }
 
   render() {
@@ -21,6 +24,7 @@ class Routes extends React.Component {
       <Router basename={basename}>
         <div>
           <Header />
+          <Route exact path="/company-profile" component={CompanyProfile} />
           <Route exact path="/offices" component={Offices} />
           <Route exact path="/offices/create" component={CreateOffice} />
           <Route exact path="/offices/:office_id/employees" component={Employee} />
@@ -31,7 +35,7 @@ class Routes extends React.Component {
   }
 }
 
-const RoutesConnected = connect(null, ({ getOffice }))(Routes);
+const RoutesConnected = connect(null, ({ getOffice, masterData }))(Routes);
 
 const RoutesHOC = () => (<RouteG view={<RoutesConnected />} basename={basename} />);
 

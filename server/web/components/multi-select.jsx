@@ -7,14 +7,29 @@ let updatevalue = false;
 
 const multiSelect = (field) => {
   const { options = [], input } = field;
-  const moded_options = options.map(o => ({
-    value: o.id,
-    label: o.name,
-  }));
+  const moded_options = options.map((o) => {
+    if (typeof o === 'object') {
+      return ({
+        value: o.id,
+        label: o.name,
+      });
+    }
+    if (typeof o === 'string') {
+      return ({
+        value: o,
+        label: o,
+      });
+    }
+  });
 
   const change = (e) => {
     let newValues = e || [];
-    newValues = newValues.map(v => parseInt(v.value, 10));
+    newValues = newValues.map((v) => {
+      if (_.isInteger(v)) {
+        return parseInt(v.value, 10);
+      }
+      return v.value;
+    });
     input.onChange(newValues);
     if (field.input.name === 'workPerformance'
     || field.input.name === 'tags') {

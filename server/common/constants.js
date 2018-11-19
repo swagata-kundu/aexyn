@@ -21,5 +21,5 @@ module.exports = {
     LIMITED: 'LIMITED',
     VIEW: 'VIEW',
   },
-  BUSINESS_TYPE: ['Type 1, Type 2'],
+  BUSINESS_TYPE: ['Type 1', 'Type 2'],
 };

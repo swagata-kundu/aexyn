@@ -13,3 +13,5 @@ export const search_company_service = async (query) => {
 };
 
 export const get_all_company_service = () => axios.get(`${COMPANY}`);
+
+export const get_company_info_service = company_id => axios.get(`${COMPANY}${company_id}`);

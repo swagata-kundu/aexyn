@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import Nav from '../components/nav';
 import { getOffice } from '../state/action';
 
-class Editor extends Component {
+class Offices extends Component {
   componentDidMount = () => {
     this.props.getOffice();
   }
@@ -102,4 +102,4 @@ function mapStateToProps(state) {
     userInfo: state.common.get('userInfo').toJS(),
   };
 }
-export default connect(mapStateToProps, ({ getOffice }))(Editor);
+export default connect(mapStateToProps, ({ getOffice }))(Offices);

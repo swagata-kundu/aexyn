@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, Field, submit } from 'redux-form';
-import { masterData } from '../../state/action';
 import Nav from '../components/nav';
 import OfficeFields from '../../create-account/components/offfice-fields';
 import { addOffice } from '../state/action';
@@ -47,11 +46,6 @@ const OfficeFormConnected = reduxForm({
 })(OfficeForm);
 
 class CreateOffice extends Component {
-  componentDidMount() {
-    const { masterData } = this.props;
-    masterData();
-  }
-
     createOffice = async (data) => {
       const { history, commonData } = this.props;
       const { company_id } = commonData;
@@ -117,4 +111,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { submit, masterData })(CreateOffice);
+export default connect(mapStateToProps, { submit })(CreateOffice);
