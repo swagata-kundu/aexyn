@@ -5,11 +5,25 @@ import Nav from '../components/nav';
 import OfficeFields from '../../create-account/components/offfice-fields';
 import { addOffice } from '../state/action';
 
-const OfficeForm = (props) => {
-  const { handleSubmit, onSubmit } = props;
+export const OfficeForm = (props) => {
+  const { handleSubmit, onSubmit, disabled } = props;
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <OfficeFields />
+      <div className="form-field">
+        <div className="label label-text">
+          <label>Name</label>
+        </div>
+        <div className="input">
+          <Field
+            name="name"
+            component="input"
+            type="text"
+            disabled={disabled}
+            placeholder="Office Name"
+          />
+        </div>
+      </div>
+      <OfficeFields disabled={disabled} />
       <div className="form-field">
         <div className="label label-text">
           <label>Phone</label>
@@ -19,6 +33,7 @@ const OfficeForm = (props) => {
             name="phone_no"
             component="input"
             type="text"
+            disabled={disabled}
             placeholder="Phone No"
           />
         </div>
@@ -32,6 +47,7 @@ const OfficeForm = (props) => {
             name="fax_no"
             component="input"
             type="text"
+            disabled={disabled}
             placeholder="Fax No"
 
           />

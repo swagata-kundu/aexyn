@@ -18,9 +18,9 @@ export const office_schema = {
 export const company_info = {
   name: Joi.string().required(),
   labour_type: Joi.array().items(Joi.number()).default([]).optional(),
-  business_type: Joi.array().items(Joi.number()).default([]).optional(),
-  tagLine: Joi.string().default('').optional(),
-  websiteUrl: Joi.string().default('').optional(),
+  business_type: Joi.array().items(Joi.string()).default([]).optional(),
+  tagLine: Joi.string().default('').optional().allow(''),
+  websiteUrl: Joi.string().default('').optional().allow(''),
   img: Joi.optional(),
 };
 

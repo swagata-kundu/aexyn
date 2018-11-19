@@ -8,6 +8,7 @@ import Offices from './screens/offices';
 import CreateOffice from './screens/addoffice';
 import Employee from './screens/employees';
 import CompanyProfile from './screens/company';
+import OfficeInfo from './screens/officeinfo';
 import { getOffice } from './state/action';
 import { masterData } from '../state/action';
 
@@ -28,6 +29,7 @@ class Routes extends React.Component {
           <Route exact path="/offices" component={Offices} />
           <Route exact path="/offices/create" component={CreateOffice} />
           <Route exact path="/offices/:office_id/employees" component={Employee} />
+          <Route exact path="/offices/:office_id/info" component={OfficeInfo} />
           <Footer />
         </div>
       </Router>

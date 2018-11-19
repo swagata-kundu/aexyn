@@ -18,10 +18,10 @@ export default class Location extends Component {
   }
 
   render() {
-    const { placeholder, input } = this.props;
+    const { placeholder, input, disabled } = this.props;
     const { value, onChange } = input;
     return (
-      <input id="company_address" placeholder={placeholder} type="text" value={value} onChange={onChange} />
+      <input id="company_address" disabled={disabled} placeholder={placeholder} type="text" value={value} onChange={onChange} />
     );
   }
 }

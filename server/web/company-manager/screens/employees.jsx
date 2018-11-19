@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SideBar from '../components/sidebar';
-import NavBar from '../components/employeeNav';
+import NavBar from '../components/officenav';
 import { getEmployee } from '../state/action';
 import { EmployeeName } from '../../components/employees/index';
 
@@ -12,14 +12,15 @@ class Employees extends Component {
   }
 
   render() {
-    const { getEmployees, commonData } = this.props;
+    const { getEmployees, commonData, match } = this.props;
+    const { office_id } = match.params;
     return (
       <section className="custom-body-container-wrapper" style={{ paddingLeft: '50px' }}>
         <div className="custom-body-container">
           <div className="custom-questionnaire-section">
             <SideBar />
             <div className="custom-right-group">
-              <NavBar />
+              <NavBar office_id={office_id} />
               <div className="custom-employee-right-col-inner">
                 <div className="employee-form">
                   <form>
@@ -31,6 +32,7 @@ class Employees extends Component {
                     </div>
                   </form>
                 </div>
+                {!!getEmployees.length && (
                 <table className="Company-detail-table">
                   <tbody>
                     <tr>
@@ -48,7 +50,7 @@ Lead
                       </td>
                       <td><span className="custom-address"><div className="arrow"><i className="fa fa-angle-down" aria-hidden="true" /></div></span></td>
                     </tr>
-                    {getEmployees.length > 0 && getEmployees.map(val => (
+                    {getEmployees.map(val => (
                       <tr key={val.id}>
                         <td>
                           <EmployeeName {...val} />
@@ -56,17 +58,17 @@ Lead
                         <td><span className="custom-employee">{val.email}</span></td>
                         <td><input type="checkbox" defaultChecked={val.technical_lead} /></td>
                         <td>
-                          {commonData.id !== val.user_id ? (
-                            <span className="custom-address">
-                              <i className="fa fa-times-circle" aria-hidden="true" />
-                            </span>
-                          ) : null}
+                          <span className="custom-address">
+                            <i className="fa fa-times-circle" aria-hidden="true" />
+                          </span>
                         </td>
                       </tr>
                     ))}
                   </tbody>
 
                 </table>
+                )}
+                {!getEmployees.length && <p>No Employees</p>}
               </div>
             </div>
           </div>

@@ -1,6 +1,7 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-const EmployeeNavgation = () => (
+const OfficeNavigation = ({ office_id }) => (
   <div className="custom-section-header-main-wrapper" style={{ minHeight: '105px' }}>
     <div className="section-header">
       <div className="container-fluid">
@@ -10,11 +11,11 @@ const EmployeeNavgation = () => (
           </div>
           <div className="col-sm-12">
             <ul>
-              <li className="active">
-                <a href="/company-manager/offices/1/employees">Employees</a>
+              <li>
+                <NavLink to={`/offices/${office_id}/employees`}>Employees</NavLink>
               </li>
               <li>
-                <a href="/company-profile">Office Information</a>
+                <NavLink to={`/offices/${office_id}/info`}>Office Information</NavLink>
               </li>
             </ul>
           </div>
@@ -24,4 +25,4 @@ const EmployeeNavgation = () => (
   </div>
 );
 
-export default EmployeeNavgation;
+export default OfficeNavigation;

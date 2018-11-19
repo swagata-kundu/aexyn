@@ -5,7 +5,7 @@ import {
 } from 'redux-form';
 import MultiSelect from '../../components/multi-select';
 import Nav from '../components/nav';
-import { get_company_info } from '../state/action';
+import { get_company_info, update_company_info } from '../state/action';
 
 const companyForm = (props) => {
   const {
@@ -101,9 +101,13 @@ const companyForm = (props) => {
 
 function mapStateToPropsCompanyForm(state) {
   const { company } = state;
+  const {
+    name, labour_type, business_type, tagLine, websiteUrl,
+  } = company.companyInfo;
   const initialValues = {
-    ...company.companyInfo,
+    name, labour_type, business_type, tagLine, websiteUrl,
   };
+  console.log(initialValues);
   return ({
     initialValues,
   });
@@ -127,12 +131,10 @@ class Company extends Component {
     this.props.get_company_info(company_id);
   }
 
-  submitForm=async (values) => {
+  submitForm= (values) => {
     const { userInfo } = this.props;
-    try {
-      await change_user_info_service({ user_id: userInfo.id, values });
-      this.setState({ isEdit: false });
-    } catch (error) {}
+    this.props.update_company_info({ company_id: userInfo.company_id, data: values });
+    this.setState({ isEdit: false });
   }
 
   cancelChange=() => {
@@ -219,4 +221,6 @@ function mapStateToProps(state) {
     common: state.common.get('masterData').toJS(),
   };
 }
-export default connect(mapStateToProps, ({ get_company_info, submit, reset }))(Company);
+export default connect(mapStateToProps, ({
+  get_company_info, update_company_info, submit, reset,
+}))(Company);

@@ -26,7 +26,7 @@ class OfficeFields extends Component {
   }
 
   render=() => {
-    const { baseName, common } = this.props;
+    const { baseName, common, disabled } = this.props;
     const country = common.country ? common.country : [];
     const seperator = baseName ? `${baseName}.` : '';
     const { states } = this.state;
@@ -39,6 +39,7 @@ class OfficeFields extends Component {
           <Field
             component={LocationSearch}
             seperator={seperator}
+            disabled={disabled}
             name={`${seperator}address1`}
             placeholder="Street / P.O Box"
           />
@@ -46,6 +47,7 @@ class OfficeFields extends Component {
             component="input"
             type="text"
             name={`${seperator}address2`}
+            disabled={disabled}
             placeholder="Suite / Floor"
             required
           />
@@ -53,12 +55,14 @@ class OfficeFields extends Component {
             required
             component="input"
             type="text"
+            disabled={disabled}
             name={`${seperator}city`}
             placeholder="City"
           />
           <Field
             required
             component="select"
+            disabled={disabled}
             onChange={this.changeCountry}
             name={`${seperator}country_id`}
           >
@@ -69,6 +73,7 @@ class OfficeFields extends Component {
             <Field
               required
               component="select"
+              disabled={disabled}
               name={`${seperator}state_id`}
               className="state"
             >
@@ -78,6 +83,7 @@ class OfficeFields extends Component {
             <Field
               required
               component="input"
+              disabled={disabled}
               type="text"
               name={`${seperator}zip`}
               placeholder="Zip"

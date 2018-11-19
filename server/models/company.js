@@ -21,6 +21,7 @@ export default class Company {
       office: (cb) => {
         const mod = data;
         delete mod.country_id;
+        mod.name = mod.name || mod.city;
         return this.con.insert({
           tableName: tables.OFFICE,
           values: mod,
@@ -126,7 +127,7 @@ export default class Company {
     office_id,
   }, done) => this.con.query({
     text: `SELECT 
-      CO.*, S.name AS state_name, COUNTRY.name AS country_name
+      CO.*, S.name AS state_name, COUNTRY.name AS country_name,COUNTRY.id as country_id
       FROM
       company_office CO
           JOIN
@@ -145,10 +146,14 @@ export default class Company {
   updateOffice = ({
     office_id,
     data,
-  }, done) => this.con.query({
-    text: 'UPDATE ?? SET ? WHERE ??=?;',
-    values: [tables.OFFICE, data, 'id', office_id],
-  }, done)
+  }, done) => {
+    const mod = data;
+    delete mod.country_id;
+    return this.con.query({
+      text: 'UPDATE ?? SET ? WHERE ??=?;',
+      values: [tables.OFFICE, mod, 'id', office_id],
+    }, done);
+  }
 
   updateCompany = ({
     company_id,

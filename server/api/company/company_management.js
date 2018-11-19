@@ -74,10 +74,16 @@ const updateCompany = db => (req, res, next) => {
   const company = new Company(qry);
   Async.auto({
     validate: cb => Joi.validate(req.body, company_info, cb),
-    update: ['validate', (results, cb) => company.updateOffice({
-      company_id: req.params.company_id,
-      data: results.validate,
-    }, cb)],
+    update: ['validate', (results, cb) => {
+      const data = results.validate;
+      data.labour_type = JSON.stringify(data.labour_type);
+      data.business_type = JSON.stringify(data.business_type);
+      company.updateCompany({
+        company_id: req.params.company_id,
+        data: results.validate,
+      }, cb);
+    },
+    ],
   }, passerror(next, () => res.send('ok')));
 };
 

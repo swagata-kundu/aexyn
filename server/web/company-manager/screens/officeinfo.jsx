@@ -1,72 +1,111 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import SideBar from '../components/sidebar';
-import NavBar from '../components/employeeNav';
-import { getEmployee } from '../state/action';
-import { EmployeeName } from '../../components/employees/index';
+import { reduxForm, submit, reset } from 'redux-form';
 
-class Employees extends Component {
-  componentDidMount = async () => {
+import SideBar from '../components/sidebar';
+import NavBar from '../components/officenav';
+import { get_office_info, update_office_info } from '../state/action';
+import { OfficeForm } from './addoffice';
+
+const OfficeFormConnected = connect((state) => {
+  const {
+    name, address1, address2, city, zip, state_id, phone_no, fax_no, country_id,
+  } = state.company.officeInfo;
+  return ({
+    initialValues: {
+      name, address1, address2, city, zip, state_id, phone_no, fax_no, country_id,
+    },
+  });
+})(reduxForm({
+  form: 'office-info',
+  enableReinitialize: true,
+})(OfficeForm));
+
+class OfficeInfo extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isEdit: false,
+    };
+  }
+
+  componentDidMount = () => {
+    this.loadInitialData();
+  }
+
+  loadInitialData=() => {
     const { office_id } = this.props.match.params;
-    await this.props.getEmployee(office_id);
+    this.props.get_office_info(office_id);
+  }
+
+  submitForm= (values) => {
+    const { office_id } = this.props.match.params;
+    this.props.update_office_info({ office_id, data: values });
+    this.setState({ isEdit: false });
+  }
+
+  cancelChange=() => {
+    this.setState({ isEdit: false });
+    this.props.reset('office-info');
+    this.loadInitialData();
+  }
+
+  saveChanges=() => {
+    debugger;
+    this.props.submit('office-info');
+  }
+
+  editForm=() => {
+    this.setState({ isEdit: true });
   }
 
   render() {
-    const { getEmployees, commonData } = this.props;
+    const { isEdit } = this.state;
+    const { match } = this.props;
+    const { office_id } = match.params;
+
     return (
       <section className="custom-body-container-wrapper" style={{ paddingLeft: '50px' }}>
         <div className="custom-body-container">
           <div className="custom-questionnaire-section">
             <SideBar />
             <div className="custom-right-group">
-              <NavBar />
-              <div className="custom-employee-right-col-inner">
-                <div className="employee-form">
-                  <form>
-                    <div className="form-field">
-                      <input type="Email" placeholder="Coworker Email" />
+              <NavBar office_id={office_id} />
+
+              <div className="section-bottom-group">
+                <div className="container-fluid">
+                  <div className="row">
+                    <div className="add-office-info col-md-8">
+                      <div className="top-bar">
+                        <div className="row">
+                          <div className="left-group col-md-8">
+                            <p>Office Information</p>
+                          </div>
+                          <div className="right-group col-md-4">
+                            <ul>
+                              {isEdit ? <li><button type="button" onClick={this.cancelChange}>Cancel</button></li> : null}
+                              {!isEdit ? <li><button type="button" onClick={this.editForm} className="custom-btn">Edit</button></li> : null}
+                              {isEdit ? <li><button type="button" onClick={this.saveChanges} className="custom-btn">Save</button></li> : null}
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="bottom-group">
+                        <OfficeFormConnected
+                          onSubmit={this.submitForm}
+                          disabled={!isEdit}
+                        />
+                      </div>
                     </div>
-                    <div className="form-btn-grp">
-                      <button type="submbit">+ Invite Coworker</button>
+                    <div className="office-profile col-md-4">
+                      <div className="top-bar">
+                        <h3>About profiles</h3>
+                      </div>
+                      <p>Keep your profile information up to date so that people can easily find you on Aexyn</p>
+                      <a href="#">Preview your complete profile &gt;&gt;</a>
                     </div>
-                  </form>
+                  </div>
                 </div>
-                <table className="Company-detail-table">
-                  <tbody>
-                    <tr>
-                      <td>
-                        <span className="custom-name">Name</span>
-                        <span className="sort"><i className="fa fa-sort-asc" aria-hidden="true" /></span>
-                      </td>
-                      <td><span className="custom-employee">Contact</span></td>
-                      <td>
-                        <span className="custom-phone">
-Lead
-                          <i data-toggle="tooltip" title="uidgghfgurfgvhcgjdhff fugrfuigufgrf kjfhrjgfjrgfrfjhrgfhrgjgfrj" className="fa fa-question-circle" aria-hidden="true" />
-                        </span>
-
-                      </td>
-                      <td><span className="custom-address"><div className="arrow"><i className="fa fa-angle-down" aria-hidden="true" /></div></span></td>
-                    </tr>
-                    {getEmployees.length > 0 && getEmployees.map(val => (
-                      <tr key={val.id}>
-                        <td>
-                          <EmployeeName {...val} />
-                        </td>
-                        <td><span className="custom-employee">{val.email}</span></td>
-                        <td><input type="checkbox" defaultChecked={val.technical_lead} /></td>
-                        <td>
-                          {commonData.id !== val.user_id ? (
-                            <span className="custom-address">
-                              <i className="fa fa-times-circle" aria-hidden="true" />
-                            </span>
-                          ) : null}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-
-                </table>
               </div>
             </div>
           </div>
@@ -78,8 +117,9 @@ Lead
 
 function mapStateToProps(state) {
   return {
-    getEmployees: state.company.getEmployees,
-    commonData: state.common.get('userInfo').toJS(),
+    userInfo: state.common.get('userInfo').toJS(),
   };
 }
-export default connect(mapStateToProps, { getEmployee })(Employees);
+export default connect(mapStateToProps, {
+  get_office_info, submit, reset, update_office_info,
+})(OfficeInfo);
