@@ -2,7 +2,7 @@ import React from 'react';
 import { Field } from 'redux-form';
 
 const Employees = ({ name, questionInfo }) => (
-  <div className="form-field input-column two-col-form-field clearfix">
+  <div className="form-field clearfix input-column two-col-form-field clearfix">
     <label>{questionInfo.text}</label>
     <div className="form-text">
       <div className="department">Department</div>

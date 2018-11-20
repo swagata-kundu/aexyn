@@ -59,7 +59,7 @@ const Fields = (props) => {
 
   const questions = fields.map(getQuestion);
 
-  return <div>{questions}</div>;
+  return questions;
 };
 
 export default Fields;

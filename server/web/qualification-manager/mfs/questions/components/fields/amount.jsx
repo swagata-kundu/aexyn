@@ -8,7 +8,7 @@ const Amount = ({ name, questionInfo }) => (
         <label>{questionInfo.text}</label>
       </div>
       <div className="input-field">
-        <input type="number" step="any" />
+        <Field component="input" required={questionInfo.isRequired} type="number" name={`${name}.value`} placeholder={questionInfo.text} />
         <span className="dollar-icon">$</span>
       </div>
     </div>

@@ -7,7 +7,7 @@ const Number = ({ name, questionInfo }) => (
       <label>{questionInfo.text}</label>
     </div>
     <div className="input-field">
-      <Field component="input" required={questionInfo.isRequired} type="number" name={name} placeholder={questionInfo.text} />
+      <Field component="input" required={questionInfo.isRequired} type="number" name={`${name}.value`} placeholder={questionInfo.text} />
     </div>
   </div>
 );

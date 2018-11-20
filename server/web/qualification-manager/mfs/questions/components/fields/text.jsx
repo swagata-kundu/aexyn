@@ -7,7 +7,7 @@ const Text = ({ name, questionInfo }) => (
       <label>{questionInfo.text}</label>
     </div>
     <div className="input-field">
-      <Field component="input" required={questionInfo.isRequired} type="text" name={name} placeholder={questionInfo.text} />
+      <Field component="input" required={questionInfo.isRequired} type="text" name={`${name}.value`} placeholder={questionInfo.text} />
     </div>
   </div>
 );

@@ -1,36 +1,54 @@
 import React from 'react';
-import { Field } from 'redux-form';
+import { Field, FieldArray } from 'redux-form';
 
-const CompanyContacts = ({ name, questionInfo }) => (
-  <div className="form-field list-of-company input-column clearfix">
-    <label>{questionInfo.text}</label>
-    <div className="four-col-form-field clearfix">
-      <div className="column-1">
-        <div className="form-text">Company Namer</div>
-        <input type="text" placeholder="Aexyn" />
+const RenderOffices = ({ fields }) => (
+  <div>
+    {fields.map((location, index) => (
+      <div className="form-field-bottom-grop clearfix">
+        <div className="column-1 four-col">
+          <Field component="input" type="text" name={`${location}.company`} placeholder="Company Name" />
+        </div>
+        <div className="column-2 four-col">
+          <Field component="input" type="text" name={`${location}.address`} placeholder="Address" />
+        </div>
+        <div className="column-3 four-col">
+          <Field component="input" type="text" name={`${location}.phone`} placeholder="Phone" />
+        </div>
+        <div className="column-4 four-col">
+          <Field component="input" type="email" name={`${location}.email`} placeholder="Email" />
+        </div>
+        <span className="remove-row-value">
+          <i
+            onClick={() => fields.remove(index)}
+            className="fa fa-times"
+            aria-hidden="true"
+          />
+        </span>
       </div>
-      <div className="column-2">
-        <div className="form-text">Address</div>
-        <input type="text" placeholder="Panipat" />
-      </div>
-      <div className="column-3">
-        <div className="form-text">Phone</div>
-        <input type="Phone" placeholder={9876543210} />
-      </div>
-      <div className="column-4">
-        <div className="form-text">Email</div>
-        <input type="Email" placeholder="abc@aexyn.com" />
-      </div>
-      <span className="remove-row-value">
-        <i className="fa fa-times" aria-hidden="true" />
-      </span>
-    </div>
-    <div className="additional-input">
+    ))}
+    <div role="presentation" className="additional-input" onClick={() => fields.push({})}>
       <i className="fa fa-plus-circle" aria-hidden="true" />
       {' '}
-        Add Contact
+Add a Contact
+      {' '}
+
     </div>
   </div>
 );
+
+
+const CompanyContacts = ({ name, questionInfo }) => (
+  <div className="four-col-form-field four-col-additional-form-field">
+    <label>{questionInfo.text}</label>
+    <div className="form-field-top-grop clearfix">
+      <div className="column-1 four-col"><div className="form-text">Company Name</div></div>
+      <div className="column-2 four-col"><div className="form-text">Address</div></div>
+      <div className="column-3 four-col"><div className="form-text">Phone</div></div>
+      <div className="column-3 four-col"><div className="form-text">Email</div></div>
+    </div>
+    <FieldArray name={name} component={RenderOffices} />
+  </div>
+);
+
 
 export default CompanyContacts;

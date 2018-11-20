@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { submit } from 'redux-form';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { load_questions } from '../../state/action';
@@ -27,6 +28,10 @@ class Preview extends Component {
     });
   };
 
+  submit=() => {
+    this.props.submit('qualificationForm');
+  }
+
   render() {
     return (
       <section
@@ -44,10 +49,14 @@ class Preview extends Component {
                   Configure Questionnaire
                 </a>
               </span>
+              <button type="button" onClick={this.submit}>Submit</button>
             </div>
             <div className="bottom-group">
               <p>This is a preview of questionnaire that your supplier will be asked to complete:</p>
-              <QF onSubmit={() => {}} />
+              <QF onSubmit={(values) => {
+                console.log(values);
+              }}
+              />
             </div>
           </div>
         </div>
@@ -58,5 +67,5 @@ class Preview extends Component {
 
 export default connect(
   null,
-  { load_questions },
+  { load_questions, submit },
 )(Preview);

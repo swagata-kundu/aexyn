@@ -1,26 +1,41 @@
 import React from 'react';
-import { Field } from 'redux-form';
+import { Field, FieldArray } from 'redux-form';
+
+const RenderOffices = ({ fields }) => (
+  <div>
+    {fields.map((location, index) => (
+      <div className="form-field-bottom-grop clearfix">
+        <div className="column-1 three-col">
+          <Field component="input" type="text" name={`${location}.name`} placeholder="Company Name" />
+        </div>
+        <div className="column-2 three-col">
+          <Field component="input" type="text" name={`${location}.address`} placeholder="Address" />
+        </div>
+        <div className="column-3 three-col">
+          <Field component="input" type="text" name={`${location}.phone`} placeholder="Phone" />
+
+          <span className="remove-row-value"><i onClick={() => fields.remove(index)} className="fa fa-times" aria-hidden="true" /></span>
+        </div>
+      </div>
+    ))}
+    <div role="presentation" className="additional-input" onClick={() => fields.push({})}>
+      <i className="fa fa-plus-circle" aria-hidden="true" />
+      {' '}
+Add a Location
+    </div>
+  </div>
+);
 
 const Office = ({ name, questionInfo }) => (
-  <div>
-    <div className="form-field input-column three-form-field clearfix">
-      <label>Office Location</label>
-      <div className="column-1">
-        <div className="form-text">Office Name</div>
-        <input type="text" name="companyname" placeholder="Company Name" />
+  <div className="three-col-form-field three-col-additional-field">
+    <div className="form-field clearfix input-column clearfix">
+      <label>{questionInfo.text}</label>
+      <div className="form-field-top-grop clearfix">
+        <div className="column-1 three-col"><div className="form-text">Office Name</div></div>
+        <div className="column-2 three-col"><div className="form-text">Address</div></div>
+        <div className="column-3 three-col"><div className="form-text">phone</div></div>
       </div>
-      <div className="column-2">
-        <div className="form-text">Address</div>
-        <input type="text" name="address" placeholder="Address" />
-      </div>
-      <div className="column-3">
-        <div className="form-text">phone</div>
-        <input type="tel" name="telephone" placeholder="Phone Number" />
-      </div>
-    </div>
-    <div className="additional-input">
-      <i className="fa fa-plus-circle" aria-hidden="true" /> 
-      add a location
+      <FieldArray name={name} component={RenderOffices} />
     </div>
   </div>
 );

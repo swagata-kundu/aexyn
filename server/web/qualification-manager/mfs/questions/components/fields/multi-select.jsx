@@ -8,7 +8,7 @@ const MultiSelect = ({ name, questionInfo }) => (
       <label>{questionInfo.text}</label>
     </div>
     <div className="input-field">
-      <Field name={name} component={MS} placeholder={questionInfo.text} />
+      <Field name={`${name}.value`} component={MS} placeholder={questionInfo.text} />
     </div>
   </div>
 );

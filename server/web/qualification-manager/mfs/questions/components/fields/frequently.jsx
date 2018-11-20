@@ -2,7 +2,7 @@ import React from 'react';
 import { Field } from 'redux-form';
 
 const Frequently = ({ name, questionInfo }) => (
-  <div className="form-field single-col left-label">
+  <div className="form-field clearfix two-col-right-field clearfix">
     <div className="label-text">
       <label>{questionInfo.text}</label>
     </div>
@@ -11,7 +11,7 @@ const Frequently = ({ name, questionInfo }) => (
         component="select"
         required={questionInfo.isRequired}
         type="input"
-        name={name}
+        name={`${name}.value`}
         placeholder={questionInfo.text}
       >
         <option>Annual</option>

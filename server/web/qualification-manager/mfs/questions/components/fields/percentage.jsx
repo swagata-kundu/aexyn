@@ -7,7 +7,7 @@ const Percentage = ({ name, questionInfo }) => (
       <label>{questionInfo.text}</label>
     </div>
     <div className="input-field">
-      <input type="number" step="any" />
+      <Field component="input" required={questionInfo.isRequired} type="number" name={`${name}.value`} placeholder={questionInfo.text} />
       <span className="percent-icon">%</span>
     </div>
   </div>
