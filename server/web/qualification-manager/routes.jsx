@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Header from '../components/dashboard-header';
 import Footer from '../components/dashboard-footer';
 import Mfs from './mfs';
+import Ifj from './ifj';
 import Permission from './permission';
 import RouteG from '../components/route-guard';
 
@@ -12,6 +13,7 @@ const Routes = () => (
     <div>
       <Header />
       <Route path="/manage-food-suppliers/" component={Mfs} />
+      <Route path="/invitation-from-jungle/" component={Ifj} />
       <Route path="/permission-settings/" component={Permission} />
       <Footer />
     </div>

@@ -18,7 +18,7 @@ const Tabs = () => (
                 <NavLink to="/manage-food-suppliers/">Manage Food Suppliers</NavLink>
               </li>
               <li>
-                <NavLink to="/not-implemented/">Invitations From Jungles</NavLink>
+                <NavLink to="/invitation-from-jungle/">Invitations From Jungles</NavLink>
               </li>
               <li>
                 <NavLink to="/permission-settings/">Permissions &amp; Settings</NavLink>
