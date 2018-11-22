@@ -2,6 +2,7 @@ import passerror from 'passerror';
 import boom from 'boom';
 import _ from 'lodash';
 import config from 'config';
+import { v1 } from 'uuid';
 import { tables } from '../db';
 
 export default class Question {
@@ -21,7 +22,7 @@ export default class Question {
       }));
     }
 
-    addQuestionSet=(info, done) => this.con.insert({ tableName: tables.QUESTION_SET, values: { ...info } }, done)
+    addQuestionSet=(info, done) => this.con.insert({ tableName: tables.QUESTION_SET, values: { ...info, hash: v1() } }, done)
 
     addQuestions=({ questions, question_set_id }, done) => {
       const values = [];

@@ -12,3 +12,10 @@ export const COMPANY_PERMISSION = 'company_qm_permission';
 export const USER_JUNGLE_PERMISSION = 'user_jungle_permission';
 export const USER_SUPPLIERS_PERMISSION = 'user_mfs_permission';
 export const USER_PREFERENCE = 'user_preference';
+
+// INVITAIONS
+export const INVITATION_REVIEWERS = 'qualification_reviewers';
+export const INVITATION_EDITORS = 'qualification_editors';
+export const INVITATION_NOTES = 'qualification_notes';
+export const INVITATION_FILES = 'qualification_files';
+export const INVITATION_ANSWERS = 'qualification_answers';

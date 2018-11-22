@@ -22,3 +22,9 @@ export const jungle_list = {
   status: Joi.string().optional().default('SENT'),
   sort_order: Joi.string().optional().default('ASC'),
 };
+
+export const jungle_editor = {
+  status: Joi.string().optional().default('NONE'),
+  user_id: Joi.number().required(),
+  invitation_id: Joi.number().required(),
+};

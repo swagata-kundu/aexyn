@@ -12,3 +12,4 @@ export const GET_INVITE_LINK = 'invitations/link';
 export const SEND_INVITATION_LINK = 'invitations/send';
 export const QUALIFICATION_PERMISSION = 'permission/';
 export const GET_OFFICES = 'company/offices';
+export const JUNGLE_INVITES = 'invitations/jungle/supplier-invites';
