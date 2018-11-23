@@ -63,8 +63,8 @@ const OfficeFormConnected = reduxForm({
 
 class CreateOffice extends Component {
     createOffice = async (data) => {
-      const { history, commonData } = this.props;
-      const { company_id } = commonData;
+      const { history, userInfo } = this.props;
+      const { company_id } = userInfo;
       await addOffice(data, company_id);
       history.push('/offices');
     };
@@ -123,7 +123,7 @@ class CreateOffice extends Component {
 
 function mapStateToProps(state) {
   return {
-    commonData: state.common.get('userInfo').toJS(),
+    userInfo: state.common.get('userInfo').toJS(),
   };
 }
 

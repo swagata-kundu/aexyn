@@ -28,3 +28,18 @@ export const jungle_editor = {
   user_id: Joi.number().required(),
   invitation_id: Joi.number().required(),
 };
+
+export const reviewer = {
+  status: Joi.string().optional().default('NONE'),
+  user_id: Joi.number().required(),
+  invitation_id: Joi.number().optional().default(null),
+  email_invitation_id: Joi.number().optional().default(null),
+};
+
+
+export const note = {
+  user_id: Joi.number().required(),
+  invitation_id: Joi.number().optional().default(null),
+  email_invitation_id: Joi.number().optional().default(null),
+  note: Joi.string().required(),
+};

@@ -120,6 +120,16 @@ const getCompanyInfo = db => (req, res, next) => {
   }));
 };
 
+const getAllEmployees = db => (req, res, next) => {
+  const qry = new Query(db);
+  const company = new Company(qry);
+  Async.auto({
+    validate: cb => Joi.validate(req.params, {
+      company_id: Joi.number().required(),
+    }, cb),
+    get: ['validate', (results, cb) => company.getAllEmployees(req.params.company_id, cb)],
+  }, passerror(next, results => res.json(results.get)));
+};
 
 module.exports = {
   getCompanyInfo,
@@ -130,4 +140,5 @@ module.exports = {
   createOffice,
   updateCompany,
   getAllCompany,
+  getAllEmployees,
 };

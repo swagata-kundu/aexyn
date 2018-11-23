@@ -14,6 +14,7 @@ export default function (db) {
     .get('/offices', require('./company_management').getCompanyOffices(db))
     .get('/offices/:office_id', require('./company_management').getOfficeInfo(db))
     .get('/offices/:office_id/employees', require('./company_management').getOfficeEmployees(db))
+    .get('/:company_id/employees', require('./company_management').getAllEmployees(db))
     .get('/:company_id', require('./company_management').getCompanyInfo(db))
     .get('/', require('./company_management').getAllCompany(db));
 }

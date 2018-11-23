@@ -7,13 +7,14 @@ import {
   CHANGE_COMPANY_PERMISSION,
 } from './type';
 import common from '../../state/reducer';
+import invites from './invitation_reducer';
 
 const INITIAL_STATE_MFS = {
   questions: {
   },
   questionTypes: [],
   questionSet: {},
-  companies: {},
+  companies: [],
   getCompanies: [],
   filterCompanies: {},
   filterValues: {},
@@ -91,5 +92,6 @@ const reducer = combineReducers({
   qualification: qualificationReducer,
   common,
   permission: permissionReducer,
+  invites,
 });
 export default reducer;

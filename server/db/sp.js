@@ -6,4 +6,3 @@ export const LINK_USER_INVITES_ON_SIGNUP = 'sp_link_user_invites_to_company';
 export const SUPPLIER_INVITES = 'sp_get_supplier_sent_invites';
 export const GET_INVITE_INFO = 'sp_invitaion_info_mfs';
 export const GET_INVITES_FROM_JUNGLE = 'sp_get_invites_from_jungle';
-

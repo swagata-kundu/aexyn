@@ -114,7 +114,7 @@ export default class Company {
     office_id,
   }, done) => this.con.query({
     text: `SELECT 
-      UOP.*, user.first_name, user.last_name, user.email
+      UOP.*, user.first_name, user.last_name, user.email,user.pic
   FROM
       user_office_profile UOP
           JOIN
@@ -165,6 +165,20 @@ export default class Company {
 
   getCompanyInfo = (company_id, done) => this.con.query({
     text: 'SELECT * FROM company where id =?;',
+    values: [company_id],
+  }, done)
+
+  getAllEmployees = (
+    company_id, done,
+  ) => this.con.query({
+    text: `SELECT 
+      UOP.*, user.first_name, user.last_name, user.email,user.pic
+  FROM
+      user_office_profile UOP
+          JOIN
+      user ON UOP.user_id = user.id
+      JOIN company_office CO ON CO.id=UOP.office_id
+      WHERE CO.company_id=?`,
     values: [company_id],
   }, done)
 }

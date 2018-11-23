@@ -1,7 +1,110 @@
 import React, { Component } from 'react';
+import Select from 'react-select';
+import { connect } from 'react-redux';
+
+import { EmployeeName } from '../../../components/employees/index';
+
+import { load_invitation_reviewers, add_invitation_reviewers } from '../../state/action';
 
 class Reviewers extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedOption: {},
+    };
+  }
+
   componentDidMount() {}
+
+
+  handleEmployeeChange = (selectedOption) => {
+    this.setState({ selectedOption });
+  }
+
+  renderAddReviewer=() => {
+    const { employees } = this.props;
+
+    const options = employees.map(e => ({
+      label: e.email,
+      value: e.user_id,
+    }));
+    const { selectedOption } = this.state;
+
+    return (
+
+      <div className="right-group">
+        <form className="custom-add-review-form" onSubmit={this.addReviewer}>
+          <div className="custom-review-form-inner">
+            <Select
+              value={selectedOption}
+              onChange={this.handleEmployeeChange}
+              isMulti={false}
+              options={options}
+            />
+            {' '}
+            <button type="submit">+</button>
+          </div>
+        </form>
+      </div>
+
+    );
+  }
+
+  addReviewer=(e) => {
+    e.preventDefault();
+    const { selectedOption } = this.state;
+    const { invitationId } = this.props;
+
+    if (selectedOption) {
+      const params = {
+        invitation_id: invitationId,
+        user_id: selectedOption.value,
+      };
+      this.props.add_invitation_reviewers(invitationId, params);
+      this.setState({ selectedOption: null });
+    }
+  }
+
+  removeReviewer=(reviewerId) => {}
+
+  renderReviewers=() => {
+    const { reviewers } = this.props;
+    if (!reviewers.length) {
+      return <p>No Record</p>;
+    }
+
+    return (
+      <table>
+        <tbody>
+          <tr>
+            <th>Name</th>
+            <th>Review Status</th>
+            <th>Remove</th>
+          </tr>
+          {reviewers.map(r => (
+            <tr key={r.id}>
+              <td>
+                <EmployeeName {...r} />
+              </td>
+              <td>
+                <div className="invite-status">Invited</div>
+                <div className="meta-date">11/10/18</div>
+              </td>
+
+              <td>
+                <span className="custom-address">
+                  <i data-toggle="tooltip" title="Remove Reviewer!" className="fa fa-times-circle" aria-hidden="true" />
+                </span>
+              </td>
+
+            </tr>
+          ))}
+
+        </tbody>
+      </table>
+    );
+  }
+
 
   render() {
     return (
@@ -29,93 +132,10 @@ complete)
             <div className="left-group">
               <h3>Reviewers</h3>
             </div>
-            <div className="right-group">
-              <form className="custom-add-review-form">
-                <div className="custom-review-form-inner">
-                  <input type="text" name placeholder="Add coworker by name" />
-                  <button type="Submit">+</button>
-                </div>
-              </form>
-            </div>
+            {this.renderAddReviewer()}
           </div>
           <div className="application-reviewer-bottom-group">
-            <table>
-              <tbody>
-                <tr>
-                  <th>Name</th>
-                  <th>Review Status</th>
-                  <th>Action</th>
-                </tr>
-                <tr>
-                  <td>
-                    <div className="member-detail">
-                      <div className="icon-group">
-                        <span className="member-icon">NK</span>
-                      </div>
-                      <div className="detail-group">
-                        <a href="#" className="member-name">Nishant Kataria</a>
-                        <small className="designation">Director</small>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div className="invite-status">Invited</div>
-                    <div className="meta-date">11/10/18</div>
-                  </td>
-                  <td>
-                    <ul className="custom-client-action-section">
-                      <li className="action-drop-down active">
-                        <i className="fa fa-angle-down" />
-                        <ul>
-                          <li>
-                            <a href="#">
-                              <i className="fa fa-object-ungroup" aria-hidden="true" />
-Group with...
-                            </a>
-
-                          </li>
-                          <li>
-                            <a href="#">
-                              <i className="fa fa-exchange" aria-hidden="true" />
-Change Status
-                            </a>
-
-                          </li>
-                          <li>
-                            <a href="#">
-                              <i className="fa fa-credit-card" aria-hidden="true" />
-Archive
-                            </a>
-
-                          </li>
-                          <li>
-                            <a href="#">
-                              <i className="fa fa-trash-o" aria-hidden="true" />
-Delete
-                            </a>
-
-                          </li>
-                          <li>
-                            <a href="#">
-                              <i className="fa fa-clone" aria-hidden="true" />
-Create a copy
-                            </a>
-
-                          </li>
-                          <li>
-                            <a href="#">
-                              <i className="fa fa-print" aria-hidden="true" />
-Print
-                            </a>
-
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            {this.renderReviewers()}
           </div>
         </div>
       </div>
@@ -125,4 +145,12 @@ Print
   }
 }
 
-export default Reviewers;
+function mapStateToProps(state) {
+  return ({
+    reviewers: state.invites.reviewers,
+    employees: state.common.get('employees').toJS(),
+  });
+}
+
+export default
+connect(mapStateToProps, { load_invitation_reviewers, add_invitation_reviewers })(Reviewers);

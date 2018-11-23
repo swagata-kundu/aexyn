@@ -13,3 +13,5 @@ export const COMPANY_POPUP = 'company_popup';
 export const LOAD_PERMISSION = 'permission-load-permission';
 
 export const CHANGE_COMPANY_PERMISSION = 'permission-change-company-permission';
+
+export const LOAD_INVITATION_REVIEWERS = 'invitation-load-reviewers';

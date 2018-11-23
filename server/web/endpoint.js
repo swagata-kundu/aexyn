@@ -13,3 +13,5 @@ export const SEND_INVITATION_LINK = 'invitations/send';
 export const QUALIFICATION_PERMISSION = 'permission/';
 export const GET_OFFICES = 'company/offices';
 export const JUNGLE_INVITES = 'invitations/jungle/supplier-invites';
+export const MFS_INVITES = 'invitations/mfs/supplier-invites/';
+export const MFS_REVIEWERS = 'invitations/mfs/reviewers/';
