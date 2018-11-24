@@ -11,7 +11,39 @@ const DashBoard = () => (
 
             <Tabs />
 
-            <div className="tabber-content-group qualification-layout">
+            <div className="tabber-content-group mfs-layout">
+              <div className="mfs-layout-top-bar">
+                <div className="row">
+                  <div className="col-sm-6 mfs-layout-top-bar-left-col">
+                    <ul>
+                      <li>
+                        <a href="/qualification-manager/manage-food-suppliers/preview-questions">
+                          <i className="fa fa-tasks" aria-hidden="true" />
+                  Questionnaire
+
+                        </a>
+
+                      </li>
+                      <li>
+                        <div className="single-check-grp">
+                          <input type="checkbox" defaultValue="Only Show my application" />
+                          <label>Only Show my application</label>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="col-sm-6 mfs-layout-top-bar-right-col">
+                    <form>
+                      <input type="Search" name placeholder="Find application by company or email" />
+                      <a href className="custom-btn">
+                        <i className="fa fa-plus" aria-hidden="true" />
+                Invite Suppliers
+
+                      </a>
+                    </form>
+                  </div>
+                </div>
+              </div>
               <div className="qualification-layout-top-bar">
                 <div className="row">
                   <div className="col-sm-6 qualification-layout-top-bar-left-col">

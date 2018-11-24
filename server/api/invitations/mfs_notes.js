@@ -17,7 +17,7 @@ const getNotes = db => (req, res, next) => {
     text: `SELECT 
     QE.*, USERS.first_name, USERS.last_name, USERS.pic
     FROM
-    qualification_reviewers QE
+    qualification_notes QE
         JOIN
     user USERS ON QE.user_id = USERS.id
     WHERE QE.invitation_id=?;`,

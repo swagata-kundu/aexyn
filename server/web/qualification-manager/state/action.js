@@ -1,6 +1,7 @@
 import {
   LOAD_INITIAL_QUESTIONS, SEARCH_COMPANY, GET_COMPANIES_DETAIL, FILTER_COMPANY_DATA,
   COMPANY_POPUP, LOAD_PERMISSION, CHANGE_COMPANY_PERMISSION, LOAD_INVITATION_REVIEWERS,
+  LOAD_INVITATION_NOTES,
 } from './type';
 import {
   load_company_permission_service,
@@ -12,6 +13,11 @@ import {
   add_jungle_permission_service,
   load_invitation_reviewers_service,
   add_invitation_reviewers_service,
+  delete_invitation_reviewers_service,
+  load_invitation_notes_service,
+  add_invitation_notes_service,
+  delete_invitation_notes_service,
+
 } from '../../service/permissions';
 
 export const load_questions = data => ({ type: LOAD_INITIAL_QUESTIONS, payload: data });
@@ -92,7 +98,42 @@ export const load_invitation_reviewers = invitation_id => (dispatch) => {
 
 export const add_invitation_reviewers = (invitation_id, data) => (dispatch) => {
   add_invitation_reviewers_service(data)
-    .then(result => dispatch(load_invitation_reviewers(invitation_id))).catch((error) => {
+    .then(() => dispatch(load_invitation_reviewers(invitation_id))).catch((error) => {
+      console.log(error);
+    });
+};
+
+export const delete_invitation_reviewers = (id, invitation_id) => (dispatch) => {
+  delete_invitation_reviewers_service(id)
+    .then(() => dispatch(load_invitation_reviewers(invitation_id)))
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+
+export const load_invitation_notes = invitation_id => (dispatch) => {
+  load_invitation_notes_service(invitation_id)
+    .then(result => dispatch({
+      type: LOAD_INVITATION_NOTES,
+      payload: result.data,
+    })).catch(error => dispatch({
+      type: LOAD_INVITATION_NOTES,
+      payload: [],
+    }));
+};
+
+export const add_invitation_notes = (invitation_id, data) => (dispatch) => {
+  add_invitation_notes_service(data)
+    .then(() => dispatch(load_invitation_notes(invitation_id))).catch((error) => {
+      console.log(error);
+    });
+};
+
+export const delete_invitation_notes = (id, invitation_id) => (dispatch) => {
+  delete_invitation_notes_service(id)
+    .then(() => dispatch(load_invitation_notes(invitation_id)))
+    .catch((error) => {
       console.log(error);
     });
 };

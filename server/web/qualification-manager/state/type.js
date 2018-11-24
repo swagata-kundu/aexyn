@@ -15,3 +15,7 @@ export const LOAD_PERMISSION = 'permission-load-permission';
 export const CHANGE_COMPANY_PERMISSION = 'permission-change-company-permission';
 
 export const LOAD_INVITATION_REVIEWERS = 'invitation-load-reviewers';
+
+export const LOAD_INVITATION_NOTES = 'invitation-load-notes';
+
+export const LOAD_INVITATION_DETAIL = 'invitation-load-detail';

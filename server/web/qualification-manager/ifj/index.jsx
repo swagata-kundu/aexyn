@@ -8,7 +8,7 @@ const IFJ = ({ match }) => {
   return (
     <div>
       <Route exact path={`${url}`} component={DashBoard} />
-      <Route path={`${url}/:invitationId`} component={Invitation} />
+      <Route path={`${url}/invitation/:invitationId`} component={Invitation} />
     </div>
   );
 };

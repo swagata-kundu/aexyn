@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import Select from 'react-select';
 import { connect } from 'react-redux';
 
+import { formatDate } from '../../../util';
 import { EmployeeName } from '../../../components/employees/index';
-
-import { load_invitation_reviewers, add_invitation_reviewers } from '../../state/action';
+import { load_invitation_reviewers, add_invitation_reviewers, delete_invitation_reviewers } from '../../state/action';
 
 class Reviewers extends Component {
   constructor(props) {
@@ -65,7 +65,10 @@ class Reviewers extends Component {
     }
   }
 
-  removeReviewer=(reviewerId) => {}
+  removeReviewer=(reviewerId) => {
+    const { invitationId } = this.props;
+    this.props.delete_invitation_reviewers(reviewerId, invitationId);
+  }
 
   renderReviewers=() => {
     const { reviewers } = this.props;
@@ -87,13 +90,13 @@ class Reviewers extends Component {
                 <EmployeeName {...r} />
               </td>
               <td>
-                <div className="invite-status">Invited</div>
-                <div className="meta-date">11/10/18</div>
+                {r.status === 'NONE' ? <div className="invite-status">Invited</div> : null}
+                <div className="meta-date">{formatDate(r.date_modified)}</div>
               </td>
 
               <td>
                 <span className="custom-address">
-                  <i data-toggle="tooltip" title="Remove Reviewer!" className="fa fa-times-circle" aria-hidden="true" />
+                  <i onClick={() => { this.removeReviewer(r.id); }} data-toggle="tooltip" title="Remove Reviewer" className="fa fa-times-circle" aria-hidden="true" />
                 </span>
               </td>
 
@@ -153,4 +156,4 @@ function mapStateToProps(state) {
 }
 
 export default
-connect(mapStateToProps, { load_invitation_reviewers, add_invitation_reviewers })(Reviewers);
+connect(mapStateToProps, { load_invitation_reviewers, add_invitation_reviewers, delete_invitation_reviewers })(Reviewers);

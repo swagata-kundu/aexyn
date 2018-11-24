@@ -1,20 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { reduxForm, FieldArray, Field } from 'redux-form';
+import { reduxForm, FieldArray } from 'redux-form';
 import Fields from './components/fields';
 
-const QualificationForm = (props) => {
-  const { handleSubmit, onSubmit } = props;
+export const QualificationForm = (props) => {
+  const { handleSubmit, onSubmit, opening_statement } = props;
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="content-group">
         <div className="content-item">
           <h3>Opening Statement</h3>
           <p>
-            Please complete all the questions. The contents of this
-            questionnaire will be considered confidention and used safety to
-            determine your firm's qualification and will not be disclosed to
-            others.
+            {opening_statement}
           </p>
         </div>
       </div>

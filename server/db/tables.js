@@ -19,3 +19,4 @@ export const INVITATION_EDITORS = 'qualification_editors';
 export const INVITATION_NOTES = 'qualification_notes';
 export const INVITATION_FILES = 'qualification_files';
 export const INVITATION_ANSWERS = 'qualification_answers';
+export const QUALIFICATION_INVITES = 'qualification_invites';
