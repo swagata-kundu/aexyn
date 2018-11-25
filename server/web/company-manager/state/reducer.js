@@ -6,8 +6,8 @@ import {
 } from './type';
 
 const INITIAL_STATE = {
-  getOffices: [],
-  getEmployees: [],
+  offices: [],
+  employees: [],
   companyInfo: {},
   officeInfo: {},
 };
@@ -18,13 +18,13 @@ function companyReducer(state = INITIAL_STATE, action) {
     case GET_OFFICE_LIST: {
       return ({
         ...state,
-        getOffices: payload,
+        offices: payload,
       });
     }
     case GET_EMPLOYEE_DATA: {
       return ({
         ...state,
-        getEmployees: payload,
+        employees: payload,
       });
     }
     case GET_COMPANY_DETAIL: {

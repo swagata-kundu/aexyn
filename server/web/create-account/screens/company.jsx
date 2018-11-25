@@ -91,7 +91,7 @@ class Company extends Component {
 
   render() {
     const { companies, searchText, company_id } = this.props;
-    const size = companies.size;
+    const { size } = companies;
     const text = this.state.searchText || searchText;
     return (
       <div>

@@ -3,14 +3,14 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 const SideBar = (props) => {
-  const { getOffices } = props;
+  const { offices, userInfo } = props;
   return (
     <div className="custom-left-group">
       <div className="custom-siebar-user-detail">
         <div className="custom-user-company-name">
           <h3>COMPANY:</h3>
           <ul>
-            <li>Karvie</li>
+            <li>{userInfo.company_name}</li>
           </ul>
         </div>
       </div>
@@ -25,8 +25,8 @@ const SideBar = (props) => {
       </div>
       <div className="middle-group">
         <ul>
-          {getOffices.map(o => (
-            <li key={o.id}><NavLink to={`/offices/${o.id}/employees`}>{o.city}</NavLink></li>
+          {offices.map(o => (
+            <li key={o.id}><NavLink to={`/offices/${o.id}/employees`}>{o.name}</NavLink></li>
           ))}
         </ul>
       </div>
@@ -35,5 +35,6 @@ const SideBar = (props) => {
 };
 
 export default connect(state => ({
-  getOffices: state.company.getOffices,
+  offices: state.company.offices,
+  userInfo: state.common.get('userInfo').toJS(),
 }))(SideBar);

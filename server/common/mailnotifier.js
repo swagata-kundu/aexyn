@@ -49,6 +49,15 @@ export class MailNotifier {
       text: link,
     }, done);
   }
+
+  sendJoinOfficeEmail=({ to, link }, done) => {
+    this.transporter.sendMail({
+      ...this.defaultConfig,
+      subject: 'Aexyn | Join Office',
+      to,
+      text: link,
+    }, done);
+  }
 }
 
 export default new MailNotifier();

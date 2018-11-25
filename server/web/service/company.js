@@ -19,6 +19,12 @@ export const get_company_info_service = company_id => axios.get(`${COMPANY}${com
 export const update_company_info_service = ({ company_id, data }) => axios.put(`${COMPANY}${company_id}`, data);
 
 
-export const get_office_info_service = office_id => axios.get(`${GET_OFFICES}/${office_id}`);
+export const get_office_info_service = office_id => axios.get(`${GET_OFFICES}${office_id}`);
 
-export const update_office_info_service = ({ office_id, data }) => axios.put(`${GET_OFFICES}/${office_id}`, data);
+export const update_office_info_service = ({ office_id, data }) => axios.put(`${GET_OFFICES}${office_id}`, data);
+
+export const delete_employee_service = values => axios.post(`${COMPANY}delete-employee`, values);
+
+export const invite_employee_Service = data => axios.post(`${COMPANY}invite`, data);
+
+export const changeTL_Service = data => axios.post(`${GET_OFFICES}change-tl`, data);

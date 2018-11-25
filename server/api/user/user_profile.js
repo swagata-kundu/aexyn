@@ -30,7 +30,7 @@ const getUserDetail = db => (req, res, next) => {
                 JOIN
             company_office CO ON CO.id = UOP.office_id
         WHERE
-            user_id = ?;`,
+            user_id = ? ORDER BY UOP.isPrimaryOffice DESC;`,
         values: [req.params.user_id],
       }, cb);
     }],
@@ -220,10 +220,33 @@ const changeNotificationPreference = db => (req, res, next) => {
   }, passerror(next, () => res.send('ok')));
 };
 
+const changePrimaryOffice = db => (req, res, next) => {
+  const qry = new QueryHelper(db);
+  const { userInfo } = res.locals;
+
+  Async.auto({
+    remove: (cb) => {
+      const query = {
+        text: 'UPDATE user_office_profile set isPrimaryOffice=false WHERE user_id=?',
+        values: [userInfo.id],
+      };
+      qry.query(query, cb);
+    },
+    add: ['remove', (results, cb) => {
+      const query = {
+        text: 'UPDATE user_office_profile set isPrimaryOffice=true WHERE user_id=? AND office_id=?',
+        values: [userInfo.id, req.body.office_id],
+      };
+      qry.query(query, cb);
+    }],
+  }, passerror(next, () => res.send('ok')));
+};
+
 module.exports = {
   getUserDetail,
   updateUserDetail,
   changePassword,
   changePreference,
   changeNotificationPreference,
+  changePrimaryOffice,
 };

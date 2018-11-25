@@ -10,7 +10,7 @@ class Offices extends Component {
   }
 
   render() {
-    const { getOffices } = this.props;
+    const { offices } = this.props;
     return (
       <section
         className="custom-body-container-wrapper"
@@ -38,12 +38,12 @@ class Offices extends Component {
                             <tr>
                               <td>
                                 <span className="custom-name">Name</span>
-                                <span className="sort">
+                                {/* <span className="sort">
                                   <i
                                     className="fa fa-sort-asc"
                                     aria-hidden="true"
                                   />
-                                </span>
+                                </span> */}
                               </td>
                               <td>
                                 <span className="custom-employee">Employee</span>
@@ -55,11 +55,11 @@ class Offices extends Component {
                                 <span className="custom-address">Address</span>
                               </td>
                             </tr>
-                            {getOffices.length > 0 && getOffices.map(value => (
+                            {offices.length > 0 && offices.map(value => (
                               <tr key={value.id}>
                                 <td>
                                   <span className="custom-name">
-                                    <NavLink to={`/offices/${value.id}/employees`}>{value.city}</NavLink>
+                                    <NavLink to={`/offices/${value.id}/employees`}>{value.name}</NavLink>
                                     <i
                                       className="fa fa-user-circle"
                                       aria-hidden="true"
@@ -75,7 +75,6 @@ class Offices extends Component {
                                 <td>
                                   <span className="custom-address">
                                     {value.address1}
-,
                                     {value.address2}
                                   </span>
                                 </td>
@@ -98,7 +97,7 @@ class Offices extends Component {
 
 function mapStateToProps(state) {
   return {
-    getOffices: state.company.getOffices,
+    offices: state.company.offices,
     userInfo: state.common.get('userInfo').toJS(),
   };
 }

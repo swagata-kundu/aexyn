@@ -14,5 +14,6 @@ export default function (db) {
     .put('/change-password', verifyAuth(db), require('./user_profile').changePassword(db))
     .put('/preference', verifyAuth(db), require('./user_profile').changePreference(db))
     .put('/notification-preference', verifyAuth(db), require('./user_profile').changeNotificationPreference(db))
+    .put('/primary-office', verifyAuth(db), require('./user_profile').changePrimaryOffice(db))
     .put('/:user_id', verifyAuth(db), require('./user_profile').updateUserDetail(db));
 }

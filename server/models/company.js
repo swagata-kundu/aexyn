@@ -1,6 +1,7 @@
 import Async from 'async';
 import _ from 'lodash';
 import boom from 'boom';
+import config from 'config';
 import passerror from 'passerror';
 import {
   tables,
@@ -181,4 +182,6 @@ export default class Company {
       WHERE CO.company_id=?`,
     values: [company_id],
   }, done)
+
+  createJoinCompanyLink=hash => `${config.get('host')}aexyn/join-us/${hash}?company=true`
 }

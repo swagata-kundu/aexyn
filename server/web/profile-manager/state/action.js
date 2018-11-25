@@ -2,6 +2,7 @@ import { LOAD_USER_PROFILE, LOAD_ALL_COMPANIES, CHANGE_PREFERENCE } from './type
 import {
   load_user_profile_service, change_user_preference_service,
   change_user_notification_preference_service,
+  change_user_primary_office_service,
 } from '../../service/profile';
 import { get_all_company_service } from '../../service/company';
 
@@ -43,6 +44,16 @@ export const change_notification_preference = (user_id, user, notification) => (
     change_user_notification_preference_service(notification).then(() => {
       dispatch(load_user_profile(user_id));
     });
+  }).catch((error) => {
+    console.log(error);
+  });
+};
+
+
+export const change_user_primary_office = (office_id, user_id) => (dispatch) => {
+  change_user_primary_office_service(office_id).then(() => {
+    dispatch(load_user_profile(user_id));
+    window.location.reload();
   }).catch((error) => {
     console.log(error);
   });

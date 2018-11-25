@@ -7,6 +7,9 @@ import {
   get_company_info_service, get_office_info_service,
   update_office_info_service,
   update_company_info_service,
+  delete_employee_service,
+  invite_employee_Service,
+  changeTL_Service,
 } from '../../service/company';
 
 export const getOffice = () => async (dispatch) => {
@@ -83,6 +86,32 @@ export const update_office_info = ({ office_id, data }) => (dispatch) => {
 export const update_company_info = ({ company_id, data }) => (dispatch) => {
   update_company_info_service({ company_id, data }).then(() => {
     dispatch(get_company_info(company_id));
+  }).catch((error) => {
+    console.log(error);
+  });
+};
+
+
+export const delete_employee = ({ user_id, office_id }) => (dispatch) => {
+  debugger;
+  delete_employee_service({ user_id, office_id }).then(() => {
+    dispatch(getEmployee(office_id));
+  }).catch((error) => {
+    console.log(error);
+  });
+};
+
+export const invite_employee = ({ email, office_id }) => (dispatch) => {
+  invite_employee_Service({ email, office_id }).then(() => {
+    dispatch(getEmployee(office_id));
+  }).catch((error) => {
+    console.log(error);
+  });
+};
+
+export const changeTL = ({ id, office_id, technical_lead }) => (dispatch) => {
+  changeTL_Service({ id, office_id, technical_lead }).then(() => {
+    dispatch(getEmployee(office_id));
   }).catch((error) => {
     console.log(error);
   });

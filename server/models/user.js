@@ -44,6 +44,7 @@ export default class User {
   getUserInfo=(user_id, done) => {
     const text = `SELECT 
     U.*,
+    C.name AS company_name,
     PACKAGE.package_id,
     C.id AS company_id
     FROM

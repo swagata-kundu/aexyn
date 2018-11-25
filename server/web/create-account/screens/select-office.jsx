@@ -48,7 +48,7 @@ class CompanySelect extends Component {
     if (!selected_company || !selected_company.size) {
       return null;
     }
-    const offices = selected_company.get('offices').toJS();
+    const offices = JSON.parse(selected_company.get('offices'));
     return (
       <ul className="clearfix">
         {offices.map(o => (

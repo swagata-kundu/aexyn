@@ -1,5 +1,6 @@
 import Express from 'express';
 import { webAuth } from '../middlewares';
+import join from './join_us';
 
 export default function (db) {
   return Express
@@ -16,6 +17,7 @@ export default function (db) {
         res.redirect('/');
       }
     })
+    .get('/aexyn/join-us/:hash', join(db))
     .get('/forget-password', (req, res) => res.render('sign-in'))
     .get('/', (req, res) => res.render('sign-in'));
 }

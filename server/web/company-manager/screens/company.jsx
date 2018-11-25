@@ -107,7 +107,6 @@ function mapStateToPropsCompanyForm(state) {
   const initialValues = {
     name, labour_type, business_type, tagLine, websiteUrl,
   };
-  console.log(initialValues);
   return ({
     initialValues,
   });

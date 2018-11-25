@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { load_user_profile, change_user_preference } from '../state/action';
+import { load_user_profile, change_user_preference, change_user_primary_office } from '../state/action';
 import Nav from '../components/nav';
 import ChangePassword from '../components/change-password';
 
@@ -19,6 +19,11 @@ class Account extends Component {
       user_id: userInfo.id,
       params,
     });
+  }
+
+  changePrimaryOffice=(e) => {
+    const { userInfo } = this.props;
+    this.props.change_user_primary_office(e.target.value, userInfo.id);
   }
 
   render() {
@@ -57,7 +62,7 @@ class Account extends Component {
                         <label>Primary Office</label>
                       </div>
                       <div className="input">
-                        <select value={office_profile.office_id}>
+                        <select onChange={this.changePrimaryOffice} value={office_profile.office_id}>
                           {office_options.map(o => <option key={o.id} value={o.id}>{o.name}</option>)}
                         </select>
                         <small>
@@ -181,4 +186,4 @@ export default connect(state => ({
   profile: state.profile,
   userInfo: state.common.get('userInfo').toJS(),
 
-}), ({ load_user_profile, change_user_preference }))(Account);
+}), ({ load_user_profile, change_user_preference, change_user_primary_office }))(Account);
