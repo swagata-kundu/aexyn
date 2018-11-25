@@ -156,4 +156,5 @@ function mapStateToProps(state) {
 }
 
 export default
-connect(mapStateToProps, { load_invitation_reviewers, add_invitation_reviewers, delete_invitation_reviewers })(Reviewers);
+connect(mapStateToProps,
+  { load_invitation_reviewers, add_invitation_reviewers, delete_invitation_reviewers })(Reviewers);

@@ -84,6 +84,13 @@ export default class InvitationList extends Component {
         <div className="item-group">
           {this.renderItems()}
         </div>
+        <div className="custom-mfs-item-bottom-text orange-border">
+          <a href="#">
+Send a message to remind 1 vendor
+            {' '}
+            <i className="fa fa-angle-double-right" aria-hidden="true" />
+          </a>
+        </div>
       </div>
     );
   }

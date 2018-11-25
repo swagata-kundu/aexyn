@@ -42,7 +42,7 @@ module.exports = db => (req, res, next) => {
     }],
     update: ['save', (results, cb) => {
       const { answers } = results.validate;
-      const updates = _.filter(answers, a => !a.answerId);
+      const updates = _.filter(answers, a => !!a.answerId);
       if (!updates.length) {
         return cb();
       }

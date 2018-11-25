@@ -13,6 +13,11 @@ img {
     max-width: 100%;
 }
 
+b,
+strong {
+    font-weight: bold !important;
+}
+
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -2272,6 +2277,26 @@ a.tb-more-btn i {
     clear: both;
 }
 
+.custom-mfs-section-1 .tab-content,
+.custom-qualification-section-1 .tab-content {
+    position: relative;
+    padding-bottom: 55px;
+}
+
+.custom-mfs-item-bottom-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-bottom: 10px;
+    border-top: 1px solid;
+    padding-top: 12px;
+}
+
+.custom-mfs-item-bottom-text a,
+.custom-mfs-item-bottom-text a i {
+    font-weight: bold;
+}
+
 
 /* =================== Questionnaire ==================== */
 
@@ -3241,7 +3266,7 @@ table.Company-detail-table tr td .sort i {
     padding: 5px 0;
 }
 
-.member-detail .icon-group {
+.jungle-bottom-group table tr td .member-detail .icon-group {
     width: 35px;
     height: 35px;
     text-align: center;
@@ -3252,13 +3277,13 @@ table.Company-detail-table tr td .sort i {
     float: left;
 }
 
- .member-detail .detail-group {
+.jungle-bottom-group table tr td .member-detail .detail-group {
     float: left;
     width: calc(100% - 35px);
     padding-left: 10px;
 }
 
- .member-detail .detail-group small.designation {
+.jungle-bottom-group table tr td .member-detail .detail-group small.designation {
     display: block;
 }
 
@@ -3658,6 +3683,16 @@ a.custom-continue-btn {
 .qualified i {
     font-weight: normal;
     color: #abc360;
+}
+
+.custom-review-sidebar {
+    position: fixed !important;
+    right: 0;
+    top: 150px;
+    z-index: 9;
+    overflow-y: auto;
+    height: 100%;
+    padding-bottom: 160px;
 }
 
 .custom-review-sidebar .custom-sidebar-widget {
@@ -4128,6 +4163,500 @@ h3.applicant-heading>span {
 }
 
 
+
+/* =================== Popup ==================== */
+
+.user-profile-popup,
+.company-profile-popup {
+    max-width: 1000px !important;
+    width: 90% !important;
+}
+
+.user-profile-popup .modal-content,
+.company-profile-popup .modal-content {
+    border-radius: 0 !important;
+    background: #f1f1f1 !important;
+}
+
+.popup-header {
+    padding: 10px 30px;
+    background: #fff;
+    border-bottom: 1px solid #ccc;
+    box-shadow: 0 0 1px #a9a9a9;
+}
+
+.user-profile-popup .popup-user-icon span.user-icon {
+    background: #edde95;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    border-radius: 80px;
+    display: block;
+    color: #fff;
+}
+
+.user-profile-popup .popup-user-icon {
+    float: left;
+    width: 100px;
+}
+
+.user-profile-popup .popup-user-detail {
+    float: left;
+    width: calc(100% - 100px);
+}
+
+.user-profile-popup .popup-user-detail span {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.popup-main-content {
+    padding: 10px;
+}
+
+.popup-main-content .left-group {
+    width: 60%;
+    float: left;
+    background: #fff;
+    padding: 10px 0;
+    border: 1px solid #ccc;
+    min-height: 350px;
+}
+
+.popup-main-content .left-group h3 {
+    margin-bottom: 0;
+}
+
+a.transparent-btn {
+    background: transparent;
+    border: 2px solid #ccc;
+    padding: 5px 20px;
+    display: inline-block;
+    color: #ccc;
+    font-size: 12px;
+    text-decoration: none;
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+}
+
+a.transparent-btn:hover {
+    color: #fff;
+    border-color: #74a973;
+    background: #74a973;
+    text-decoration: none;
+}
+
+.user-information-item .label {
+    float: left;
+    width: 130px;
+    font-weight: bold;
+}
+
+.user-information-item .info {
+    width: calc(100% - 130px);
+    float: left;
+}
+
+.user-information-item {
+    margin-bottom: 15px;
+}
+
+.user-information-item .company-info .company-icon {
+    float: left;
+    width: 40px;
+    background: #dcd9d9;
+    padding: 12px 5px;
+    text-align: center;
+    margin-right: 10px;
+    color: #fff;
+}
+
+.popup-company-details .company-location {
+    display: block;
+    margin-top: 5px;
+}
+
+.popup-main-content .right-group {
+    float: left;
+    width: 40%;
+    padding: 10px 0;
+    height: 350px;
+    overflow-y: auto;
+}
+
+.popup-main-content .right-group .review-items {
+    padding: 15px;
+}
+
+.popup-main-content .right-top-content {
+    margin-bottom: 30px;
+}
+
+.popup-main-content .right-group h5 {
+    font-size: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.popup-main-content .right-group .review-items .icon-group {
+    width: 50px;
+    float: left;
+}
+
+.popup-main-content .right-group .review-items .user-details {
+    float: left;
+    width: calc(100% - 50px);
+}
+
+.popup-main-content .right-group .review-items .icon-group .user-icon {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 100px;
+    text-align: center;
+    display: block;
+    background: #57b18c;
+    color: #fff;
+    font-size: 10px;
+}
+
+.popup-main-content .right-group .review-items p.description {
+    padding-top: 15px;
+    clear: both;
+    text-align: justify;
+    position: relative;
+    padding-right: 50px;
+}
+
+.popup-main-content .right-group .review-items p.description .delete-icon {
+    position: absolute;
+    top: -12px;
+    right: 0px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.delete-icon i {
+    cursor: pointer;
+    color: #ef2929;
+    font-size: 16px;
+}
+
+.popup-main-content .right-group .review-items .user-details .date {
+    display: block;
+}
+
+.popup-main-content .right-group .notes p {
+    text-align: justify;
+}
+
+.popup-main-content .right-group .show-more,
+.popup-main-content .right-group .less-more {
+    cursor: pointer;
+    font-size: 12px;
+    float: right;
+}
+
+.star {
+    position: relative;
+    cursor: pointer;
+}
+
+.star img.star-hover {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9;
+}
+
+.star:hover img.star-hover {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup-main-content .right-group .review-items .member-review-left-group {
+    float: left;
+    width: 50%;
+}
+
+.popup-main-content .right-group .review-items .member-review-right-group {
+    float: left;
+    width: 50%;
+}
+
+.popup-main-content .right-top-content .notes {
+    position: relative;
+}
+
+.popup-main-content .right-top-content .notes .delete-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.add-review-field .star-review {
+    margin: 10px 0;
+}
+
+.add-review-field {
+    border: 1px solid green;
+    margin: 5px auto;
+    padding: 10px;
+    width: calc(100% - 15px);
+}
+
+.add-review-field button {
+    font-size: 10px;
+}
+
+.add-review-field button.cancel {
+    background: transparent;
+    color: #333;
+    font-weight: bold;
+}
+
+.add-review-field textarea {
+    -moz-box-shadow: 0px 0px 1px rgba(68, 68, 68, 0.4);
+    -webkit-box-shadow: 0px 0px 1px rgba(68, 68, 68, 0.4);
+    box-shadow: 0px 0px 1px rgba(68, 68, 68, 0.4);
+    margin-bottom: 10px;
+}
+
+.user-profile-edit-bottom-group {
+    background: #fff;
+    padding: 15px 0;
+    border: 1px solid #ccc;
+}
+
+.user-profile-edit-bottom-group .col-md-7 {
+    border-right: 2px solid #f1f1f1;
+}
+
+h3.red {
+    color: #f32424;
+}
+
+.edit-profile-left-group .label-text label {
+    font-size: 15px;
+}
+
+.edit-profile-left-group .form-field.two-col-field .input input {
+    display: inline-block;
+    width: 48%;
+    margin-right: 11px;
+}
+
+.edit-profile-left-group .form-field.two-col-field .input input:last-child {
+    margin-right: 0;
+}
+
+.popup-header-content .row {
+    align-items: center;
+}
+
+.edit-profile-right-group .form-field .input-field label {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.edit-profile-right-group .form-field {
+    margin-bottom: 10px;
+}
+
+iframe {
+    max-width: 100%;
+}
+
+.popup-main-content .map {
+    margin: 10px 0;
+}
+
+.company-profile-popup .popup-header .icon-group {
+    background: #ccc;
+    color: #fff;
+    padding: 10px;
+    font-size: 29px;
+    float: left;
+    width: 60px;
+    text-align: center;
+}
+
+.company-profile-popup .popup-header .content-group {
+    float: left;
+    width: calc(100% - 60px);
+    padding-left: 20px;
+}
+
+.company-profile-popup .company-information-item {
+    margin-bottom: 10px;
+}
+
+.company-profile-popup .company-information-item .label {
+    float: left;
+    width: 130px;
+}
+
+.company-profile-popup .company-information-item .info {
+    float: left;
+    width: calc(100% - 130px);
+}
+
+.company-profile-popup .company-information-item .info ul li {
+    display: inline-block;
+    position: relative;
+}
+
+.company-profile-popup .company-information-item .info ul li+li {
+    margin-left: 10px;
+}
+
+.company-profile-popup .company-information-item .info ul li+li:before {
+    content: "";
+    position: absolute;
+    left: -12px;
+    top: 8px;
+    width: 5px;
+    height: 5px;
+    border-radius: 30px;
+    background: #b1b1b1;
+    display: block;
+}
+
+.popup-main-content .left-group .company-popup-left-bottom h3 {
+    margin-bottom: 10px;
+}
+
+.company-popup-contact-detail .item .icon {
+    float: left;
+    width: 30px;
+}
+
+.company-popup-contact-detail .item .content {
+    float: left;
+    width: calc(100% - 30px);
+}
+
+.company-popup-contact-detail .item .content .member-detail .icon {
+    background: #61caa3;
+    color: #fff;
+    text-align: center;
+    border-radius: 100px;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 10px;
+}
+
+.company-popup-contact-detail .item .content .member-detail .content {
+    padding-left: 10px;
+}
+
+.company-popup-contact-detail .item .content .member-detail .content .designation {
+    display: block;
+}
+
+.company-popup-contact-detail .item {
+    margin-bottom: 10px;
+}
+
+.company-popup-contact-detail .item .member-detail {
+    margin: 5px 0;
+}
+
+.company-popup-contact-detail .item .member-detail {
+    margin: 5px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+.company-popup-contact-detail .item .member-detail:last-child {
+    border-bottom: 0 none;
+}
+
+.company-profile-popup .popup-main-content .right-group {
+    padding: 10px 15px;
+    height: 675px;
+}
+
+.company-information-right-bottom form {
+    padding: 15px 0;
+}
+
+.company-information-right-bottom ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.company-information-right-bottom ul li {
+    display: -webkit-inline-box;
+    margin: 0 5px 10px;
+    border: 1px solid #ccc;
+    padding: 2px 8px;
+    font-size: 11px;
+}
+
+.company-profile-popup .popup-main-content .right-group .company-information-item .label {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.add-review-field form .star-review {
+    float: left;
+    width: 50%;
+    margin: 0;
+}
+
+.add-review-field form .button-group {
+    float: left;
+    width: 50%;
+}
+
+.submitted-form-group .left-content {
+    width: 50%;
+    float: left;
+}
+
+.submitted-form-group .right-content {
+    float: left;
+    text-align: right;
+    width: 50%;
+}
+
+.submitted-form-group tr {
+    border-bottom: 1px solid #ccc;
+}
+
+.submitted-form-group tr td {
+    padding: 10px 0;
+}
+
+.submitted-form-group tr th {
+    border-bottom: 1px solid #000;
+}
+
+.submitted-form-group h5 {
+    font-size: 15px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.submitted-form-group h3 {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.submitted-form-group .left-content h3 {
+    margin: 0 0 10px;
+}
+
+
+
 /* =================== Responsive ==================== */
 
 @media (min-width: 768px) {
@@ -4155,6 +4684,14 @@ h3.applicant-heading>span {
         transition: width 0.4s;
         overflow-y: auto;
         overflow-x: hidden;
+    }
+
+    .section-header ul {
+        display: block !important;
+    }
+
+    .section-menu-trigger {
+        display: none;
     }
 }
 
@@ -4271,10 +4808,93 @@ h3.applicant-heading>span {
         -o-transition: all ease 0.4s;
         transition: all ease 0.4s;
     }
+
+    .section-header ul {
+        display: none;
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+
+    .section-header ul li {
+        float: none;
+        width: 100%;
+        display: block;
+        margin: 0;
+    }
+
+    .section-header ul li a {
+        display: block;
+        border-radius: 0;
+        text-align: left;
+    }
+
+    .section-header ul li:first-child {
+        margin-top: 10px;
+    }
+
+    .section-header {
+        text-align: center;
+    }
 }
 
 
+
 /* ================ Media Queries  ============== */
+@media (max-width: 1200px) {
+    ul.projects-tab-link li a {
+        font-size: 12px;
+        font-weight: bold;
+        padding: 8px 10px;
+    }
+}
+
+@media (max-width: 960px) {
+    .axeyn-tab-search-inner-grp .custom-axeyn-tab-search-sidebar {
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+        border-right: none;
+    }
+
+    .axeyn-tab-search-inner-grp .custom-axeyn-tab-search-main-content {
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .custom-search-table table td {
+        font-size: 11px;
+    }
+
+    .custom-search-tb-data .custom-tb-rght-col {
+        font-size: 11px;
+    }
+
+    .custom-search-tb-data a {
+        font-weight: bold;
+    }
+
+    .custom-tag {
+        font-size: 9px;
+        padding: 3px;
+        border-radius: 0;
+    }
+
+    ul.projects-tab-link {
+        display: block;
+        margin-bottom: 15px;
+    }
+
+    ul.projects-tab-link li {
+        display: block;
+        width: 100%;
+        margin: 0;
+    }
+
+    ul.projects-tab-link li a {
+        width: 100%;
+    }
+}
 
 @media (max-width: 767px) {
 
@@ -4295,6 +4915,9 @@ h3.applicant-heading>span {
 
     .header-group {
         padding: 5px 0;
+        width: 100%;
+        left: 0;
+        right: 0;
     }
 
     .custom-questionnaire-section>.container-fluid>.row {
@@ -4311,6 +4934,21 @@ h3.applicant-heading>span {
 
     .custom-questionnaire-section .custom-left-group {
         position: static;
+        width: 100%;
+        max-width: 100%;
+        float: none;
+        height: auto;
+        min-height: 0 !IMPORTANT;
+        padding-bottom: 0;
+    }
+
+    .custom-questionnaire-section .custom-right-group {
+        clear: both;
+    }
+
+    .custom-employee-right-col-inner {
+        padding-left: 15px;
+        padding-right: 15px;
     }
 
     .custom-questionnaire-section {
@@ -4333,10 +4971,394 @@ h3.applicant-heading>span {
         width: 100%;
         margin: 15px 0px;
     }
+
+    .custom-section-header-main-wrapper {
+        min-height: 0 !important;
+    }
+
+    .custom-section-header-main-wrapper .section-header {
+        position: static;
+        width: 100%;
+    }
+
+    .add-office-info form {
+        max-width: 100%;
+    }
+
+    .add-office-info .form-field .label {
+        width: 100%;
+        float: none;
+    }
+
+    .add-office-info .form-field .input {
+        width: 100%;
+        float: none;
+    }
+
+    .header-group {
+        display: block;
+        padding: 20px 0;
+    }
+
+    .logo {
+        padding-right: 30px;
+        margin-bottom: 20px;
+    }
+
+    .header-right.group.text-right {
+        text-align: left !important;
+    }
+
+    .custom-ovel-btn {
+        font-size: 10px !important;
+    }
+
+    .section-header h1 {
+        font-size: 25px;
+    }
+
+    .add-office-info .top-bar .right-group ul {
+        text-align: left;
+        margin-top: 10px;
+    }
+
+    .two-col-right-input select,
+    .two-col-right-input input {
+        width: 100% !important;
+    }
+
+    .taber-menu li {
+        margin: 5px 5px 5px 0;
+    }
+
+    .client-action-table-wrapper table.client-action {
+        width: 735px;
+    }
+
+    .client-action-table-wrapper {
+        overflow-x: scroll;
+    }
+
+    .custom-section-header-main-wrapper {
+        width: 100%;
+    }
+
+    a.company-selection-btn.custom-btn {
+        margin-top: 0;
+    }
+
+    .company-selection .companies .company-items .item {
+        width: 100%;
+        float: none;
+        margin: 0 0 10px;
+    }
+
+    .company-selection .companies .company-items .item .icon {
+        width: 50px;
+    }
+
+    .company-selection .companies .company-items .item .company-detail {
+        display: flex;
+    }
+
+    .custom-body-container-wrapper,
+    .footer-container-wrapper,
+    .custom-account-container-wrapper {
+        padding-left: 0;
+    }
+
+    .employee-form .form-field {
+        width: 100%;
+        float: none;
+    }
+
+    .employee-form .form-btn-grp {
+        float: none;
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .custom-employee-right-col-inner .employee-form form {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    table.Company-detail-table {
+        font-size: 12px;
+    }
+
+    .custom-user-right-col a {
+        font-size: 12px;
+    }
+
+    .qualification-layout-top-bar .qualification-layout-top-bar-left-col,
+    .qualification-layout-top-bar .qualification-layout-top-bar-right-col {
+        width: 100% !important;
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+        text-align: left !IMPORTANT;
+    }
+
+    .qualification-layout-top-bar-left-col {
+        margin-bottom: 10px;
+    }
+
+    .qualification-layout-top-bar-left-col form input[type="Search"] {
+        max-width: 100%;
+    }
+
+    .custom-mfs-section-1 .tab-content,
+    .custom-qualification-section-1 .tab-content {
+        width: 100%;
+        float: none;
+        margin: 0 0 15px;
+    }
+
+    .custom-mfs-section-1 .tab-content .item-group,
+    .custom-qualification-section-1 .tab-content .item-group {
+        height: auto;
+        display: none;
+        max-height: 1000px;
+    }
+
+    .tabber-content-group .tab-content h3 {
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+
+    .custom-search-table table {
+        width: 590px;
+    }
+
+    .custom-search-table table {
+        width: 500px;
+    }
+
+    .custom-search-table table .align-center {
+        padding-right: 10px;
+    }
+
+    .custom-search-table {
+        overflow-y: auto;
+    }
+
+    .mfs-layout-top-bar .row>div {
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .mfs-layout-top-bar-right-col form {
+        float: none;
+        margin-top: 15px;
+    }
+
+    .custom-mfs-section-1-inner {
+        width: auto;
+    }
+
+    .custom-access-section .row>div {
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .custom-access-section-right-col {
+        text-align: center;
+    }
+
+    .custom-access-section-right-col .member-sec {
+        display: inline-block;
+    }
+
+    .mfs-layout-top-bar-right-col form {
+        max-width: 100%;
+    }
+
+    .mfs-layout-top-bar-right-col form input {
+        width: 1900%;
+        float: none;
+        margin-bottom: 15px;
+    }
+
+    .custom-access-section-left-col-inner {
+        padding: 20px 0;
+    }
+
+    .office-selection ul li {
+        width: 100%;
+        float: none;
+        margin-right: 0;
+        margin-left: 0;
+    }
+
+    .company-details h5,
+    .office-selection h5 {
+        margin-bottom: 30px;
+    }
+
+    .office-selection h3 {
+        max-width: 100%;
+    }
+
+    .company-details,
+    .office-selection {
+        max-width: 100%;
+        float: none;
+        padding: 20px 0;
+    }
+
+    .office-selection ul {
+        padding: 0 15px;
+    }
+
+    .office-selection form {
+        max-width: 100%;
+    }
+
+    .office-selection form .form-field {
+        margin-bottom: 0;
+    }
+
+    .custom-axeyn-tabber-item {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .custom-projects-tabber .row>div {
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin: 0 0 15px;
+    }
+
+    ul.projects-tab-link {
+        margin: 0;
+    }
+
+    .custom-project-search-group form {
+        max-width: 100%;
+    }
+
+    .custom-project-new-project-btn-group {
+        text-align: left;
+    }
+
+    .form-field.left-label .label-text,
+    .form-field .left-label .label-text {
+        width: 100%;
+        float: none;
+    }
+
+    .form-field.left-label .input-field,
+    .form-field .left-label .input-field {
+        width: 100%;
+        float: none;
+        padding: 0;
+    }
+
+    .three-form-field>div {
+        width: 100%;
+        float: none;
+        position: static;
+    }
+
+    .three-form-field .column-2 {
+        padding: 0;
+    }
+
+    .form-field {
+        position: relative;
+    }
+
+    .form-field.input-column.three-form-field span.remove-row-value {
+        right: 0;
+        transform: translateY(-50%);
+    }
+
+    form .upload-file-input {
+        width: 100% !important;
+        float: none;
+        margin-top: 10px;
+    }
+
+    .two-col-form-field .form-text .employee-number,
+    .two-col-form-field .form-field .input-field {
+        width: 100%;
+        display: block;
+    }
+
+    .four-col-form-field>div {
+        width: 100%;
+        padding: 0;
+    }
+
+    .form-field.list-of-project-details.input-column.list-of-project-details {
+        padding-right: 0;
+    }
+
+    .two-col-equal-field>div {
+        float: none;
+        width: 100%;
+    }
+
+    .two-col-right-field .label-text {
+        float: none;
+        width: 100%;
+    }
+
+    .two-col-right-field .input-field {
+        float: none;
+        width: 100%;
+    }
 }
 
 @media (max-height: 600px) {
     .custom-sidebar-login-details {
         position: static;
+    }
+}
+
+@media (max-width: 479px) {
+    .header-right.group ul li {
+        display: block;
+    }
+
+    .custom-ovel-btn {
+        max-width: 230px;
+    }
+
+    .header-right.group ul li:last-child,
+    .header-right.group ul li:nth-last-of-type(2) {
+        display: inline-block;
+        margin-top: 10px;
+    }
+
+    .custom-user-left-col {
+        width: auto;
+        margin-right: 5px;
+    }
+
+    .custom-user-left-col i {
+        font-size: 25px;
+        margin-left: 0 !important;
+    }
+
+    .custom-user-right-col a {
+        font-size: 11px;
+    }
+
+    table.Company-detail-table {
+        font-size: 11px;
+    }
+
+    table.Company-detail-table tr td {
+        padding-right: 10px;
+    }
+
+    .jungle-bottom-group table,
+    .jungle-right-group table {
+        font-size: 10px;
     }
 }

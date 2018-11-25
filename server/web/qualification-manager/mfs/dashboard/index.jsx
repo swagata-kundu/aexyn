@@ -19,7 +19,8 @@ const DashBoard = () => (
                       <li>
                         <a href="/qualification-manager/manage-food-suppliers/preview-questions">
                           <i className="fa fa-tasks" aria-hidden="true" />
-                  Questionnaire
+                          {' '}
+Questionnaire
 
                         </a>
 
@@ -35,26 +36,11 @@ const DashBoard = () => (
                   <div className="col-sm-6 mfs-layout-top-bar-right-col">
                     <form>
                       <input type="Search" name placeholder="Find application by company or email" />
-                      <a href className="custom-btn">
+                      <a href="/qualification-manager/manage-food-suppliers/invite/by-search" className="custom-btn">
                         <i className="fa fa-plus" aria-hidden="true" />
                 Invite Suppliers
-
                       </a>
                     </form>
-                  </div>
-                </div>
-              </div>
-              <div className="qualification-layout-top-bar">
-                <div className="row">
-                  <div className="col-sm-6 qualification-layout-top-bar-left-col">
-                    <form>
-                      <input type="Search" placeholder="Find" />
-                      {' '}
-                      <i className="fa fa-search" aria-hidden="true" />
-                    </form>
-                  </div>
-                  <div className="col-sm-6 qualification-layout-top-bar-right-col text-right">
-                    <span className="video-btn"> View our introductory video &gt;&gt;</span>
                   </div>
                 </div>
               </div>

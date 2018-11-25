@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
+import _ from 'lodash';
+import { reduxForm, submit } from 'redux-form';
 
+import { axios } from '../../../../util';
 import { QualificationForm } from '../../../mfs/questions/qualification-form';
+import { masterData } from '../../../../state/action';
 
 const QualificationFormConnected = reduxForm({
   form: 'qualificationForm',
@@ -14,7 +17,27 @@ const QF = connect(state => ({
 }))(QualificationFormConnected);
 
 class Questions extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.masterData();
+  }
+
+  saveAnswers=(values) => {
+    const { invitationId } = this.props;
+    let answers = [];
+    _.forEach(values, (v) => {
+      answers.push(...v);
+    });
+    answers = answers.map(a => ({
+      answerId: a.answerId || 0,
+      answer: a.answer,
+      question_id: a.id,
+    }));
+    axios.post('questions/answers/', { invitation_id: invitationId, answers });
+  }
+
+  submit=() => {
+    this.props.submit('qualificationForm');
+  }
 
   renderSideOptions=() => (
     <div className="custom-left-group ifj-ques-left-group">
@@ -64,8 +87,9 @@ trusts Aexyn connected to securely collect and transmit your qualification. Your
                   <span className="company-name">Talwar Electronics</span>
 . Other clients will only receive your information if your information if you explicity send them a qualification application.
                 </p>
+                <button type="button" onClick={this.submit}>Save</button>
               </div>
-              <QF onSubmit={() => {}} opening_statement={opening_statement} />
+              <QF onSubmit={this.saveAnswers} opening_statement={opening_statement} />
             </div>
           </div>
         </div>
@@ -77,4 +101,5 @@ trusts Aexyn connected to securely collect and transmit your qualification. Your
 
 export default connect(state => ({
   detail: state.invites.invitation.detail,
-}))(Questions);
+
+}), { submit, masterData })(Questions);

@@ -27,9 +27,10 @@ class Account extends Component {
   }
 
   render() {
+    const { userInfo, profile } = this.props;
     const {
       allLinkedOffices, office_profile, user_preferences, user_info,
-    } = this.props.profile;
+    } = profile;
     const { start_page, tz } = user_preferences;
     const office_options = allLinkedOffices.map(o => ({ id: o.office_id, name: o.city }));
 
@@ -54,7 +55,7 @@ class Account extends Component {
                         <label>Company Name</label>
                       </div>
                       <div className="input">
-                        <div className="field-text"><span className="office-name">Karvi</span></div>
+                        <div className="field-text"><span className="office-name">{userInfo.company_name}</span></div>
                       </div>
                     </div>
                     <div className="form-field">
@@ -93,8 +94,10 @@ class Account extends Component {
                         <small>
 To leave
                           {' '}
-                          <span className="company-name">AA</span>
-  printers, remove yourself from the
+                          <span className="company-name">{userInfo.company_name}</span>
+                          {' '}
+remove yourself from the
+                          {' '}
                           <a href="#">Employees Table.</a>
                         </small>
                       </div>

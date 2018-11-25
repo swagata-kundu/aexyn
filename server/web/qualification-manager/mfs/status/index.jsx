@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Status from './status';
 import Reviewers from './reviewers';
 import History from './history';
+import Form from './form';
 import { load_all_employees } from '../../../state/action';
 
 import ReviewersSidemenu from '../components/reviewers';
@@ -85,6 +86,16 @@ class Invitation extends Component {
                   path={`${url}/history`}
                   render={props => (
                     <History
+                      {...props}
+                      invitationId={invitationId}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path={`${url}/form`}
+                  render={props => (
+                    <Form
                       {...props}
                       invitationId={invitationId}
                     />

@@ -5,7 +5,9 @@ const renderQuestions = ({ fields, questionTypes }) => {
   const qTypes = questionTypes.filter(qt => qt.configurable);
   const questions = fields.map((q, index) => {
     const current_question = fields.get(index);
-    const { isDefault, text, type_name, isDisabled } = current_question;
+    const {
+      isDefault, text, type_name, isDisabled,
+    } = current_question;
     return (
       <tr key={`${q}-${index}`}>
         <td>
@@ -85,14 +87,12 @@ const renderQuestions = ({ fields, questionTypes }) => {
       </tbody>
       <tbody>
         {questions}
-        <button type="button" onClick={addQuestion}>
-          ADD
-        </button>
+
         <tr className="add-feld-btn-wrp">
           <td>
-            <span className="ad-field">
+            <span role="presentation" className="ad-field" onClick={addQuestion}>
               <i className="fa fa-plus-circle" aria-hidden="true" />
-              add a field
+Add Question
             </span>
           </td>
         </tr>

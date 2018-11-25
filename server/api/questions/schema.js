@@ -30,7 +30,7 @@ export const create_Question = {
 export const answers_schema = {
   invitation_id: Joi.number().required(),
   answers: Joi.array().items(Joi.object({
-    answerId: Joi.number().optional().default(0),
+    answerId: Joi.any().default(0),
     answer: Joi.any().default(null),
     question_id: Joi.number().required(),
   })),

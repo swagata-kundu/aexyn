@@ -1,6 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const DashBoardHeader = () => (
+const DashBoardHeader = ({ userInfo }) => (
   <header className="custom-header-container-wrapper">
     <div
       className="custom-header-container questionnaire"
@@ -52,15 +53,15 @@ Expired (Click hare to
                 <i className="fa fa-user-o" aria-hidden="true" />
               </span>
               <span className="user-name">
-                {'User Name '}
+                {`${userInfo.first_name} ${userInfo.last_name}`}
                 <i className="fa fa-chevron-down" aria-hidden="true" />
               </span>
               <ul>
                 <li className="my-account">
-                  <a href="#">
+                  <a href="/profile-manager">
                     <span>
                       <i className="fa fa-user-o" aria-hidden="true" />
-                      {' My Accounts'}
+                      My Accounts
                     </span>
                   </a>
                 </li>
@@ -68,7 +69,7 @@ Expired (Click hare to
                   <a href="/logout">
                     <span>
                       <i className="fa fa-power-off" aria-hidden="true" />
-                      {' Logout'}
+                      Logout
                     </span>
                   </a>
                 </li>
@@ -146,4 +147,11 @@ Expired (Click hare to
   </header>
 );
 
-export default DashBoardHeader;
+function mapStateToProps(state) {
+  return ({
+    userInfo: state.common.get('userInfo').toJS(),
+  });
+}
+
+export default
+connect(mapStateToProps)(DashBoardHeader);
