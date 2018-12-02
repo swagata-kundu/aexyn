@@ -1,7 +1,7 @@
 import {
   LOAD_INITIAL_QUESTIONS, SEARCH_COMPANY, GET_COMPANIES_DETAIL, FILTER_COMPANY_DATA,
   COMPANY_POPUP, LOAD_PERMISSION, CHANGE_COMPANY_PERMISSION, LOAD_INVITATION_REVIEWERS,
-  LOAD_INVITATION_NOTES,
+  LOAD_INVITATION_NOTES, LOAD_INVITATION_FILES,
 } from './type';
 import {
   load_company_permission_service,
@@ -17,6 +17,9 @@ import {
   load_invitation_notes_service,
   add_invitation_notes_service,
   delete_invitation_notes_service,
+  load_invitation_files_service,
+  add_invitation_files_service,
+  delete_invitation_files_service,
 
 } from '../../service/permissions';
 
@@ -133,6 +136,35 @@ export const add_invitation_notes = (invitation_id, data) => (dispatch) => {
 export const delete_invitation_notes = (id, invitation_id) => (dispatch) => {
   delete_invitation_notes_service(id)
     .then(() => dispatch(load_invitation_notes(invitation_id)))
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+
+// files
+
+export const load_invitation_files = invitation_id => (dispatch) => {
+  load_invitation_files_service(invitation_id)
+    .then(result => dispatch({
+      type: LOAD_INVITATION_FILES,
+      payload: result.data,
+    })).catch(error => dispatch({
+      type: LOAD_INVITATION_FILES,
+      payload: [],
+    }));
+};
+
+export const add_invitation_files = (invitation_id, data) => (dispatch) => {
+  add_invitation_files_service(data)
+    .then(() => dispatch(load_invitation_files(invitation_id))).catch((error) => {
+      console.log(error);
+    });
+};
+
+export const delete_invitation_files = (id, invitation_id) => (dispatch) => {
+  delete_invitation_files_service(id)
+    .then(() => dispatch(load_invitation_files(invitation_id)))
     .catch((error) => {
       console.log(error);
     });

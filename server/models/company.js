@@ -179,7 +179,8 @@ export default class Company {
           JOIN
       user ON UOP.user_id = user.id
       JOIN company_office CO ON CO.id=UOP.office_id
-      WHERE CO.company_id=?`,
+      WHERE CO.company_id=?
+      AND UOP.isPrimaryOffice=true;`,
     values: [company_id],
   }, done)
 

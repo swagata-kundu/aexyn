@@ -43,3 +43,13 @@ export const note = {
   email_invitation_id: Joi.number().optional().default(null),
   note: Joi.string().required(),
 };
+
+
+export const file = {
+  user_id: Joi.number().required(),
+  invitation_id: Joi.number().optional().default(null),
+  email_invitation_id: Joi.number().optional().default(null),
+  file_name: Joi.string().required(),
+  url: Joi.string().required(),
+
+};

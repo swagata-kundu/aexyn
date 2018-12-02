@@ -1,30 +1,29 @@
 import React from 'react';
-import { Field } from 'redux-form';
 import moment from 'moment';
 
-const YearlyData = ({ name, questionInfo }) => {
+const YearlyData = ({ text, answer }) => {
   const currentYear = parseInt(moment().format('YYYY'), 10);
   return (
-    <div className="four-col-form-field">
-      <div className="form-field clearfix input-column clearfix">
-        <label>{questionInfo.text}</label>
-        <div className="column-1 four-col">
-          <div className="form-text">{currentYear}</div>
-          <Field component="input" type="text" name={`${name}.year1`} />
-        </div>
-        <div className="column-2 four-col">
-          <div className="form-text">{currentYear - 1}</div>
-          <Field component="input" type="text" name={`${name}.year2`} />
-        </div>
-        <div className="column-3 four-col">
-          <div className="form-text">{currentYear - 2}</div>
-          <Field component="input" type="text" name={`${name}.year3`} />
-        </div>
-        <div className="column-4 four-col">
-          <div className="form-text">{currentYear - 3}</div>
-          <Field component="input" type="text" name={`${name}.year4`} />
-        </div>
-      </div>
+    <div>
+      <h5>{text}</h5>
+      <table>
+        <tbody>
+          <tr>
+            <th>{currentYear}</th>
+            <th>{currentYear - 1}</th>
+            <th>{currentYear - 2}</th>
+            <th>{currentYear - 3}</th>
+          </tr>
+          <tr>
+            <td>{answer.year1 ? answer.year1 : '--'}</td>
+            <td>{answer.year2 ? answer.year2 : '--'}</td>
+            <td>{answer.year3 ? answer.year3 : '--'}</td>
+            <td>{answer.year4 ? answer.year4 : '--'}</td>
+          </tr>
+        </tbody>
+      </table>
+
+
     </div>
   );
 };

@@ -15,6 +15,12 @@ const {
 } = require('./mfs_reviewers');
 
 const {
+  getFiles,
+  addFiles,
+  deleteFiles,
+} = require('./mfs_files');
+
+const {
   getInvitesFromJungle, getEditorsList, addEditor, deleteEditor,
 } = require('./jungle');
 
@@ -27,13 +33,16 @@ export default function (db) {
     .get('/jungle/supplier-invites', getInvitesFromJungle(db))
     .get('/jungle/editors/:invitation_id', getEditorsList(db))
     .get('/mfs/notes/:invitation_id', getNotes(db))
+    .get('/mfs/files/:invitation_id', getFiles(db))
     .get('/mfs/reviewers/:invitation_id', getReviewers(db))
     .post('/send', sendInvitation(db))
     .post('/jungle/editors', addEditor(db))
     .post('/mfs/notes', addNotes(db))
+    .post('/mfs/files', addFiles(db))
     .post('/mfs/reviewers', addReviewers(db))
     .post('/search', require('./search_company')(db))
     .delete('/jungle/editors/:editor_id', deleteEditor(db))
     .delete('/mfs/notes/:note_id', deleteNote(db))
+    .delete('/mfs/files/:note_id', deleteFiles(db))
     .delete('/mfs/reviewers/:reviewer_id', deleteReviewer(db));
 }

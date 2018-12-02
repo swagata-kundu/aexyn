@@ -1,6 +1,6 @@
 import React from 'react';
 import Text from './text';
-import MS from './multi-select';
+// import MS from './multi-select';
 import IYE from './iye';
 import INE from './ine';
 import OFFICE from './office';
@@ -23,43 +23,51 @@ import WORKERS from './workers';
 import EMAILS from './emails';
 import NUMBER from './number';
 
-const Fields = (props) => {
-  const { fields } = props;
-  const getQuestion = (q, index) => {
-    const current_question = fields.get(index);
-    const { type, id } = current_question;
-    const name = `${q}.answer`;
+const Fields = ({ questions }) => {
+  const getQuestion = (q) => {
+    const {
+      type, id,
+    } = q;
+    q.answer = q.answer ? q.answer : {};
     switch (type) {
-      case 'TEXT': return <Text questionInfo={current_question} key={id} name={name} />;
-      case 'NUMBER': return <NUMBER questionInfo={current_question} key={id} name={name} />;
-      case 'MS': return <MS questionInfo={current_question} key={id} name={name} />;
-      case 'YN-YE': return <IYE questionInfo={current_question} key={id} name={name} />;
-      case 'YN-NE': return <INE questionInfo={current_question} key={id} name={name} />;
-      case 'YN-PD': return <YND questionInfo={current_question} key={id} name={name} />;
-      case 'YN': return <YN questionInfo={current_question} key={id} name={name} />;
-      case 'OFFICES': return <OFFICE questionInfo={current_question} key={id} name={name} />;
-      case 'BS': return <BS questionInfo={current_question} key={id} name={name} />;
-      case 'EMPLOYEES': return <EMPLOYEES questionInfo={current_question} key={id} name={name} />;
-      case 'LICENSES': return <LICENSES questionInfo={current_question} key={id} name={name} />;
-      case 'AMOUNT': return <AMOUNT questionInfo={current_question} key={id} name={name} />;
-      case 'FILE': return <FILE questionInfo={current_question} key={id} name={name} />;
-      case 'FREQUENTLY': return <FREQUENTLY questionInfo={current_question} key={id} name={name} />;
-      case 'PERCENT': return <PERCENT questionInfo={current_question} key={id} name={name} />;
-      case '4YRDATA': return <YD questionInfo={current_question} key={id} name={name} />;
-      case 'PROJECT_DETAIL': return <PROJECTDETAIL questionInfo={current_question} key={id} name={name} />;
-      case 'PROJECT_LIST': return <PROJECTLIST questionInfo={current_question} key={id} name={name} />;
-      case 'COMPANY_CONTACT': return <CONTACTS questionInfo={current_question} key={id} name={name} />;
-      case 'IAFFILIATION': return <AFFILIATIONS questionInfo={current_question} key={id} name={name} />;
-      case 'UNIONS': return <UNION questionInfo={current_question} key={id} name={name} />;
-      case 'WORKERS': return <WORKERS questionInfo={current_question} key={id} name={name} />;
-      case 'EMAILS': return <EMAILS questionInfo={current_question} key={id} name={name} />;
-      default: return <div><h1>{type}</h1></div>;
+      case 'TEXT':
+        return <Text key={id} {...q} />;
+      case 'NUMBER':
+        return <NUMBER key={id} {...q} />;
+      // case 'MS': return <MS  key={id} {...q} />;
+      // case 'YN-YE': return <IYE  key={id} {...q} />;
+      // case 'YN-NE': return <INE  key={id} {...q} />;
+      // case 'YN-PD': return <YND  key={id} {...q} />;
+      // case 'YN': return <YN  key={id} {...q} />;
+      // case 'OFFICES': return <OFFICE  key={id} {...q} />;
+      case 'BS':
+        return <BS key={id} {...q} />;
+      // case 'EMPLOYEES': return <EMPLOYEES  key={id} {...q} />;
+      case 'LICENSES':
+        return <LICENSES key={id} {...q} />;
+      case 'AMOUNT':
+        return <AMOUNT key={id} {...q} />;
+      // case 'FILE': return <FILE  key={id} {...q} />;
+      // case 'FREQUENTLY': return <FREQUENTLY  key={id} {...q} />;
+      case 'PERCENT':
+        return <PERCENT key={id} {...q} />;
+      case '4YRDATA':
+        return <YD key={id} {...q} />;
+      // case 'PROJECT_DETAIL': return <PROJECTDETAIL  key={id} {...q} />;
+      // case 'PROJECT_LIST': return <PROJECTLIST  key={id} {...q} />;
+      // case 'COMPANY_CONTACT': return <CONTACTS  key={id} {...q} />;
+      // case 'IAFFILIATION': return <AFFILIATIONS  key={id} {...q} />;
+      // case 'UNIONS': return <UNION  key={id} {...q} />;
+      // case 'WORKERS': return <WORKERS  key={id} {...q} />;
+      // case 'EMAILS': return <EMAILS  key={id} {...q} />;
+      default:
+        return null;
     }
   };
 
-  const questions = fields.map(getQuestion);
+  const renderQuestions = questions.map(getQuestion);
 
-  return questions;
+  return renderQuestions;
 };
 
 export default Fields;

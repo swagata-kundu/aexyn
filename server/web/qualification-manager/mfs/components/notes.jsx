@@ -116,7 +116,6 @@ at
   }
 
   render() {
-    const { notes } = this.props;
     return (
       <div className="custom-sidebar-widget notes-widget">
         <h3>

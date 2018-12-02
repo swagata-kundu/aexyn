@@ -1,62 +1,41 @@
 import React from 'react';
 import { Field } from 'redux-form';
 
-const Employees = ({ name, questionInfo }) => (
-  <div className="form-field clearfix input-column two-col-form-field clearfix">
-    <label>{questionInfo.text}</label>
-    <div className="form-text">
-      <div className="department">Department</div>
-      <div className="employee-number">Number of Employees</div>
-    </div>
-    <div className="form-field">
-      <div className="label-text">
-        <label>Estimating Department</label>
-      </div>
-      <div className="input-field">
-        <Field component="input" type="number" name={`${name}.ed`} />
-      </div>
-    </div>
-    <div className="form-field">
-      <div className="label-text">
-        <label>Field Supervision</label>
-      </div>
-      <div className="input-field">
-        <Field component="input" type="number" name={`${name}.fs`} />
-      </div>
-    </div>
-    <div className="form-field">
-      <div className="label-text">
-        <label>Trades People</label>
-      </div>
-      <div className="input-field">
-        <Field component="input" type="number" name={`${name}.tp`} />
-      </div>
-    </div>
-    <div className="form-field">
-      <div className="label-text">
-        <label>Clerical / Accounting</label>
-      </div>
-      <div className="input-field">
-        <Field component="input" type="number" name={`${name}.ca`} />
-      </div>
-    </div>
-    <div className="form-field">
-      <div className="label-text">
-        <label>Other</label>
-      </div>
-      <div className="input-field">
-        <Field component="input" type="number" name={`${name}.ot`} />
-      </div>
-    </div>
-    <div className="form-field">
-      <div className="label-text">
-        <label>Total</label>
-      </div>
-      <div className="input-field">
-        <Field component="input" type="number" name={`${name}.total`} />
-      </div>
-    </div>
+const Employees = ({ text, answer = {} }) => (
+  <div>
+    <h5>{text}</h5>
+    <table>
+      <tbody>
+        <tr>
+          <th>Department</th>
+          <th className="text-right">Number of Employees</th>
+        </tr>
+        <tr>
+          <td>Estimating Department</td>
+          <td className="text-right">{answer.ed}</td>
+        </tr>
+        <tr>
+          <td>Field Supervision</td>
+          <td className="text-right">{answer.fs}</td>
+        </tr>
+        <tr>
+          <td>Tradespeople</td>
+          <td className="text-right">{answer.tp}</td>
+        </tr>
+        <tr>
+          <td>Clerical/Accounting</td>
+          <td className="text-right">{answer.ca}</td>
+        </tr>
+        <tr>
+          <td>Other</td>
+          <td className="text-right">{answer.ot}</td>
+        </tr>
+        <tr>
+          <td>Total</td>
+          <td className="text-right">{answer.total}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 );
-
 export default Employees;

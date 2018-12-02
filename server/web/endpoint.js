@@ -17,4 +17,6 @@ export const JUNGLE_EDITORS = 'invitations/jungle/editors/';
 export const MFS_INVITES = 'invitations/mfs/supplier-invites/';
 export const MFS_REVIEWERS = 'invitations/mfs/reviewers/';
 export const MFS_NOTES = 'invitations/mfs/notes/';
+export const MFS_FILES = 'invitations/mfs/files/';
 export const QUESTION_ANSWER = 'questions/answers/';
+export const FILES = 'files/';

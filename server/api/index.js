@@ -5,6 +5,7 @@ import questions from './questions';
 import invitations from './invitations';
 import MasterData from './master-data';
 import permission from './permisssion';
+import files from './files';
 import { verifyAuth } from '../middlewares';
 
 export default function routes(db) {
@@ -14,5 +15,6 @@ export default function routes(db) {
     .use(verifyAuth(db))
     .use('/questions', questions(db))
     .use('/permission', permission(db))
-    .use('/invitations', invitations(db));
+    .use('/invitations', invitations(db))
+    .use('/files', files(db));
 }

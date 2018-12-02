@@ -1,22 +1,71 @@
 import React, { Component } from 'react';
-import Select from 'react-select';
 import { connect } from 'react-redux';
-
-import { formatDate } from '../../../util';
-import { EmployeeName } from '../../../components/employees/index';
-import { load_invitation_reviewers, add_invitation_reviewers, delete_invitation_reviewers } from '../../state/action';
+import _ from 'lodash';
+import Fields from './fields';
+import { load_invitation_answers } from '../../state/invitation_action';
 
 class Form extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    const { invitationId } = this.props;
+    this.props.load_invitation_answers(invitationId);
+  }
+
+  renderQuestions=() => {
+    const { invitation } = this.props;
+    const { questions } = invitation;
+    if (_.isEmpty(questions)) {
+      return null;
+    }
+    return (
+      <div>
+        <div>
+          <h3>Company profile</h3>
+          <Fields questions={questions.CP} />
+        </div>
+        <div>
+          <h3>Certification And Licenses</h3>
+          <Fields questions={questions.CL} />
+        </div>
+        <div>
+          <h3>Health And Safety</h3>
+          <Fields questions={questions.HS} />
+        </div>
+        <div>
+          <h3>Insurance And Surity</h3>
+          <Fields questions={questions.IS} />
+        </div>
+        <div>
+          <h3>Financials</h3>
+          <Fields questions={questions.FIN} />
+        </div>
+        <div>
+          <h3>Work Experience</h3>
+          <Fields questions={questions.WEX} />
+        </div>
+        <div>
+          <h3>Legal</h3>
+          <Fields questions={questions.LGL} />
+        </div>
+        <div>
+          <h3>Others</h3>
+          <Fields questions={questions.OTH} />
+        </div>
+        <div>
+          <h3>Signature</h3>
+          <Fields questions={questions.SIG} />
+        </div>
+      </div>
+    );
+  }
 
   render() {
-    const a = 1;
     return (
       <div className="custom-application-tabber-item" id="submitted-form" style={{}}>
 
 
         <div className="custom-qualification-status-form">
           <div className="submitted-form-group">
+
             <div className="submitted-form-content clearfix">
               <div className="left-content">
                 <h3>Completed Questionnaire</h3>
@@ -35,6 +84,7 @@ by
               </div>
             </div>
             <hr />
+
             <div className="clearfix">
               <div className="left-content">
                 <h3><span className="company-name">AA Printers</span></h3>
@@ -55,588 +105,8 @@ Invitation to apply sent on
               </div>
               <div className="right-content" />
             </div>
-            <hr />
-            <h5>Office Locations</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>Office Name</th>
-                  <th>Address</th>
-                  <th>Phone</th>
-                </tr>
-                <tr>
-                  <td>Phoenix</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-                <tr>
-                  <td>Buisness Type</td>
-                  <td>--</td>
-                  <td />
-                </tr>
-                <tr>
-                  <td>Labor Type</td>
-                  <td />
-                  <td />
-                </tr>
-                <tr>
-                  <td>Enterprise Type</td>
-                  <td>None</td>
-                  <td />
-                </tr>
-                <tr>
-                  <td>Work Performed</td>
-                  <td />
-                  <td />
-                </tr>
-              </tbody>
-            </table>
-            <h5>Ownership/Buisness Structure</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>Corporation Type</th>
-                  <th>State of Incorporation</th>
-                  <th>Year of Incorporation</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-                <tr>
-                  <td>Has your company ever done buisness under a different name?</td>
-                  <td>No</td>
-                  <td />
-                </tr>
-                <tr>
-                  <td>Is your company owned or controlledby a parent corporation?</td>
-                  <td />
-                  <td />
-                </tr>
-                <tr>
-                  <td>Does someone outside of your company your estimating?</td>
-                  <td />
-                  <td />
-                </tr>
-              </tbody>
-            </table>
-            <h5>Number of Employees</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>Department</th>
-                  <th className="text-right">Number of Employees</th>
-                </tr>
-                <tr>
-                  <td>Estimating Department</td>
-                  <td className="text-right">0</td>
-                </tr>
-                <tr>
-                  <td>Field Supervision</td>
-                  <td className="text-right">0</td>
-                </tr>
-                <tr>
-                  <td>Tradespeople</td>
-                  <td className="text-right">0</td>
-                </tr>
-                <tr>
-                  <td>Clerical/Accounting</td>
-                  <td className="text-right">0</td>
-                </tr>
-                <tr>
-                  <td>Other</td>
-                  <td className="text-right">0</td>
-                </tr>
-                <tr>
-                  <td>Total</td>
-                  <td className="text-right">0</td>
-                </tr>
-              </tbody>
-            </table>
-            <h5>Owner/Officers of your company</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                </tr>
-                <tr className="company-owner">
-                  <td>xyz</td>
-                  <td />
-                  <td>12345</td>
-                </tr>
-              </tbody>
-            </table>
-            <h3>Certifications &amp; Licenses</h3>
-            <h5>Professional Licenses</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>license Number</th>
-                  <th>Classification</th>
-                  <th>State</th>
-                  <th>Issuing Agency</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h5>Trade Unions</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>Trade</th>
-                  <th>Agreement</th>
-                  <th>Year Expires</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h5>MBE, WBE, SBE or any other type of certified buisness enterprises</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>Type of certified business</th>
-                  <th>Certifying Agency</th>
-                  <th>Vendor ID</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h5>Industry Affiliation or Memberships</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>Description of affiliation or memberships</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h3>Health &amp; Safety</h3>
-            <table>
-              <tbody>
-                <tr>
-                  <th>Health &amp; Safety</th>
-                  <th />
-                </tr>
-                <tr>
-                  <td>Attach a copy of your safety program</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h5>Provide your workers compensation experience modification rate (EMR)</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>2018</th>
-                  <th>2017</th>
-                  <th>2016</th>
-                  <th>2015</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h5>Attach copy of your osha no. 300A summary logs</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>2018</th>
-                  <th>2017</th>
-                  <th>2016</th>
-                  <th>2015</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h5>Man-Hours worked</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>2018</th>
-                  <th>2017</th>
-                  <th>2016</th>
-                  <th>2015</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h5>First Aid Cases</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>2018</th>
-                  <th>2017</th>
-                  <th>2016</th>
-                  <th>2015</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h5>Osha Recordable cases</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>2018</th>
-                  <th>2017</th>
-                  <th>2016</th>
-                  <th>2015</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h5>Recordable Incident Rate (RIR)</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>2018</th>
-                  <th>2017</th>
-                  <th>2016</th>
-                  <th>2015</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h5>Lost Time/Workday cases</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>2018</th>
-                  <th>2017</th>
-                  <th>2016</th>
-                  <th>2015</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h5>Lost Time/Workday Incident Rate (LTWR)</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>2018</th>
-                  <th>2017</th>
-                  <th>2016</th>
-                  <th>2015</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h5>Fatalities</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>2018</th>
-                  <th>2017</th>
-                  <th>2016</th>
-                  <th>2015</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h5>Average number of Employees</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>2018</th>
-                  <th>2017</th>
-                  <th>2016</th>
-                  <th>2015</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h5>Osha Inspection</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>2018</th>
-                  <th>2017</th>
-                  <th>2016</th>
-                  <th>2015</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h5>Osha Violations/Citations (Closed Only)</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>2018</th>
-                  <th>2017</th>
-                  <th>2016</th>
-                  <th>2015</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h3>Insurance &amp; Surety</h3>
-            <table>
-              <tbody>
-                <tr>
-                  <td>Total bonding capacity</td>
-                  <td>
-                    <span className="dollar-icon">$</span>
-0
-                  </td>
-                </tr>
-                <tr>
-                  <td>Bonding capacity per project</td>
-                  <td>
-                    <span className="dollar-icon">$</span>
-0
-                  </td>
-                </tr>
-                <tr>
-                  <td>Available bonding capacity as of the date</td>
-                  <td>
-                    <span className="dollar-icon">$</span>
-0
-                  </td>
-                </tr>
-                <tr>
-                  <td>Bond rate</td>
-                  <td>
-0
-                    <span className="percent-icon">%</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Attach reference letter stating aggregate and single project bonding capacity from your surety company</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h5>Insurance Limits</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>General Liability Aggregate</th>
-                  <th>General Liability Single Occur.</th>
-                  <th>Workers Compensation</th>
-                  <th>Automobile</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h5>Bonding Agent Refrences</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>Company Name</th>
-                  <th>Branch Address</th>
-                  <th>Phone</th>
-                  <th>Email</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h5>Surety Refrences</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>Company Name</th>
-                  <th>Branch Address</th>
-                  <th>Phone</th>
-                  <th>Email</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h5>Insurance Refrences</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>Company Name</th>
-                  <th>Branch Address</th>
-                  <th>Phone</th>
-                  <th>Email</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h3>Financials</h3>
-            <table>
-              <tbody>
-                <tr>
-                  <td>Attach a current financial statement. Ideally</td>
-                  <td>--</td>
-                </tr>
-                <tr>
-                  <td>Attach a current financial statement. Ideally</td>
-                  <td>--</td>
-                </tr>
-                <tr>
-                  <td>Attach a current financial statement. Ideally</td>
-                  <td>--</td>
-                </tr>
-                <tr>
-                  <td>Attach a current financial statement. Ideally, this is an audited financial covering the last three years.</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h5>Revenue</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>2018</th>
-                  <th>2017</th>
-                  <th>2016</th>
-                  <th>2015</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h5>Net Worth</h5>
-            <table>
-              <tbody>
-                <tr>
-                  <th>2018</th>
-                  <th>2017</th>
-                  <th>2016</th>
-                  <th>2015</th>
-                </tr>
-                <tr>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
-            <h3>Other</h3>
-            <table>
-              <tbody>
-                <tr>
-                  <td>
-Would you like to prove any additional information you feel would help
-                    {' '}
-                    <span className="company-name">AA Printers</span>
-                    {' '}
-determine your company's qualifications and expertise?
-                  </td>
-                  <td>No</td>
-                </tr>
-              </tbody>
-            </table>
-            <h3>Signature</h3>
-            <table>
-              <tbody>
-                <tr>
-                  <td>Full Name</td>
-                  <td>Ankit</td>
-                </tr>
-                <tr>
-                  <td>Title</td>
-                  <td>--</td>
-                </tr>
-                <tr>
-                  <td>Date</td>
-                  <td>--</td>
-                </tr>
-              </tbody>
-            </table>
+
+            {this.renderQuestions()}
           </div>
         </div>
       </div>
@@ -644,4 +114,7 @@ determine your company's qualifications and expertise?
   }
 }
 
-export default Form;
+
+export default connect(state => ({
+  invitation: state.invites.invitation,
+}), { load_invitation_answers })(Form);

@@ -3,7 +3,7 @@ import Boom from 'boom';
 import path from 'path';
 
 
-export class UploadHandler {
+export default class UploadHandler {
   constructor(fileSize) {
     this.fileSize = fileSize;
 
@@ -19,12 +19,6 @@ export class UploadHandler {
     this.uploadFile = this.uploadFile.bind(this);
   }
 
-  /**
-     * @param  {} req
-     * @param  {} res
-     * @param  {} next
-     * @param  {} upload
-     */
   handleUploadError(req, res, next, upload) {
     upload(req, res, (err) => {
       if (err) {
@@ -37,12 +31,6 @@ export class UploadHandler {
     });
   }
 
-
-  /**
-     * @param  {} req
-     * @param  {} res
-     * @param  {} next
-     */
   uploadFile(req, res, next) {
     const upload = multer({
       storage: this.storage,
@@ -53,6 +41,3 @@ export class UploadHandler {
     this.handleUploadError(req, res, next, upload);
   }
 }
-
-
-export default new UploadHandler(10);

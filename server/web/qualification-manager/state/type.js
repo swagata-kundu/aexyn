@@ -18,4 +18,6 @@ export const LOAD_INVITATION_REVIEWERS = 'invitation-load-reviewers';
 
 export const LOAD_INVITATION_NOTES = 'invitation-load-notes';
 
+export const LOAD_INVITATION_FILES = 'invitation-load-files';
+
 export const LOAD_INVITATION_DETAIL = 'invitation-load-detail';
