@@ -1,40 +1,28 @@
 import React from 'react';
-import { Field } from 'redux-form';
 
-const Workers = ({ name, questionInfo }) => (
-  <div className="form-field clearfix input-column clearfix">
-    <label>{questionInfo.text}</label>
-    <div className="column-1 four-col dollar">
-      <div className="form-text">
-General Liability aggregriate
-      </div>
-      <div className="input-field">
-        <Field component="input" type="number" name={`${name}.gl`} />
-        <span className="dollar-icon">$</span>
-      </div>
-    </div>
-    <div className="column-1 four-col dollar">
-      <div className="form-text">General Liability Single Occur</div>
-      <div className="input-field">
-        <Field component="input" type="number" name={`${name}.gls`} />
-        <span className="dollar-icon">$</span>
-      </div>
-    </div>
-    <div className="column-1 four-col dollar">
-      <div className="form-text">Workers compensation</div>
-      <div className="input-field">
-        <Field component="input" type="number" name={`${name}.wc`} />
-        <span className="dollar-icon">$</span>
-      </div>
-    </div>
-    <div className="column-1 four-col dollar">
-      <div className="form-text">Automobile</div>
-      <div className="input-field">
-        <Field component="input" type="number" name={`${name}.auto`} />
-        <span className="dollar-icon">$</span>
-      </div>
-    </div>
+const Workers = ({ answer = {}, text }) => (
+
+  <div>
+    <h5>{text}</h5>
+    <table>
+      <tbody>
+        <tr>
+          <th>General Liability aggregriate</th>
+          <th>General Liability Single Occur</th>
+          <th>Workers compensation</th>
+          <th>Automobile</th>
+        </tr>
+        <tr>
+          <td>{answer.gl}</td>
+          <td>{answer.gls}</td>
+          <td>{answer.wc}</td>
+          <td>{answer.auto}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+
+
 );
 
 export default Workers;

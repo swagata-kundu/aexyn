@@ -465,6 +465,7 @@ textarea:focus::placeholder {
     margin: 0 0 20px;
     padding-bottom: 5px;
     border-bottom: 2px solid;
+    position: relative;
 }
 
 .tabber-content-group .tab-content .item {
@@ -1186,19 +1187,22 @@ ul.custom-client-action-section li.action-drop-down {
 .custom-project-search-group .custom-search-input {
     border: 1px solid #3333;
     font-size: 14px;
-    padding: 5px 10px;
+    padding: 6px 10px;
     line-height: normal;
     display: block;
     margin: 0;
     outline: none;
     color: #a9a2a2;
+    box-shadow: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .custom-project-search-group .custom-search-btn {
     -webkit-appearance: none;
     background: #fff;
     border: 1px solid #3333;
-    padding: 5px 10px;
+    padding: 4.5px 10px;
     font-size: 13px;
     color: #a9a2a2;
 }
@@ -3307,11 +3311,12 @@ table.Company-detail-table tr td .sort i {
 
 span.sort {
     display: inline-block;
-    vertical-align: sub;
+    vertical-align: text-top;
     cursor: pointer;
     width: 15px;
     height: 15px;
     text-align: center;
+    margin-left: 5px;
 }
 
 .jungle-bottom-group tr.reviewer-permissions td:nth-child(3) {
@@ -4633,7 +4638,11 @@ iframe {
 }
 
 .submitted-form-group tr td {
-    padding: 10px 0;
+    padding: 10px 5px;
+}
+
+.submitted-form-group tr td small {
+    display: block;
 }
 
 .submitted-form-group tr th {
@@ -4657,10 +4666,291 @@ iframe {
 
 
 
+
+
+/* =================== Projects ==================== */
+
+
+span.duplicate {
+    cursor: pointer;
+}
+
+ul.sorting-dropdown li {
+    position: relative;
+}
+
+ul.sorting-dropdown {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: inline-block;
+}
+
+ul.sorting-dropdown ul {
+    position: absolute;
+    top: 100%;
+    background: #fff;
+    border-radius: 5px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    min-width: 100px;
+    box-shadow: 0px 0px 3px #000;
+    display: none;
+}
+
+ul.sorting-dropdown ul li {
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+ul.sorting-dropdown ul li:last-child {
+    margin-bottom: 0;
+}
+
+ul.sorting-dropdown ul li span {
+    display: block;
+    cursor: pointer;
+    padding: 5px 10px;
+    position: relative;
+    z-index: 9;
+}
+
+ul.sorting-dropdown ul li:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    background: rgba(16, 95, 43, 1);
+    transition: all 0.3s ease;
+}
+
+ul.sorting-dropdown ul li:first-child:after {
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+ul.sorting-dropdown ul li:last-child:after {
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+ul.sorting-dropdown ul li:hover:after {
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+ul.sorting-dropdown ul li:hover {
+    color: #fff;
+}
+
+ul.bid-packg-action-section li {
+    cursor: pointer;
+    position: relative;
+}
+
+ul.bid-packg-action-section li ul {
+    margin: 0;
+    position: absolute;
+    top: 100%;
+    left: auto;
+    right: 0;
+    background: #fff;
+    border-radius: 5px;
+    min-width: 140px;
+}
+
+ul.bid-packg-action-section li ul li a {
+    font-size: 12px;
+    background: transparent;
+    color: #333;
+    text-transform: none;
+    border-radius: 0;
+}
+
+ul.bid-packg-action-section li ul li a i {
+    margin-right: 7px;
+}
+
+.custom-project-top-left-group ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.custom-project-top-left-group ul li {
+    display: inline-block;
+    border: 1px solid #ccc;
+}
+
+.custom-project-top-left-group ul li span {
+    display: block;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.custom-project-top-left-group ul li i.fa.fa-long-arrow-up {
+    transform: rotate(45deg);
+    margin-left: 5px;
+}
+
+.bid-packg-bottom-group table th {
+    padding: 10px 0;
+}
+
+.bid-packg-bottom-group table tr {
+    border-bottom: 1px solid #ccc;
+}
+
+.bid-packg-bottom-group .bottom-content {
+    padding-top: 40px;
+}
+
+ul.bid-packg-action-section>li {
+    margin: 0;
+    border: 1px solid #ccc;
+    padding: 2px 10px;
+    font-size: 20px;
+    line-height: normal;
+}
+
+.custom-bid-board-share-form form {
+    max-width: 400px;
+    float: right;
+    width: 100%;
+    position: relative;
+}
+
+.custom-bid-board-share-form form button {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.bid-packg-share-group table tr {
+    border-bottom: 1px solid #ccc;
+}
+
+.bid-packg-share-group table tr td {
+    padding: 5px 0;
+}
+
+.bid-packg-share-group table tr td .member-detail .icon-group {
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    line-height: 35px;
+    border-radius: 100px;
+    background: #bc7070;
+    color: #fff;
+    float: left;
+}
+
+.bid-packg-share-group table tr td .member-detail .detail-group {
+    float: left;
+    width: calc(100% - 35px);
+    padding-left: 10px;
+}
+
+.bid-packg-share-group {
+    padding-top: 15px;
+}
+
+.bid-packg-share-group ul.custom-client-action-section {
+    padding-left: 20px;
+}
+
+.custom-projects-tabber table tr {
+    border-bottom: 1px solid #ccc;
+}
+
+.custom-projects-tabber table tr th,
+.custom-projects-tabber table tr td {
+    padding: 5px 0;
+}
+
+.custom-projects-tabber table tbody tr:last-child {
+    border-bottom: 0;
+}
+
+.custom-projects-tabber .general-info strong {
+    display: inline-block;
+    width: 25%;
+}
+
+.custom-projects-tabber .general-info {
+    margin-bottom: 15px;
+}
+
+span.accordion-icon {
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.tabber-content-group .tab-content h3 .accordion-icon {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    z-index: 9;
+}
+
+ul.multi-files {
+    padding: 0 0 0 10px;
+    margin: 0;
+    list-style: none;
+}
+
+ul.multi-files li {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    position: relative;
+    border-bottom: 1px dashed;
+}
+
+ul.multi-files li:last-child {
+    margin-bottom: 0;
+    border-bottom: 0 none;
+}
+
+ul.multi-files li a {
+    position: relative;
+}
+
+ul.multi-files li a span.remove {
+    position: absolute;
+    top: -6px;
+    right: -5px;
+    cursor: pointer;
+    width: 15px;
+    text-align: center;
+
+}
+
+ul.multi-files li .remove {
+    position: absolute;
+    top: -6px;
+    width: 10px;
+    text-align: center;
+    cursor: pointer;
+    margin-left: 5px;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 11px;
+    color: #000;
+}
+
+
+
 /* =================== Responsive ==================== */
 
 @media (min-width: 768px) {
-    .mobile-trigger {
+
+    .mobile-trigger,
+    .tabber-content-group .tab-content h3 .accordion-icon {
         display: none;
     }
 
@@ -4686,7 +4976,7 @@ iframe {
         overflow-x: hidden;
     }
 
-    .section-header ul {
+    .section-header ul:not(.bid-packg-drop-down) {
         display: block !important;
     }
 

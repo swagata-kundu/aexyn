@@ -1,11 +1,21 @@
 import React from 'react';
 
 const Amount = ({ text, answer = {} }) => (
-  <div>
-    <p>{text}</p>
-    <p>{answer.value}</p>
 
-  </div>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          {text}
+        </td>
+        <td>
+          <span className="dollar-icon">$</span>
+          {answer.value ? answer.value : '0'}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
 );
 
 export default Amount;

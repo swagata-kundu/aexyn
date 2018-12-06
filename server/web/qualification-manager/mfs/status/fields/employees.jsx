@@ -1,5 +1,4 @@
 import React from 'react';
-import { Field } from 'redux-form';
 
 const Employees = ({ text, answer = {} }) => (
   <div>

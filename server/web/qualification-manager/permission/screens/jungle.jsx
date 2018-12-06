@@ -39,7 +39,9 @@ class JunglePermission extends Component {
 
         <td>
           <span className="remove-ico">
-            {userInfo.id !== employee.user_id ? <i className="fa fa-times-circle" aria-hidden="true" onClick={deleteEmployeePermission} /> : null}
+            {userInfo.id !== employee.user_id ? <i className="fa fa-times-circle" aria-hidden="true" onClick={deleteEmployeePermission} />
+              : <i className="fa fa-times-circle" aria-hidden="true" />}
+
           </span>
         </td>
       </tr>

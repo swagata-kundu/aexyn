@@ -5,12 +5,20 @@ let calulateLength = 0;
 
 const QuestionierCompany = (props) => {
   const { data, selectCompany } = props;
+  const { qualification_status } = data;
   if (data !== undefined && data.locations !== undefined) {
     str_array = data.locations.split(',');
 
     for (let i = 0; i < str_array.length; i += 1) {
       str_array[i] = str_array[i].replace(/^\s*/, '').replace(/\s*$/, '');
     }
+  }
+
+  let statusText = 'Not Invited to Qualify';
+  if (qualification_status === 'SENT') {
+    statusText = 'Invitation Sent';
+  } else if (qualification_status === 'IN_PROGRESS') {
+    statusText = 'Invitation In-Progress';
   }
 
   if (str_array.length > 4) {
@@ -43,14 +51,14 @@ const QuestionierCompany = (props) => {
                 +
                 <i className="more-tag-val">{calulateLength}</i>
                 {' '}
-more
+More
               </span>
             )}
           </div>
         </div>
       </td>
       <td>
-        <b>NOT INVITED TO QUALITY</b>
+        <b>{statusText}</b>
       </td>
       <td>
         <i>None for this work performed</i>

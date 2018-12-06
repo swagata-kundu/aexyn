@@ -1,47 +1,41 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
+import _ from 'lodash';
+
 import { getCompany, invitationEmail } from '../../../../service/qualification-manager';
-import { getCompanyDetail, companyPopup } from '../../../state/action';
+import { companyPopup } from '../../../state/action';
 
-const QuestionierCompany = (props) => {
-  const { data, selectCompany } = props;
-  return (
-    <form>
-      <select onChange={e => selectCompany(e)}>
-        {data !== undefined && data.length > 0
-          ? data.map(companyData => (
-            <option key={companyData.office_id} id={companyData.office_id} value={companyData.office_id}>
-              {companyData.office}
-            </option>
-          ))
-          : null}
-      </select>
-    </form>
-  );
-};
 
-const QuestionierCompanys = reduxForm({
-  form: 'company',
-  destroyOnUnmount: false,
-})(QuestionierCompany);
 class QuestionierCompanyInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      companyId: null,
+      current: {
+        employees: [],
+      },
+      office_id: null,
+      company_offices: [],
     };
   }
 
   componentDidMount = async () => {
     const { id } = this.props;
-    const companieDetails = await getCompany(id);
-    this.props.getCompanyDetail(companieDetails);
+    const company_offices = await getCompany(id);
+    this.setState({
+      company_offices,
+      current: company_offices[0],
+      office_id: company_offices[0].office_id,
+    });
   };
 
-  onChange = (event) => {
+  onChangeOffice = (e) => {
     this.setState({
-      companyId: event.target.value,
+      office_id: parseInt(e.target.value, 10),
+    });
+    const { company_offices, office_id } = this.state;
+    const selected = _.find(company_offices, (o => o.office_id === office_id));
+    this.setState({
+      current: selected,
     });
   }
 
@@ -52,12 +46,29 @@ class QuestionierCompanyInfo extends React.Component {
   inviteEmail = async (data) => {
     const emails = [];
     emails.push(data.email);
-    const companieDetails = await invitationEmail(emails);
+    await invitationEmail(emails);
+  }
+
+  renderDropDown=() => {
+    const { company_offices, office_id } = this.state;
+
+    return (
+      <select onChange={this.onChangeOffice} value={office_id}>
+        {company_offices.map(companyData => (
+          <option key={companyData.office_id} value={companyData.office_id}>
+            {companyData.office}
+          </option>
+        ))
+          }
+      </select>
+    );
   }
 
   render() {
-    const { getCompanies } = this.props;
-    const { companyId } = this.state;
+    const { company_offices, current } = this.state;
+    if (company_offices.length === 0) {
+      return null;
+    }
     return (
       <div className="custom-data-invite-pop show-pop">
         <div className="custom-data-invite-pop-inner">
@@ -65,7 +76,7 @@ class QuestionierCompanyInfo extends React.Component {
             <table>
               <tbody>
                 <tr className="has-border">
-                  <td>{getCompanies.length > 0 ? getCompanies[0].company_name : 'Company'}</td>
+                  <td>{company_offices[0].company_name}</td>
                   <td>Private Info</td>
                   <td>Recent Work History</td>
                   <td />
@@ -77,47 +88,48 @@ class QuestionierCompanyInfo extends React.Component {
                     </div>
                     <div className="custom-tb-rght-col">
                       <div className="tb-row-1">
-                        <a href="#">{getCompanies.office}</a>
+                        <a href="#">{company_offices.office}</a>
                         {' '}
                         <span className="devider">|</span>
                         {' '}
-                        <span>{getCompanies.length > 0 ? getCompanies[0].company_name : 'Company'}</span>
+                        <span>{company_offices[0].company_name}</span>
                       </div>
                       <div className="custom-tb-select">
-                        <QuestionierCompanys
-                          data={getCompanies}
-                          selectCompany={this.onChange}
-                        />
+                        {this.renderDropDown()}
                       </div>
-                      {getCompanies !== undefined && getCompanies.length > 0
-                        ? getCompanies.map(employee => (
-                          employee.employees !== undefined && employee.employees.length > 0 && (employee.office_id === getCompanies[0].office_id || employee.office_id === Number(companyId))
-                            ? employee.employees.map(data => (
-                              <div className="tb-row-1" key={data.office_id}>
-                                <a
+                      {
+                          current.employees.map(data => (
+                            <div className="tb-row-1" key={data.office_id}>
+                              {data.isInvited === 0 ? (
+                                <button
                                   onClick={() => this.inviteEmail(data)}
-
                                   className="tb-btn"
-                                  style={data.isInvited ? { cursor: 'not-allowed' } : { cursor: 'pointer'}}
+                                  type="button"
                                 >
-                                  {!data.isInvited ? '+ INVITE' : 'INVITED'}
-                                </a>
+                                    INVITE
+                                </button>
+                              ) : (
+                                <button
+                                  className="tb-btn"
+                                  disabled
+                                  type="button"
+                                >
+                                    INVITED
+                                </button>
+                              )}
+                              {' '}
+                              <a href="#">
+                                {data.first_name}
                                 {' '}
-                                <a href="#">
-                                  {data.first_name}
-                                  {' '}
-                                  {' '}
-                                  {data.last_name}
-                                  {' '}
-                                </a>
+                                {data.last_name}
                                 {' '}
-                                <span className="devider">|</span>
-                                {' '}
-                                <span>{data.job_title}</span>
-                              </div>
-                            )) : null
-
-                        )) : null}
+                              </a>
+                              <span className="devider">|</span>
+                              {' '}
+                              <span>{data.job_title}</span>
+                            </div>
+                          ))
+                         }
                     </div>
                   </td>
                   <td>
@@ -139,12 +151,8 @@ class QuestionierCompanyInfo extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    getCompanies: state.qualification.getCompanies,
-  };
-}
+
 export default connect(
-  mapStateToProps,
-  { getCompanyDetail, companyPopup },
+  null,
+  { companyPopup },
 )(QuestionierCompanyInfo);

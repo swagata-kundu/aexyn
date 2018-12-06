@@ -122,7 +122,6 @@ Best matches
                                 </table>
                               ) : null
                               }
-                              {showCompanypopup ? <QuestionierCompanyInfo id={companyId} /> : null}
                             </div>
                           </div>
                         </div>

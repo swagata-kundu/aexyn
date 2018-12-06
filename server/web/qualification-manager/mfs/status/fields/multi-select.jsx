@@ -1,38 +1,19 @@
 import React from 'react';
-import { Field } from 'redux-form';
-import { connect } from 'react-redux';
-import MS from '../../../../../components/multi-select';
+import _ from 'lodash';
 
-const MultiSelect = ({ name, questionInfo, common }) => {
-  const labourType = common.labourType ? common.labourType.map(l => l.name) : [];
-  const businessType = common.businessType ? common.businessType : [];
-  const workPerformed = common.workPerformed ? common.workPerformed.map(l => l.name) : [];
-  let options = [];
-  if (questionInfo.text === 'Business Type') {
-    options = businessType;
-  }
-  if (questionInfo.text === 'Labour Type') {
-    options = labourType;
-  }
-  if (questionInfo.text === 'Work Performed') {
-    options = workPerformed;
-  }
-
-  return (
-    <div className="form-field left-label">
-      <div className="label-text">
-        <label>{questionInfo.text}</label>
-      </div>
-      <div className="input-field">
-        <Field name={`${name}.value`} options={options} component={MS} placeholder={questionInfo.text} />
-      </div>
-    </div>
+const MultiSelect = ({ text, answer = {} }) => (
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            {text}
+          </td>
+          <td>
+            {answer.value ? answer.value.toString() : 'NA'}
+          </td>
+        </tr>
+      </tbody>
+    </table>
   );
-};
-function mapStateToProps(state) {
-  return ({
-    common: state.common.get('masterData').toJS(),
-  });
-}
 
-export default connect(mapStateToProps)(MultiSelect);
+export default MultiSelect;

@@ -1,33 +1,25 @@
 import React from 'react';
-import { Field, FieldArray } from 'redux-form';
+import _ from 'lodash';
 
-const RenderAffiliations = ({ fields }) => (
+const RenderAffiliations = ({ answer = [], text }) => (
   <div>
-    {fields.map((location, index) => (
-      <div className="input-field">
-        <Field component="input" type="text" name={`${location}.affiliation`} placeholder="Affiliation" />
-        <span className="remove-row-value"><i onClick={() => fields.remove(index)} className="fa fa-times" aria-hidden="true" /></span>
-      </div>
-    ))}
-    <div role="presentation" className="additional-input" onClick={() => fields.push({})}>
-      <i className="fa fa-plus-circle" aria-hidden="true" />
-      {' '}
-Add Another Affiliation
-    </div>
+    <h5>{text}</h5>
+    <table>
+      <tbody>
+        <tr>
+          <th>Description of affilation of Membership</th>
+        </tr>
+        {_.map(answer, (location, index) => (
+          <tr key={index}>
+            <td>{location.affiliation}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   </div>
+
+
 );
 
-const Text = ({ name, questionInfo }) => (
-  <div className="form-field clearfix input-column one-col-addition-field clearfix">
-    <label>{questionInfo.text}</label>
-    <div className="form-text">
-      <div className="department">
-Description of affilation of Membership
-      </div>
-    </div>
-    <FieldArray name={name} component={RenderAffiliations} />
 
-  </div>
-);
-
-export default Text;
+export default RenderAffiliations;

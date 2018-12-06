@@ -51,5 +51,19 @@ export const file = {
   email_invitation_id: Joi.number().optional().default(null),
   file_name: Joi.string().required(),
   url: Joi.string().required(),
+};
 
+export const status = {
+  status: Joi.string().optional().default('SENT'),
+  expiry_date: Joi.date(),
+  total_limit: Joi.number(),
+  project_limit: Joi.number(),
+  summary: Joi.string(),
+  invitation_id: Joi.number().required(),
+};
+
+export const review_status = {
+  invitation_id: Joi.number().required(),
+  user_id: Joi.number().required(),
+  status: Joi.string().required(),
 };

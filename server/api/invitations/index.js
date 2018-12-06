@@ -40,6 +40,7 @@ export default function (db) {
     .post('/mfs/notes', addNotes(db))
     .post('/mfs/files', addFiles(db))
     .post('/mfs/reviewers', addReviewers(db))
+    .post('/mfs/status', require('./status')(db))
     .post('/search', require('./search_company')(db))
     .delete('/jungle/editors/:editor_id', deleteEditor(db))
     .delete('/mfs/notes/:note_id', deleteNote(db))

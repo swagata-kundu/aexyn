@@ -218,13 +218,12 @@ is the option to add a team member to every
         <td>
           <input onChange={changeEmployeePermission} name="autoAdd" type="checkbox" defaultChecked={supplier_autoAdd} />
         </td>
-        {userInfo.id !== employee.user_id ? (
-          <td>
-            <span className="remove-ico">
-              <i className="fa fa-times-circle" aria-hidden="true" onClick={deleteEmployeePermission} />
-            </span>
-          </td>
-        ) : null}
+        <td>
+          <span className="remove-ico">
+            {userInfo.id !== employee.user_id ? <i className="fa fa-times-circle" aria-hidden="true" onClick={deleteEmployeePermission} />
+              : <i className="fa fa-times-circle" aria-hidden="true" />}
+          </span>
+        </td>
       </tr>
     );
   };
@@ -258,7 +257,7 @@ as
                 {' '}
 has
                 <select value={companyPermission.supplier_permission} onChange={this.changeCompanyPermisssion}>
-                  <option value="No">No Access</option>
+                  <option value="NO">No Access</option>
                   <option value="VIEW">View Only Access</option>
                   <option value="LIMITED">Limited Access</option>
                   <option value="ADMIN">Admin Access</option>

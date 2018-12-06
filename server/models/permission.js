@@ -27,7 +27,8 @@ export default class Permission {
         user_mfs_permission UMP ON UMP.user_id = U.id
             LEFT JOIN
         user_jungle_permission UJP ON UJP.user_id = U.id
-        WHERE CO.company_id=?;
+        WHERE CO.company_id=?
+        AND UOP.isPrimaryOffice=true;
     `,
         values: [company_id],
       };

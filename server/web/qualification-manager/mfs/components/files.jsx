@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 import { upload_file_service } from '../../../service/file';
 import { load_invitation_files, add_invitation_files, delete_invitation_files } from '../../state/action';
-
-import { formatDate, formatTime } from '../../../util';
 
 class Files extends Component {
   componentDidMount() {
@@ -33,9 +30,23 @@ class Files extends Component {
     this.props.delete_invitation_files(fileId, invitationId);
   }
 
+  renderFiles=() => {
+    const { files } = this.props;
+    return (
+      <ul className="multi-files">
+        {files.map(f => (
+          <li key={f.id}>
+            <a href={f.url}><span className="files-item">{f.file_name}</span></a>
+            <span role="presentation" className="remove" onClick={() => this.removeFile(f.id)}>x</span>
+          </li>
+        ))}
+
+      </ul>
+    );
+  }
+
 
   render() {
-    const { files } = this.props;
     return (
       <div className="custom-sidebar-widget file-widget">
         <h3>
@@ -47,6 +58,7 @@ class Files extends Component {
         </h3>
         <div className="custom-file-form-inner">
           <input type="file" onChange={this.uploadFile} />
+          {this.renderFiles()}
         </div>
       </div>
     );

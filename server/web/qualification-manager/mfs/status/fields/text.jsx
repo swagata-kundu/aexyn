@@ -1,11 +1,18 @@
 import React from 'react';
 
 const Text = ({ text, answer = {} }) => (
-  <div>
-    <p>{text}</p>
-    <p>{answer.value}</p>
-
-  </div>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          {text}
+        </td>
+        <td>
+          {answer.value ? answer.value : 'NA'}
+        </td>
+      </tr>
+    </tbody>
+  </table>
 );
 
 export default Text;

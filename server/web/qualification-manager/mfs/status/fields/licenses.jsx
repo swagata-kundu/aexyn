@@ -1,22 +1,23 @@
 import React from 'react';
+import _ from 'lodash';
 
-const RenderLcenses = ({ answers = [], text }) => (
+const RenderLcenses = ({ answer = [], text }) => (
   <div>
     <h5>{text}</h5>
     <table>
       <tbody>
         <tr>
-          <th>license Number</th>
+          <th>License Number</th>
           <th>Classification</th>
           <th>State</th>
           <th>Issuing Agency</th>
         </tr>
-        {answers.map((location, index) => (
+        {_.map(answer, (location, index) => (
           <tr key={index}>
-            <td>{`${location}.number`}</td>
-            <td>{`${location}.classification`}</td>
-            <td>{`${location}.state`}</td>
-            <td>{`${location}.agency`}</td>
+            <td>{location.number}</td>
+            <td>{location.classification}</td>
+            <td>{location.state}</td>
+            <td>{location.agency}</td>
           </tr>
         ))}
       </tbody>

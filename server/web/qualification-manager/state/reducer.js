@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { reducer as reduxFormReducer } from 'redux-form';
 import { fromJS } from 'immutable';
 import {
-  LOAD_INITIAL_QUESTIONS, SEARCH_COMPANY, GET_COMPANIES_DETAIL, FILTER_COMPANY_DATA, FILTER_DATA_LOCATION,
+  LOAD_INITIAL_QUESTIONS, SEARCH_COMPANY, FILTER_COMPANY_DATA, FILTER_DATA_LOCATION,
   COMPANY_POPUP, LOAD_PERMISSION,
   CHANGE_COMPANY_PERMISSION,
 } from './type';
@@ -36,12 +36,7 @@ function qualificationReducer(state = INITIAL_STATE_MFS, action) {
         companies: action.payload,
       });
     }
-    case GET_COMPANIES_DETAIL: {
-      return ({
-        ...state,
-        getCompanies: action.payload,
-      });
-    }
+
     case FILTER_COMPANY_DATA: {
       return ({
         ...state,
