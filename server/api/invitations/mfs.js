@@ -13,12 +13,12 @@ import {
 
 const fetchInviteInformations = (invite, qry, done) => {
   qry.query({
-    text: 'CALL ?? (?,?);',
-    values: [GET_INVITE_INFO, invite.qset_id, invite.invited_company_id],
+    text: 'CALL ?? (?,?,?);',
+    values: [GET_INVITE_INFO, invite.id, invite.qset_id, invite.invited_company_id],
   }, passerror(done, r => done(null, {
     ...invite,
     sentTo: r[0],
-    reviewers: [],
+    reviewers: r[1],
     isCompanyLinked: true,
   })));
 };

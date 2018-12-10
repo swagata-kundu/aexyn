@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 
 const RenderUnions = ({ answer = [], text }) => (
   <div>
@@ -10,7 +11,7 @@ const RenderUnions = ({ answer = [], text }) => (
           <th>Aggrement</th>
           <th>Year Expires</th>
         </tr>
-        {answer.map((location, index) => (
+        {_.map(answer, (location, index) => (
           <tr key={index}>
             <td>{location.trade}</td>
             <td>{location.agreement}</td>

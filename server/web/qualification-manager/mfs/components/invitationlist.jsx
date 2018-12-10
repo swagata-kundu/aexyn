@@ -41,33 +41,92 @@ export default class InvitationList extends Component {
 
   renderItems=() => {
     const { invitations } = this.state;
-    return invitations.map(i => (
-      <div key={i.id} className="item">
-        <div className="contact-detail">
-          <div className="icon"><i className="fa fa-building-o" aria-hidden="true" /></div>
-          <div className="member-detail">
-            <span className="company-name">{i.company_name}</span>
-            <span className="name">
-              <span className="contact-person" />
-              <a href="/user-profile">Member Name</a>
-            </span>
-            {' '}
-  and
-            {' '}
-            <span>
-              <span className="more">1</span>
-              {' '}
-  other
-            </span>
+    return invitations.map((i) => {
+      const { sentTo, reviewers } = i;
+      const sentToUser = sentTo[0];
+      const total_sent = sentTo.length;
+      return (
+        <div key={i.id} className="item">
+          <div className="contact-detail">
+            <div className="icon"><i className="fa fa-building-o" aria-hidden="true" /></div>
+            <div className="member-detail">
+              <span className="company-name" data-toggle="modal" data-target="#company-detail-popup">{i.company_name}</span>
+              <div>
+                <span className="name">
+                  <span className="contact-person" />
+                  <a href="#">
+                    {sentToUser.first_name}
+                    {' '}
+                    {sentToUser.last_name}
+
+                  </a>
+                </span>
+
+                {total_sent > 1 ? (
+                  <span>
+                    {' '}
+                    {' '}
+and
+                    {' '}
+                    <span className="more">{total_sent - 1}</span>
+                    {' '}
+                    {' '}
+other
+
+                  </span>
+                ) : null}
+
+              </div>
+            </div>
           </div>
+          <div className="meta">
+Viewed by
+            {' '}
+            <span className="date">date</span>
+          </div>
+          <div className="more-member">
+            <span className="reviewed-text">
+Reviewers (
+              {' '}
+              <span className="current-reviewer">1</span>
+          of
+              {' '}
+              <span className="total-reviewer">10</span>
+              {' '}
+reviews completed )
+
+            </span>
+            <ul>
+              <li>
+                <span className="reviewed-member-image" />
+                <span className="check"><i className="fa fa-check-circle" aria-hidden="true" /></span>
+              </li>
+              <li>
+                <span className="reviewed-member-image"><img src="/static/images/Steven_Hallam-slide.jpg" alt="Reviewer Name" /></span>
+                <span className="check"><i className="fa fa-check-circle" aria-hidden="true" /></span>
+              </li>
+              <li className="view-all">
+View all
+                <ul>
+                  <li>
+                    <span className="name">
+                      <span className="contact-person">
+                        <span className="check"><i className="fa fa-check-circle" aria-hidden="true" /></span>
+                      </span>
+                      <a href="/user-profile">Member Name</a>
+
+                    </span>
+
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <a href={`/qualification-manager/manage-food-suppliers/invitation/${i.id}/status`} className="item-link" />
         </div>
-        <div className="meta">
-  Viewed by
-          {' '}
-          <span className="date">date</span>
-        </div>
-      </div>
-    ));
+
+      );
+    });
   }
 
   render() {

@@ -91,6 +91,7 @@ class Reviewers extends Component {
               </td>
               <td>
                 {r.status === 'NONE' ? <div className="invite-status">Invited</div> : null}
+                {r.status === 'DONE' ? <div className="invite-status">Reviewed</div> : null}
                 <div className="meta-date">{formatDate(r.date_modified)}</div>
               </td>
 
@@ -110,6 +111,9 @@ class Reviewers extends Component {
 
 
   render() {
+    const { reviewers } = this.props;
+    const completedReviews = reviewers.filter(r => r.status === 'DONE');
+
     return (
       <div className="custom-application-tabber-item">
         <div className="custom-application-top-row">
@@ -118,11 +122,11 @@ class Reviewers extends Component {
 Application under review
               <span>
 (
-                <span className="review-number">0</span>
+                <span className="review-number">{reviewers.length}</span>
                 {' '}
 of
                 {' '}
-                <span className="total-review">1</span>
+                <span className="total-review">{completedReviews.length}</span>
                 {' '}
 complete)
               </span>
