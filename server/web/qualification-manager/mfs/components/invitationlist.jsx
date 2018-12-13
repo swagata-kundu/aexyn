@@ -24,7 +24,7 @@ export default class InvitationList extends Component {
       const result = await axios.get(`${MFS_INVITES}?${stringify({ status })}`);
       this.setState({ invitations: result.data });
     } catch (error) {
-      this.state({ invitations: [] });
+      this.setState({ invitations: [] });
     }
   }
 
@@ -59,10 +59,22 @@ export default class InvitationList extends Component {
   }
 
 
+  renderReviewers=reviewers => reviewers.map(r => (
+    <li>
+      <span className="reviewed-member-image">
+        <img src="/static/images/Steven_Hallam-slide.jpg" alt="Reviewer Name" />
+      </span>
+      {r.status === 'DONE' && <span className="check"><i className="fa fa-check-circle" aria-hidden="true" /></span>}
+    </li>
+  ))
+
+
   renderItems=() => {
     const { invitations } = this.state;
     return invitations.map((i) => {
       const { sentTo, reviewers } = i;
+      const completedReviews = reviewers.filter(r => r.status === 'DONE');
+
       const sentToUser = sentTo[0];
       const total_sent = sentTo.length;
       return (
@@ -108,25 +120,19 @@ Viewed by
             <span className="reviewed-text">
 Reviewers (
               {' '}
-              <span className="current-reviewer">1</span>
+              <span className="current-reviewer">
+                {reviewers.length}
+                {' '}
+              </span>
           of
               {' '}
-              <span className="total-reviewer">10</span>
+              <span className="total-reviewer">{completedReviews.length}</span>
               {' '}
 reviews completed )
 
             </span>
             <ul>
-              <li>
-                <span className="reviewed-member-image">AA</span>
-                <span className="check"><i className="fa fa-check-circle" aria-hidden="true" /></span>
-              </li>
-              <li>
-                <span className="reviewed-member-image">
-                  <img src="/static/images/Steven_Hallam-slide.jpg" alt="Reviewer Name" />
-                </span>
-                <span className="check"><i className="fa fa-check-circle" aria-hidden="true" /></span>
-              </li>
+              {this.renderReviewers(reviewers)}
 
             </ul>
           </div>

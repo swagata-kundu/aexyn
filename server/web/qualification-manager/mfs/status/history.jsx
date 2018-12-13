@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { load_invitation_history_service } from '../../../service/invitation';
+import { formatDate, formatTime, userIcon } from '../../../util';
 
 class History extends Component {
   constructor(props) {
@@ -28,52 +30,65 @@ class History extends Component {
     const { histories } = this.state;
     const { history } = histories;
     return history.map((h) => {
-      const a = 1;
+      const { activity_type, activity_status } = h;
+      let status = '';
+      if (activity_type === 'ANSWER') {
+        if (activity_status === 'SUBMITTED') {
+          status = 'submitted the qualification form';
+        } else if (activity_status === 'IN_PROGRESS') {
+          status = 'edited the qualification form';
+        }
+      } else if (activity_type === 'REVIEWER_STATUS') {
+        if (activity_status === 'DONE') {
+          status = 'reviewed the qualification answers';
+        } else if (activity_status === 'NONE') {
+          status = 'invited to review';
+        }
+      } else if (activity_type === 'INVITATION') {
+        if (activity_status === 'REVISION') {
+          status = 'asked revission for the qualification';
+        } else if (activity_status === 'APPROVED') {
+          status = 'approved the qualification status';
+        } else if (activity_status === 'APPROVED_EXCEPTION') {
+          status = 'approved the qualification status with exception';
+        } else if (activity_status === 'DENIED') {
+          status = 'denied the qualification status';
+        } else if (activity_status === 'SUBMITTED') {
+          status = 'submitted the qualification form';
+        }
+      }
+
       return (
-        <div className="history-items clearfix">
+        <div key={h.id} className="history-items clearfix">
           <div className="left-group">
             <div className="icon-group" />
             <div className="history-meta">
-              <span className="history-date">11/10/2018</span>
+              <span className="history-date">{formatDate(h.date_created)}</span>
               {' '}
 at
               {' '}
-              <span className="history-time">11:11 AM</span>
+              <span className="history-time">{formatTime(h.date_created)}</span>
               {' '}
 HST
             </div>
           </div>
           <div className="right-group">
-            <div className="member-detail clearfix">
+            <div className="member-detail">
               <div className="icon-group">
-                <span className="member-icon">NK</span>
+                <span className="member-icon">{userIcon(h)}</span>
               </div>
               <div className="detail-group">
-                <a href="#" className="member-name">Nishant Kataria</a>
+                <a href="#" className="member-name">
+                  {h.first_name}
+                  {' '}
+                  {h.last_name}
+                </a>
                 {' '}
                 <span>
-removed
-                  {' '}
-                  <a href>Aman Talvar</a>
-                  {' '}
-as an applicant.
+                  {status}
+.
                 </span>
               </div>
-            </div>
-            <div className="about-application">
-              <p>
-Hi
-                {' '}
-                <span className="company-name">AA Printers</span>
-                {' '}
-Team,
-              </p>
-              <p>I'm writting to invite you to reapply for your qualification. please let me know if you have any question...</p>
-              <a href="#" className="show-more">
-show more
-                {' '}
-                <i className="fa fa-angle-down" />
-              </a>
             </div>
           </div>
         </div>
@@ -82,6 +97,9 @@ show more
   }
 
   render() {
+    const { reviewers } = this.props;
+    const completedReviews = reviewers.filter(r => r.status === 'DONE');
+
     return (
       <div className="custom-application-tabber-item">
         <div className="custom-application-top-row">
@@ -90,16 +108,16 @@ show more
                 Application under review
               <span>
                         (
-                <span className="review-number">0</span>
+                <span className="review-number">{completedReviews.length}</span>
                 {' '}
                     of
                 {' '}
-                <span className="total-review">1</span>
+                <span className="total-review">{reviewers.length}</span>
                 {' '}
                 complete)
               </span>
             </div>
-            <a className="pull-to-right complete-review-btn" href="#">Complete My Review</a>
+            {/* <a className="pull-to-right complete-review-btn" href="#">Complete My Review</a> */}
           </div>
           <div className="custom-application-history-section">
             <h3>Full History</h3>
@@ -117,4 +135,9 @@ show more
   }
 }
 
-export default History;
+export default connect(
+  state => ({
+    reviewers: state.invites.reviewers,
+  }),
+
+)(History);

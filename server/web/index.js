@@ -19,5 +19,6 @@ export default function (db) {
     })
     .get('/aexyn/join-us/:hash', join(db))
     .get('/forget-password', (req, res) => res.render('sign-in'))
+    .get('/reset-password/*', (req, res) => res.render('sign-in'))
     .get('/', (req, res) => res.render('sign-in'));
 }

@@ -1,6 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const VerifyEmail = () => (
+const VerifyEmail = ({ userInfo }) => (
   <section className="custom-account-container-wrapper">
     <div className="container">
       <div className="row">
@@ -8,8 +9,9 @@ const VerifyEmail = () => (
           <h2>Verify your email to View</h2>
           <p>
             You are logged in as
-            <span className="email-text">abc@xyz.com</span>
-            which has verified.
+            {' '}
+            <span className="email-text">{userInfo.email}</span>
+            which has not been verified.
             Email verification is required as a security precaution.
           </p>
           <a className="email-verify-btn custom-btn">
@@ -19,7 +21,7 @@ const VerifyEmail = () => (
             <small>
               Already verified your email?
               {' '}
-              <a>
+              <a href="/qualification-manager/manage-food-suppliers">
                 <em>Reload this page</em>
               </a>
             </small>
@@ -39,4 +41,8 @@ const VerifyEmail = () => (
   </section>
 );
 
-export default VerifyEmail;
+export default connect(
+  state => ({
+    userInfo: state.common.get('userInfo').toJS(),
+  }),
+)(VerifyEmail);

@@ -21,3 +21,8 @@ export const resetPasswordLink = (params) => {
   const url = `${USER}/reset-password-link`;
   return axios.post(url, params);
 };
+
+export const resetPassword = (params) => {
+  const url = `${USER}/reset-password`;
+  return axios.post(url, params);
+};
