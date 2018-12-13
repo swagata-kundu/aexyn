@@ -32,12 +32,32 @@ export default class InvitationList extends Component {
     const { status } = this.props;
     switch (status) {
       case 'SENT': return 'New Invitation';
-      case 'IN_PROGRESS': return 'Draft in Progress';
+      case 'IN_PROGRESS': return 'Application in Progress';
       case 'REVISION': return 'Need Revision';
-      case 'SUBMITTED': return 'Submitted';
+      case 'SUBMITTED': return 'Application Submitted';
+      case 'APPROVED': return 'Application Approved';
+      case 'EXPIRING': return 'Expiring Soon';
+      case 'EXPIRED': return 'Expired';
+      case 'DENIED': return 'Denied';
       default: return '';
     }
   }
+
+  getHeaderClass=() => {
+    const { status } = this.props;
+    switch (status) {
+      case 'SENT': return 'orange-border';
+      case 'IN_PROGRESS': return 'dark-green-border';
+      case 'REVISION': return 'dark-green-border';
+      case 'SUBMITTED': return 'blue-border';
+      case 'APPROVED': return 'green-border';
+      case 'EXPIRING': return 'pink-border';
+      case 'EXPIRED': return 'grey-border';
+      case 'DENIED': return 'pink-border';
+      default: return '';
+    }
+  }
+
 
   renderItems=() => {
     const { invitations } = this.state;
@@ -98,28 +118,16 @@ reviews completed )
             </span>
             <ul>
               <li>
-                <span className="reviewed-member-image" />
+                <span className="reviewed-member-image">AA</span>
                 <span className="check"><i className="fa fa-check-circle" aria-hidden="true" /></span>
               </li>
               <li>
-                <span className="reviewed-member-image"><img src="/static/images/Steven_Hallam-slide.jpg" alt="Reviewer Name" /></span>
+                <span className="reviewed-member-image">
+                  <img src="/static/images/Steven_Hallam-slide.jpg" alt="Reviewer Name" />
+                </span>
                 <span className="check"><i className="fa fa-check-circle" aria-hidden="true" /></span>
               </li>
-              <li className="view-all">
-View all
-                <ul>
-                  <li>
-                    <span className="name">
-                      <span className="contact-person">
-                        <span className="check"><i className="fa fa-check-circle" aria-hidden="true" /></span>
-                      </span>
-                      <a href="/user-profile">Member Name</a>
 
-                    </span>
-
-                  </li>
-                </ul>
-              </li>
             </ul>
           </div>
           <a href={`/qualification-manager/manage-food-suppliers/invitation/${i.id}/status`} className="item-link" />
@@ -131,9 +139,10 @@ View all
 
   render() {
     const { invitations } = this.state;
+    const borderClass = this.getHeaderClass();
     return (
       <div className="tab-content">
-        <h3 className="orange-border">
+        <h3 className={borderClass}>
           {this.renderHeader()}
           <span className="count-value">{`(${invitations.length})`}</span>
           <span className="sort">
@@ -143,13 +152,19 @@ View all
         <div className="item-group">
           {this.renderItems()}
         </div>
+        {invitations.length > 0 && (
         <div className="custom-mfs-item-bottom-text orange-border">
           <a href="#">
-Send a message to remind 1 vendor
+Send a message to remind
+            {' '}
+            {invitations.length}
+            {' '}
+vendor
             {' '}
             <i className="fa fa-angle-double-right" aria-hidden="true" />
           </a>
         </div>
+        )}
       </div>
     );
   }

@@ -93,7 +93,6 @@ export default class BaseHelper {
     }
     const obj = { ...values };
     _.keys(values).forEach((k) => {
-      console.log(values[k]);
       if (_.isArray(values[k])) {
         const v = values[k];
         obj[k] = JSON.stringify(v);

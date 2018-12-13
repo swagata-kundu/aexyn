@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Route, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
+import _ from 'lodash';
+
 
 import Status from './status';
 import Reviewers from './reviewers';
 import History from './history';
 import Form from './form';
 import { load_all_employees } from '../../../state/action';
+import { load_invitation_answers } from '../../state/invitation_action';
 
 import ReviewersSidemenu from '../components/reviewers';
 import NotesSidemenu from '../components/notes';
@@ -15,12 +18,19 @@ import FilesSidemenu from '../components/files';
 class Invitation extends Component {
   componentDidMount() {
     const { company_id } = this.props.userInfo;
+    const { match } = this.props;
+    const { params } = match;
+    const { invitationId } = params;
+    this.props.load_invitation_answers(invitationId);
     this.props.load_all_employees(company_id);
   }
 
   renderTabs=() => {
-    const { match } = this.props;
+    const { match, invitation } = this.props;
     const { url } = match;
+    const { detail } = invitation;
+    const { invited_company_name } = detail;
+
     return (
       <div className="custom-section">
         <div className="custom-section-header-main-wrapper" style={{ minHeight: 105 }}>
@@ -28,7 +38,7 @@ class Invitation extends Component {
             <div className="container-fluid">
               <div className="row">
                 <div className="col-sm-12">
-                  <h1>AA printer Application</h1>
+                  <h1>{`${invited_company_name} Application`}</h1>
                 </div>
                 <div className="col-sm-12">
                   <div className="custom-taber-link">
@@ -49,9 +59,14 @@ class Invitation extends Component {
   }
 
   render() {
-    const { match } = this.props;
+    const { match, invitation } = this.props;
     const { url, params } = match;
     const { invitationId } = params;
+
+    if (_.isEmpty(invitation.detail)) {
+      return null;
+    }
+
 
     return (
       <section className="custom-body-container-wrapper" style={{ paddingLeft: 50 }}>
@@ -119,7 +134,9 @@ class Invitation extends Component {
 function mapStateToProps(state) {
   return {
     userInfo: state.common.get('userInfo').toJS(),
+    invitation: state.invites.invitation,
+
   };
 }
 
-export default connect(mapStateToProps, { load_all_employees })(Invitation);
+export default connect(mapStateToProps, { load_all_employees, load_invitation_answers })(Invitation);

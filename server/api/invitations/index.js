@@ -12,6 +12,7 @@ const {
   getReviewers,
   addReviewers,
   deleteReviewer,
+  setReviewStatus,
 } = require('./mfs_reviewers');
 
 const {
@@ -24,6 +25,11 @@ const {
   getInvitesFromJungle, getEditorsList, addEditor, deleteEditor,
 } = require('./jungle');
 
+const {
+  setInvitationStatus,
+  saveInvitationStatus,
+} = require('./invitation_status');
+
 export default function (db) {
   return Express
     .Router()
@@ -35,12 +41,15 @@ export default function (db) {
     .get('/mfs/notes/:invitation_id', getNotes(db))
     .get('/mfs/files/:invitation_id', getFiles(db))
     .get('/mfs/reviewers/:invitation_id', getReviewers(db))
+    .get('/mfs/history/:invitation_id', require('./invitation_history')(db))
     .post('/send', sendInvitation(db))
     .post('/jungle/editors', addEditor(db))
     .post('/mfs/notes', addNotes(db))
     .post('/mfs/files', addFiles(db))
+    .post('/mfs/reviewers/status', setReviewStatus(db))
     .post('/mfs/reviewers', addReviewers(db))
-    .post('/mfs/status', require('./status')(db))
+    .post('/mfs/status', setInvitationStatus(db))
+    .post('/mfs', saveInvitationStatus(db))
     .post('/search', require('./search_company')(db))
     .delete('/jungle/editors/:editor_id', deleteEditor(db))
     .delete('/mfs/notes/:note_id', deleteNote(db))

@@ -37,7 +37,7 @@ AWSHelper.uploadSingle = (file, bucketDetail) => new Promise(((resolve, reject) 
   fileToUpload.on('error', (err) => {
     reject(err);
   });
-  const key = `${bucketDetail.folderName}/${file.filename}`;
+  const key = `/${file.filename}`;
   const s3 = new AWS.S3();
   s3.upload({
     Bucket: bucketDetail.bucketName,
@@ -64,9 +64,9 @@ AWSHelper.uploadSingle = (file, bucketDetail) => new Promise(((resolve, reject) 
 
 AWSHelper.uploadMultiple = (files, bucketDetail, callback) => {
   const promiseArray = [];
-  for (const index in files) {
-    promiseArray.push(AWSHelper.uploadSingle(files[index], bucketDetail));
-  }
+  files.forEach((f) => {
+    promiseArray.push(AWSHelper.uploadSingle(f, bucketDetail));
+  });
   Promise.all(promiseArray).then(urls => callback(null, urls), error => callback(error));
 };
 

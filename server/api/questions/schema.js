@@ -34,4 +34,5 @@ export const answers_schema = {
     answer: Joi.any().default(null),
     question_id: Joi.number().required(),
   })),
+  isSubmit: Joi.boolean().default(false),
 };

@@ -28,6 +28,17 @@ export default class InvitationList extends Component {
     }
   }
 
+  getHeaderClass=() => {
+    const { status } = this.props;
+    switch (status) {
+      case 'SENT': return 'orange-border';
+      case 'IN_PROGRESS': return 'blue-border';
+      case 'REVISION': return 'dark-green-border';
+      case 'SUBMITTED': return 'green-border';
+      default: return '';
+    }
+  }
+
   renderHeader=() => {
     const { status } = this.props;
     switch (status) {
@@ -46,35 +57,44 @@ export default class InvitationList extends Component {
         <div className="contact-detail">
           <div className="icon"><i className="fa fa-building-o" aria-hidden="true" /></div>
           <div className="member-detail">
-            <span className="company-name">{i.company_name}</span>
-            <span className="name">
-              <span className="contact-person" />
-              <a href="/user-profile">Member Name</a>
+            <span className="company-name" data-toggle="modal" data-target="#company-detail-popup">
+              {i.company_name}
             </span>
-            {' '}
-  and
-            {' '}
-            <span>
-              <span className="more">1</span>
+            <div>
+              <span className="name">
+                <span className="contact-person" />
+                <a href="#" data-toggle="modal" data-target="#user-detail-popup">Member Name</a>
+              </span>
               {' '}
-  other
-            </span>
+and
+              {' '}
+              <span>
+                <span className="more">1</span>
+                {' '}
+other
+
+              </span>
+
+            </div>
           </div>
         </div>
         <div className="meta">
-  Viewed by
+Viewed by
           {' '}
           <span className="date">date</span>
         </div>
+        <a href={`/qualification-manager/invitation-from-jungle/invitation/${i.id}`} className="item-link" />
       </div>
     ));
   }
 
   render() {
     const { invitations } = this.state;
+    const headerClass = this.getHeaderClass();
+
     return (
       <div className="tab-content">
-        <h3 className="orange-border">
+        <h3 className={headerClass}>
           {this.renderHeader()}
           <span className="count-value">{`(${invitations.length})`}</span>
           <span className="sort">

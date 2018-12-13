@@ -17,6 +17,11 @@ const QF = connect(state => ({
 }))(QualificationFormConnected);
 
 class Questions extends Component {
+  constructor(props) {
+    super(props);
+    this.isSubmit = false;
+  }
+
   componentDidMount() {
     this.props.masterData();
   }
@@ -32,11 +37,21 @@ class Questions extends Component {
       answer: a.answer,
       question_id: a.id,
     }));
-    axios.post('questions/answers/', { invitation_id: invitationId, answers });
+    axios.post('questions/answers/', { invitation_id: invitationId, answers, isSubmit: this.isSubmit });
   }
 
-  submit=() => {
+  save=() => {
     this.props.submit('qualificationForm');
+  }
+
+  submitForm=() => {
+    this.isSubmit = true;
+    this.props.submit('qualificationForm');
+  }
+
+  cancel=() => {
+    const { history } = this.props;
+    history.goBack();
   }
 
   renderSideOptions=() => (
@@ -68,7 +83,9 @@ jump to next unanswered
 
   render() {
     const { detail } = this.props;
-    const { opening_statement } = detail;
+    const {
+      opening_statement, invited_by_company_name, invited_company_name, status,
+    } = detail;
     return (
       <div className="custom-questionnaire-section ifj-questionnaire-section">
         {this.renderSideOptions()}
@@ -80,14 +97,28 @@ jump to next unanswered
               </div>
               <div className="content-group">
                 <p>
-                  <span className="company-name">Talwar Electronics</span>
+                  <span className="company-name">{invited_by_company_name}</span>
                   {' '}
-trusts Aexyn connected to securely collect and transmit your qualification. Your information will only be made available to
+trusts
                   {' '}
-                  <span className="company-name">Talwar Electronics</span>
+                  {invited_company_name}
+                  {' '}
+to securely collect and transmit your qualification. Your information will only be made available to
+                  {' '}
+                  <span className="company-name">{invited_by_company_name}</span>
 . Other clients will only receive your information if your information if you explicity send them a qualification application.
                 </p>
-                <button type="button" onClick={this.submit}>Save</button>
+
+                {status !== 'SUBMITTED' && (
+                <div>
+
+                  <button type="button" onClick={this.cancel}>Cancel</button>
+                  <button type="button" onClick={this.save}>Save</button>
+                  <button type="button" onClick={this.submitForm}>Submit</button>
+
+                </div>
+                )}
+
               </div>
               <QF onSubmit={this.saveAnswers} opening_statement={opening_statement} />
             </div>

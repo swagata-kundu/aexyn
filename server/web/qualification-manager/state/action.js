@@ -1,5 +1,5 @@
 import {
-  LOAD_INITIAL_QUESTIONS, SEARCH_COMPANY, GET_COMPANIES_DETAIL, FILTER_COMPANY_DATA,
+  LOAD_INITIAL_QUESTIONS, SEARCH_COMPANY, FILTER_COMPANY_DATA,
   COMPANY_POPUP, LOAD_PERMISSION, CHANGE_COMPANY_PERMISSION, LOAD_INVITATION_REVIEWERS,
   LOAD_INVITATION_NOTES, LOAD_INVITATION_FILES,
 } from './type';
@@ -22,6 +22,8 @@ import {
   delete_invitation_files_service,
 
 } from '../../service/permissions';
+
+import { submit_invitation_review_service } from '../../service/invitation';
 
 export const load_questions = data => ({ type: LOAD_INITIAL_QUESTIONS, payload: data });
 
@@ -164,6 +166,13 @@ export const delete_invitation_files = (id, invitation_id) => (dispatch) => {
   delete_invitation_files_service(id)
     .then(() => dispatch(load_invitation_files(invitation_id)))
     .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const submit_invitation_review = (invitation_id, data) => (dispatch) => {
+  submit_invitation_review_service(data)
+    .then(() => dispatch(load_invitation_reviewers(invitation_id))).catch((error) => {
       console.log(error);
     });
 };

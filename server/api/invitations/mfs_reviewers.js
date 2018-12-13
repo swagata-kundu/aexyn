@@ -9,6 +9,7 @@ import {
 import {
   INVITATION_REVIEWERS,
 } from '../../db/tables';
+import QA from '../../models/qualification_activity';
 
 
 const getReviewers = db => (req, res, next) => {
@@ -28,6 +29,9 @@ const getReviewers = db => (req, res, next) => {
 
 const addReviewers = db => (req, res, next) => {
   const qry = new Query(db);
+  const { userInfo } = res.locals;
+  const qa = new QA(qry);
+
   Async.auto({
     validate: cb => Joi.validate(req.body, reviewer, cb),
     checkDuplicate: ['validate', (results, cb) => {
@@ -48,6 +52,13 @@ const addReviewers = db => (req, res, next) => {
       }));
     }],
     add: ['checkDuplicate', (results, cb) => {
+      qa.add({
+        invitation_id: results.validate.invitation_id,
+        user_id: userInfo.id,
+        activity_type: 'REVIEWER',
+        activity_status: 'ADD',
+      }, () => {});
+
       qry.insert({
         tableName: INVITATION_REVIEWERS,
         values: results.validate,
@@ -65,6 +76,8 @@ const deleteReviewer = db => (req, res, next) => {
 };
 
 const setReviewStatus = db => (req, res, next) => {
+  const { userInfo } = res.locals;
+
   Async.series([
     (cb) => {
       Joi.validate(req.body, review_status, cb);
@@ -72,9 +85,18 @@ const setReviewStatus = db => (req, res, next) => {
     (cb) => {
       const qry = new Query(db);
       const { status, user_id, invitation_id } = req.body;
+      const qa = new QA(qry);
+
+      qa.add({
+        invitation_id,
+        user_id: userInfo.id,
+        activity_type: 'REVIEWER_STATUS',
+        activity_status: status,
+      }, () => {});
+
       qry.query({
         text: 'update qualification_reviewers set status=? where invitation_id=? AND user_id=?;',
-        values: [status, user_id, invitation_id],
+        values: [status, invitation_id, user_id],
       }, cb);
     },
   ], passerror(next, () => res.send('ok')));

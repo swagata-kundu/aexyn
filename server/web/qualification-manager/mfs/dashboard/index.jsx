@@ -44,12 +44,17 @@ Questionnaire
                   </div>
                 </div>
               </div>
-              <div className="custom-qualification-section-1 clearfix">
-                <div className="custom-qualification-section-1-inner clearfix">
+              <div className="custom-mfs-section-1 clearfix">
+                <div className="custom-mfs-section-1-inner clearfix">
+
                   <Invitations status="SENT" />
-                  <Invitations status="REVISION" />
                   <Invitations status="IN_PROGRESS" />
                   <Invitations status="SUBMITTED" />
+                  <Invitations status="APPROVED" />
+                  <Invitations status="EXPIRING" />
+                  <Invitations status="EXPIRED" />
+                  <Invitations status="DENIED" />
+
                 </div>
               </div>
             </div>

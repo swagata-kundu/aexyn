@@ -67,3 +67,20 @@ export const review_status = {
   user_id: Joi.number().required(),
   status: Joi.string().required(),
 };
+
+export const invitation_status_save = {
+  invitation_id: Joi.number().required(),
+  invited_company_id: Joi.number().required(),
+  status: Joi.string(),
+  expiry_date: Joi.date(),
+  total_limit: Joi.number(),
+  project_limit: Joi.number(),
+  summary: Joi.string(),
+  files: Joi.array(),
+  tags: Joi.array(),
+};
+
+export const invitation_status = {
+  invitation_id: Joi.number().required(),
+  status: Joi.string(),
+};

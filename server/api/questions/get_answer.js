@@ -9,18 +9,7 @@ module.exports = db => (req, res, next) => {
   Async.auto({
     invitation: (cb) => {
       const query = {
-        text: `SELECT 
-            QI.*,
-            C.name AS invited_by_company_name,
-            C.id AS invited_by_company_id,
-            QSET.opening_statement
-            
-        FROM
-            qualification_invites QI
-                JOIN
-            question_set QSET ON QI.qset_id = QSET.id
-            JOIN company C ON QSET.company_id=C.id
-            WHERE QI.id=?;`,
+        text: 'CALL sp_invitaion_status_mfs(?);',
         values: [req.params.invitation_id],
       };
       qry.query(query, cb);
@@ -62,6 +51,10 @@ module.exports = db => (req, res, next) => {
       }
       grouped_questions[section].push(q);
     });
-    return res.json({ detail: _.get(invitation, '0', {}), questions: grouped_questions });
+    return res.json({
+      detail: _.get(invitation, '[0][0]', {}),
+      questions: grouped_questions,
+      invitee: _.get(invitation, '[1]', []),
+    });
   }));
 };
