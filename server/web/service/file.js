@@ -1,9 +1,11 @@
 import { axios } from '../util';
 import { FILES } from '../endpoint';
 
-export const upload_file_service = (data) => {
+export const upload_file_service = (files) => {
   const fd = new FormData();
-  fd.append('file', data);
+  files.forEach((f) => {
+    fd.append('file', f);
+  });
   return axios.post(FILES, fd, {
     headers: { 'content-type': undefined },
   });

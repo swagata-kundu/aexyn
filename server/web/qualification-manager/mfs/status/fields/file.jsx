@@ -1,15 +1,23 @@
 import React from 'react';
-import { Field } from 'redux-form';
+import _ from 'lodash';
 
-const File = ({ name, questionInfo }) => (
-  <div className="form-field clearfix two-col-equal-field clearfix">
-    <div className="label-text">
-      <label>{questionInfo.text}</label>
-    </div>
-    <div className="input-field">
-      <input type="file" />
-    </div>
-  </div>
+const File = ({ text, answer = {} }) => (
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          {text}
+        </td>
+        {_.map(answer.value, (f, index) => (
+          <tr key={index}>
+            <td>
+              <a target="_blank" href={f.url}>{f.file_name}</a>
+            </td>
+          </tr>
+        ))}
+      </tr>
+    </tbody>
+  </table>
 );
 
 export default File;

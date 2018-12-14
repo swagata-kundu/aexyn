@@ -2,6 +2,7 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import Tags from '../../../components/tag';
+import FI from '../../../components/file-input';
 
 const StatusForm = (props) => {
   const {
@@ -119,7 +120,13 @@ const StatusForm = (props) => {
           <label>Attachments</label>
         </div>
         <div className="col-sm-10 input-field">
-          <input type="file" className="custom-input" />
+          <Field
+            component={FI}
+            name="files"
+            className="custom-input"
+            disabled={disabled}
+
+          />
         </div>
       </div>
     </form>

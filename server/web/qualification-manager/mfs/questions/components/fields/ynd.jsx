@@ -1,5 +1,6 @@
 import React from 'react';
 import { Field } from 'redux-form';
+import FI from '../../../../../components/file-input';
 
 const normalizeBoolean = (value) => {
   if (value === 'true') {
@@ -34,6 +35,9 @@ Yes
         <Field component="input" type="text" name={`${name}.explain`} placeholder="Description" />
       </div>
       <div className="upload-file-input">
+
+        <Field component={FI} name={`${name}.files`} />
+
         <i className="fa fa-plus-circle" aria-hidden="true" />
 upload files
       </div>

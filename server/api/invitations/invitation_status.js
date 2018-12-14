@@ -55,6 +55,8 @@ const saveInvitationStatus = db => (req, res, next) => {
       }, () => {});
       const values = { ...results.validate };
 
+      values.files = values.files ? JSON.stringify(values.files) : values.files;
+
       delete values.tags;
       delete values.invitation_id;
 

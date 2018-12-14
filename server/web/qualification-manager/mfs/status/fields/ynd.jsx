@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 
 
 const YesNoDescribe = ({ text, answer }) => (
@@ -14,6 +15,13 @@ const YesNoDescribe = ({ text, answer }) => (
             <small>{answer.explain}</small>
           </td>
         ) : <td>NA</td>}
+        {_.map(answer.files, (f, index) => (
+          <tr key={index}>
+            <td>
+              <a target="_blank" href={f.url}>{f.file_name}</a>
+            </td>
+          </tr>
+        ))}
       </tr>
     </tbody>
   </table>);

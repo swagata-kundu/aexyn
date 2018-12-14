@@ -14,7 +14,7 @@ class Files extends Component {
     const file = e.target.files[0];
     const { invitationId, userInfo } = this.props;
     try {
-      const result = await upload_file_service(file);
+      const result = await upload_file_service([file]);
       const params = result.data[0];
       params.invitation_id = invitationId;
       params.user_id = userInfo.id;

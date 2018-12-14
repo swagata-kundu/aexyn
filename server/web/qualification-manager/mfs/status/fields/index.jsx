@@ -42,7 +42,7 @@ const Fields = ({ questions }) => {
       case 'EMPLOYEES': return <EMPLOYEES key={id} {...q} />;
       case 'LICENSES': return <LICENSES key={id} {...q} />;
       case 'AMOUNT': return <AMOUNT key={id} {...q} />;
-      // case 'FILE': return <FILE  key={id} {...q} />;
+      case 'FILE': return <FILE key={id} {...q} />;
       case 'FREQUENTLY': return <FREQUENTLY key={id} {...q} />;
       case 'PERCENT': return <PERCENT key={id} {...q} />;
       case '4YRDATA': return <YD key={id} {...q} />;
