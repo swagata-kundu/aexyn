@@ -1,3 +1,4 @@
+import env from 'dotenv';
 import Express from 'express';
 import * as bodyParser from 'body-parser';
 import * as http from 'http';
@@ -7,18 +8,20 @@ import Config from 'config';
 import Morgan from 'morgan';
 import Helmet from 'helmet';
 import Session from 'express-session';
-import env from 'dotenv';
 import ConnectRedis from 'connect-redis';
 import CookieParser from 'cookie-parser';
+
 
 import ErrorHandler from './errorhandler';
 import Db from './db';
 import Api from '../api';
 import Web from '../web';
 
+
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const WHM = require('webpack-hot-middleware');
 const webpack = require('webpack');
+
 const WebpackConfig = require('../../webpack.config');
 
 const compiler = webpack(WebpackConfig);
@@ -44,10 +47,13 @@ export default class ExpressServer {
     //   cookie: {},
     //   store: new RedisStore(Config.get('redis')),
     // }));
-    this.app.use(webpackDevMiddleware(compiler, {
-      publicPath: WebpackConfig.output.publicPath,
-    }));
-    this.app.use(WHM(compiler));
+    if (process.env.NODE_ENV !== 'production') {
+      this.app.use(webpackDevMiddleware(compiler, {
+        publicPath: WebpackConfig.output.publicPath,
+      }));
+
+      this.app.use(WHM(compiler));
+    }
     this.app.use(Express.static(`${root}/views`));
     this.app.set('view engine', 'pug');
     this.app.use(cors({

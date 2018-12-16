@@ -5,6 +5,7 @@ import Preview from './questions/preview';
 import Invite from './invite';
 import Status from './status';
 import DashBoard from './dashboard';
+import UserPopup from '../../components/user-popup';
 
 const MFS = ({ match }) => {
   const { url } = match;
@@ -15,6 +16,8 @@ const MFS = ({ match }) => {
       <Route exact path={`${url}/configure-questions`} component={Configure} />
       <Route path={`${url}/invitation/:invitationId`} component={Status} />
       <Route path={`${url}/invite/`} component={Invite} />
+      <UserPopup />
+
     </div>
   );
 };

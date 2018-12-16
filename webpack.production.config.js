@@ -12,11 +12,11 @@ const envKeys = Object.keys(env).reduce((prev, next) => {
 module.exports = {
   mode: 'development',
   entry: {
-    'create-account': ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', './server/web/create-account'],
-    'sign-in': ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', './server/web/sign-in'],
-    'qualification-manager': ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', './server/web/qualification-manager'],
-    'company-manager': ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', './server/web/company-manager'],
-    'profile-manager': ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', './server/web/profile-manager'],
+    'create-account': ['./server/web/create-account'],
+    'sign-in': ['./server/web/sign-in'],
+    'qualification-manager': ['./server/web/qualification-manager'],
+    'company-manager': ['./server/web/company-manager'],
+    'profile-manager': ['./server/web/profile-manager'],
 
   },
   module: {
