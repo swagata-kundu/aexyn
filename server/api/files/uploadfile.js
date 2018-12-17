@@ -1,8 +1,11 @@
+
 module.exports = db => (req, res, next) => {
-  const results = req.files.map(f => ({
-    file_name: f.originalname,
-    url: f.path,
-  }));
+  let results = [];
+
+
+  if (res.locals.files && res.locals.files.length) {
+    results = res.locals.files;
+  }
 
   return res.json(results);
 };

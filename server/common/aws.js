@@ -1,6 +1,7 @@
 import AWS from 'aws-sdk';
 import { unlink, createReadStream } from 'fs';
 import _ from 'lodash';
+import passerror from 'passerror';
 
 const AWSHelper = {};
 module.exports = AWSHelper;
@@ -32,7 +33,7 @@ const deleteFile = (pathToFile) => {
  * @param {file} file -file to upload,
  * @param {bucketDetail} AWS location information.
  */
-AWSHelper.uploadSingle = (file, bucketDetail) => new Promise(((resolve, reject) => {
+AWSHelper.uploadSingle = file => new Promise(((resolve, reject) => {
   const fileToUpload = createReadStream(file.path);
   fileToUpload.on('error', (err) => {
     reject(err);
@@ -40,7 +41,7 @@ AWSHelper.uploadSingle = (file, bucketDetail) => new Promise(((resolve, reject) 
   const key = `/${file.filename}`;
   const s3 = new AWS.S3();
   s3.upload({
-    Bucket: bucketDetail.bucketName,
+    Bucket: 'jungle-app',
     Key: key,
     Body: fileToUpload,
     ACL: 'public-read',
@@ -49,7 +50,7 @@ AWSHelper.uploadSingle = (file, bucketDetail) => new Promise(((resolve, reject) 
     if (err) {
       reject(err);
     } else {
-      resolve(data.Location);
+      resolve({ url: data.Location, file_name: file.originalname });
     }
   });
 }));
@@ -62,10 +63,10 @@ AWSHelper.uploadSingle = (file, bucketDetail) => new Promise(((resolve, reject) 
  * @param {function(Error,object)} callback - callback function.
  */
 
-AWSHelper.uploadMultiple = (files, bucketDetail, callback) => {
+AWSHelper.uploadMultiple = (files, callback) => {
   const promiseArray = [];
   files.forEach((f) => {
-    promiseArray.push(AWSHelper.uploadSingle(f, bucketDetail));
+    promiseArray.push(AWSHelper.uploadSingle(f));
   });
   Promise.all(promiseArray).then(urls => callback(null, urls), error => callback(error));
 };
@@ -81,4 +82,13 @@ AWSHelper.createAWSBucket = (bucketName, callback) => {
   const s3 = new AWS.S3();
   const valid_name = _.replace(' ', _.escape(_.toLower(bucketName)), '-');
   s3.createBucket({ Bucket: valid_name, ACL: 'public-read-write' }, callback);
+};
+
+AWSHelper.uploadMiddleWare = (req, res, next) => {
+  if (req.files && req.files.length) {
+    AWSHelper.uploadMultiple(req.files, passerror(next, (result) => {
+      res.locals.files = result;
+      return next();
+    }));
+  }
 };

@@ -1,4 +1,3 @@
-import env from 'dotenv';
 import Express from 'express';
 import * as bodyParser from 'body-parser';
 import * as http from 'http';
@@ -17,6 +16,7 @@ import Db from './db';
 import Api from '../api';
 import Web from '../web';
 
+require('dotenv').config();
 
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const WHM = require('webpack-hot-middleware');
@@ -38,7 +38,6 @@ export default class ExpressServer {
     this.app.use(bodyParser.urlencoded({
       extended: true,
     }));
-    env.config();
     this.app.use(Morgan('dev'));
     this.app.use(Helmet());
     this.app.use(CookieParser());
