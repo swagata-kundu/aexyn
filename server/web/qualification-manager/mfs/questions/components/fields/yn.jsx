@@ -11,16 +11,16 @@ const normalizeBoolean = (value) => {
   return value;
 };
 
-const YesNo = ({ name, questionInfo }) => (
+const YesNo = ({ name, questionInfo, disabled }) => (
   <div className="form-field">
     <div className="radio-label">
       <label>{questionInfo.text}</label>
       <div className="radio-check">
-        <Field component="input" type="radio" name={`${name}.yn`} normalize={normalizeBoolean} value={false} />
+        <Field disabled={disabled} component="input" type="radio" name={`${name}.yn`} normalize={normalizeBoolean} value={false} />
     No
       </div>
       <div className="radio-check">
-        <Field component="input" type="radio" name={`${name}.yn`} normalize={normalizeBoolean} value />
+        <Field disabled={disabled} component="input" type="radio" name={`${name}.yn`} normalize={normalizeBoolean} value />
 Yes
       </div>
     </div>

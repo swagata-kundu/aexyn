@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field } from 'redux-form';
 
-const Employees = ({ name, questionInfo }) => (
+const Employees = ({ name, questionInfo, disabled }) => (
   <div className="form-field clearfix input-column two-col-form-field clearfix">
     <label>{questionInfo.text}</label>
     <div className="form-text">
@@ -13,7 +13,7 @@ const Employees = ({ name, questionInfo }) => (
         <label>Estimating Department</label>
       </div>
       <div className="input-field">
-        <Field component="input" type="number" name={`${name}.ed`} />
+        <Field disabled={disabled} component="input" type="number" name={`${name}.ed`} />
       </div>
     </div>
     <div className="form-field">
@@ -21,7 +21,7 @@ const Employees = ({ name, questionInfo }) => (
         <label>Field Supervision</label>
       </div>
       <div className="input-field">
-        <Field component="input" type="number" name={`${name}.fs`} />
+        <Field disabled={disabled} component="input" type="number" name={`${name}.fs`} />
       </div>
     </div>
     <div className="form-field">
@@ -29,7 +29,7 @@ const Employees = ({ name, questionInfo }) => (
         <label>Trades People</label>
       </div>
       <div className="input-field">
-        <Field component="input" type="number" name={`${name}.tp`} />
+        <Field disabled={disabled} component="input" type="number" name={`${name}.tp`} />
       </div>
     </div>
     <div className="form-field">
@@ -37,7 +37,7 @@ const Employees = ({ name, questionInfo }) => (
         <label>Clerical / Accounting</label>
       </div>
       <div className="input-field">
-        <Field component="input" type="number" name={`${name}.ca`} />
+        <Field disabled={disabled} component="input" type="number" name={`${name}.ca`} />
       </div>
     </div>
     <div className="form-field">
@@ -45,7 +45,7 @@ const Employees = ({ name, questionInfo }) => (
         <label>Other</label>
       </div>
       <div className="input-field">
-        <Field component="input" type="number" name={`${name}.ot`} />
+        <Field disabled={disabled} component="input" type="number" name={`${name}.ot`} />
       </div>
     </div>
     <div className="form-field">
@@ -53,7 +53,7 @@ const Employees = ({ name, questionInfo }) => (
         <label>Total</label>
       </div>
       <div className="input-field">
-        <Field component="input" type="number" name={`${name}.total`} />
+        <Field disabled={disabled} component="input" type="number" name={`${name}.total`} />
       </div>
     </div>
   </div>

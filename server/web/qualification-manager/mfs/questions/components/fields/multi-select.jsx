@@ -3,7 +3,9 @@ import { Field } from 'redux-form';
 import { connect } from 'react-redux';
 import MS from '../../../../../components/multi-select';
 
-const MultiSelect = ({ name, questionInfo, common }) => {
+const MultiSelect = ({
+  name, questionInfo, common, disabled,
+}) => {
   const labourType = common.labourType ? common.labourType.map(l => l.name) : [];
   const businessType = common.businessType ? common.businessType : [];
   const workPerformed = common.workPerformed ? common.workPerformed.map(l => l.name) : [];
@@ -24,7 +26,7 @@ const MultiSelect = ({ name, questionInfo, common }) => {
         <label>{questionInfo.text}</label>
       </div>
       <div className="input-field">
-        <Field name={`${name}.value`} options={options} component={MS} placeholder={questionInfo.text} />
+        <Field disabled={disabled} name={`${name}.value`} options={options} component={MS} placeholder={questionInfo.text} />
       </div>
     </div>
   );

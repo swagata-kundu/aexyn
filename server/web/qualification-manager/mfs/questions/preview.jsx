@@ -49,13 +49,13 @@ class Preview extends Component {
                   Configure Questionnaire
                 </a>
               </span>
-              <button type="button" onClick={this.submit}>Submit</button>
             </div>
             <div className="bottom-group">
               <p>This is a preview of questionnaire that your supplier will be asked to complete:</p>
-              <QF onSubmit={(values) => {
-                console.log(values);
-              }}
+              <QF
+                disabled
+                onSubmit={() => {
+                }}
               />
             </div>
           </div>

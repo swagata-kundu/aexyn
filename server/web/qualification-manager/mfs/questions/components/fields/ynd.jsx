@@ -12,18 +12,18 @@ const normalizeBoolean = (value) => {
   return value;
 };
 
-const YesNoDescribe = ({ name, questionInfo }) => (
+const YesNoDescribe = ({ name, questionInfo, disabled }) => (
   <div className="form-field">
     <div className="radio-label">
       <label>
         {questionInfo.text}
       </label>
       <div className="radio-check">
-        <Field component="input" type="radio" name={`${name}.yn`} normalize={normalizeBoolean} value={false} />
+        <Field disabled={disabled} component="input" type="radio" name={`${name}.yn`} normalize={normalizeBoolean} value={false} />
 No
       </div>
       <div className="radio-check">
-        <Field component="input" type="radio" name={`${name}.yn`} normalize={normalizeBoolean} value />
+        <Field disabled={disabled} component="input" type="radio" name={`${name}.yn`} normalize={normalizeBoolean} value />
 Yes
       </div>
     </div>
@@ -32,11 +32,11 @@ Yes
         <label>Please Describe</label>
       </div>
       <div className="input-field">
-        <Field component="input" type="text" name={`${name}.explain`} placeholder="Description" />
+        <Field disabled={disabled} component="input" type="text" name={`${name}.explain`} placeholder="Description" />
       </div>
       <div className="upload-file-input">
 
-        <Field component={FI} name={`${name}.files`} />
+        <Field disabled={disabled} component={FI} name={`${name}.files`} />
 
         <i className="fa fa-plus-circle" aria-hidden="true" />
 upload files

@@ -1,42 +1,42 @@
 import React from 'react';
 import { Field, FieldArray } from 'redux-form';
 
-const RenderLcenses = ({ fields }) => (
-  <div>
-    {fields.map((location, index) => (
-      <div className="form-field-bottom-grop clearfix">
-        <div className="column-1 four-col">
-          <Field component="input" type="text" name={`${location}.number`} placeholder="License Number" />
+const RenderLcenses = ({ fields, disabled }) => {
+  if (fields.length === 0 ) {
+    fields.push({});
+  }
+  return (
+    <div>
+      {fields.map((location, index) => (
+        <div className="form-field-bottom-grop clearfix">
+          <div className="column-1 four-col">
+            <Field disabled={disabled} component="input" type="text" name={`${location}.number`} placeholder="License Number" />
+          </div>
+          <div className="column-2 four-col">
+            <Field disabled={disabled} component="input" type="text" name={`${location}.classification`} placeholder="Classification" />
+          </div>
+          <div className="column-3 four-col">
+            <Field disabled={disabled} component="input" type="text" name={`${location}.state`} placeholder="State" />
+          </div>
+          <div className="column-4 four-col">
+            <Field disabled={disabled} component="input" type="text" name={`${location}.agency`} placeholder="Issuing Agency" />
+          </div>
+          {index !== 0 && <span className="remove-row-value"><i onClick={() => fields.remove(index)} className="fa fa-times" aria-hidden="true" /></span>}
+
         </div>
-        <div className="column-2 four-col">
-          <Field component="input" type="text" name={`${location}.classification`} placeholder="Classification" />
-        </div>
-        <div className="column-3 four-col">
-          <Field component="input" type="text" name={`${location}.state`} placeholder="State" />
-        </div>
-        <div className="column-4 four-col">
-          <Field component="input" type="text" name={`${location}.agency`} placeholder="Issuing Agency" />
-        </div>
-        <span className="remove-row-value">
-          <i
-            onClick={() => fields.remove(index)}
-            className="fa fa-times"
-            aria-hidden="true"
-          />
-        </span>
-      </div>
-    ))}
-    <div role="presentation" className="additional-input" onClick={() => fields.push({})}>
-      <i className="fa fa-plus-circle" aria-hidden="true" />
-      {' '}
+      ))}
+      <div role="presentation" className="additional-input" onClick={() => fields.push({})}>
+        <i className="fa fa-plus-circle" aria-hidden="true" />
+        {' '}
 Add a License
-      {' '}
+        {' '}
 
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
-const License = ({ name, questionInfo }) => (
+const License = ({ name, questionInfo, disabled }) => (
   <div className="four-col-form-field four-col-additional-form-field">
     <div className="form-field clearfix input-column clearfix">
       <label>{questionInfo.text}</label>
@@ -46,7 +46,7 @@ const License = ({ name, questionInfo }) => (
         <div className="column-3 four-col"><div className="form-text">State</div></div>
         <div className="column-4 four-col"><div className="form-text">Issuing Agency</div></div>
       </div>
-      <FieldArray name={name} component={RenderLcenses} />
+      <FieldArray name={name} component={RenderLcenses} disabled={disabled} />
     </div>
   </div>
 );

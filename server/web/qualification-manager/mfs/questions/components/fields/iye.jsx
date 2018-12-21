@@ -10,17 +10,17 @@ const normalizeBoolean = (value) => {
   }
   return value;
 };
-const IfNoExplain = ({ name, questionInfo }) => (
+const IfNoExplain = ({ name, questionInfo, disabled }) => (
   <div className="form-field clearfix">
     <div className="radio-label">
       <label>{questionInfo.text}</label>
       <div className="radio-check">
-        <Field component="input" type="radio" name={`${name}.yn`} value={false} normalize={normalizeBoolean} />
+        <Field disabled={disabled} component="input" type="radio" name={`${name}.yn`} value={false} normalize={normalizeBoolean} />
         {' '}
         No
       </div>
       <div className="radio-check">
-        <Field component="input" type="radio" name={`${name}.yn`} value normalize={normalizeBoolean} />
+        <Field disabled={disabled} component="input" type="radio" name={`${name}.yn`} value normalize={normalizeBoolean} />
         {' '}
         Yes
       </div>
@@ -30,7 +30,7 @@ const IfNoExplain = ({ name, questionInfo }) => (
       <label>If Yes, Please Explain</label>
     </div>
     <div className="input-field">
-      <Field component="input" type="text" name={`${name}.explain`} placeholder="Explain" />
+      <Field disabled={disabled} component="input" type="text" name={`${name}.explain`} placeholder="Explain" />
     </div>
   </div>
 );
